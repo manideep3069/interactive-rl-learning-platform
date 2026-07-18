@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -15,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
   <script src="rl-lib.js"></script>
   <style>
-    :root { color-scheme: only light; } html { background: #f5ead8; }
+    html { background: var(--color-bg); }
     body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
     a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
   </style>

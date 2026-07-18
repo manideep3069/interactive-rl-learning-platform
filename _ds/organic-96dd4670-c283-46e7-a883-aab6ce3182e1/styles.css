@@ -63,6 +63,54 @@
   --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
 }
 
+/* Dark theme — same roles, ramps flipped end-for-end so a "light tint"
+   step (100) stays a subtle background and a "deep ink" step (900) stays
+   high-contrast, without touching any component rule. Activated by
+   data-theme="dark" on <html> (set by rl-lib.js; persisted per visitor). */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #191512;
+  --color-surface: #262019;
+  --color-text: #ece3d2;
+  --color-accent: #d8834b;
+  --color-accent-2: #93a375;
+  --color-divider: color-mix(in srgb, #ece3d2 18%, transparent);
+
+  --color-neutral-100: #221e1a;
+  --color-neutral-200: #2d2822;
+  --color-neutral-300: #3b352d;
+  --color-neutral-400: #554d42;
+  --color-neutral-500: #776e5f;
+  --color-neutral-600: #9a9081;
+  --color-neutral-700: #b9b0a0;
+  --color-neutral-800: #d5ccbc;
+  --color-neutral-900: #efe8db;
+
+  --color-accent-100: #33210f;
+  --color-accent-200: #452a12;
+  --color-accent-300: #613a17;
+  --color-accent-400: #874f1f;
+  --color-accent-500: #b2622d;
+  --color-accent-600: #d67f48;
+  --color-accent-700: #eb9c66;
+  --color-accent-800: #f8bd92;
+  --color-accent-900: #ffdfc4;
+
+  --color-accent-2-100: #21270f;
+  --color-accent-2-200: #2b3317;
+  --color-accent-2-300: #3c4623;
+  --color-accent-2-400: #525f33;
+  --color-accent-2-500: #6f7e4e;
+  --color-accent-2-600: #8d9c6c;
+  --color-accent-2-700: #abbb8b;
+  --color-accent-2-800: #c9d7ab;
+  --color-accent-2-900: #e5efcd;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 3px 10px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);

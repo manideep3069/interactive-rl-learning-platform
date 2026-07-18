@@ -265,3 +265,42 @@
   };
   markVisit();
 })();
+
+// Theme (dark mode) — the boot script in each page's <head> sets
+// data-theme before first paint; this adds the floating toggle and
+// lets interactive canvases repaint via the 'rl-theme-change' event.
+(function () {
+  function current() { return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; }
+  function icon(t) {
+    return t === 'dark'
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m12.73-12.73 1.41-1.41"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+  }
+  function label(t) { return t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'; }
+  function apply(t) {
+    document.documentElement.dataset.theme = t;
+    try { localStorage.setItem('rl-theme', t); } catch (e) {}
+    var b = document.getElementById('rl-theme-toggle');
+    if (b) { b.innerHTML = icon(t); b.setAttribute('aria-label', label(t)); b.title = label(t); }
+    try { window.dispatchEvent(new Event('rl-theme-change')); } catch (e) {}
+  }
+  function init() {
+    if (document.getElementById('rl-theme-toggle')) return;
+    var t = current();
+    var btn = document.createElement('button');
+    btn.id = 'rl-theme-toggle';
+    btn.type = 'button';
+    btn.innerHTML = icon(t);
+    btn.setAttribute('aria-label', label(t));
+    btn.title = label(t);
+    btn.style.cssText = 'position:fixed;bottom:18px;right:18px;z-index:2147483000;' +
+      'width:44px;height:44px;border-radius:50%;display:grid;place-content:center;cursor:pointer;' +
+      'background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-divider);' +
+      'box-shadow:var(--shadow-md);';
+    btn.onclick = function () { apply(current() === 'dark' ? 'light' : 'dark'); };
+    document.body.appendChild(btn);
+  }
+  if (window.RL) window.RL.setTheme = apply;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

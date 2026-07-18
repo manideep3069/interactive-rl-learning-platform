@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -15,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
   <script src="rl-lib.js"></script>
   <style>
-    :root { color-scheme: only light; } html { background: #f5ead8; }
+    html { background: var(--color-bg); }
     body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
     a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
   </style>
@@ -307,13 +308,17 @@ class Component extends DCLogic {
   draw() {
     const cv = this.canvas; if (!cv) return;
     const ctx = cv.getContext('2d'), C = 90;
+    const dark = document.documentElement.dataset.theme === 'dark';
+    const pal = dark
+      ? { tile: '#2d2822', grid: 'rgba(236,227,210,0.14)', ink: '#ece3d2' }
+      : { tile: '#f5ead8', grid: 'rgba(32,30,29,0.12)', ink: '#201e1d' };
     let gmax = 1e-6;
     for (let i = 0; i < 16; i++) gmax = Math.max(gmax, ...this.Q[i]);
     for (let i = 0; i < 16; i++) {
       const r = Math.floor(i / 4), c = i % 4, t = this.map[i];
-      ctx.fillStyle = t === 'H' ? '#c67139' : t === 'G' ? '#7a8a5e' : '#f5ead8';
+      ctx.fillStyle = t === 'H' ? '#c67139' : t === 'G' ? '#7a8a5e' : pal.tile;
       ctx.fillRect(c * C, r * C, C, C);
-      ctx.strokeStyle = 'rgba(32,30,29,0.12)'; ctx.lineWidth = 2;
+      ctx.strokeStyle = pal.grid; ctx.lineWidth = 2;
       ctx.strokeRect(c * C + 1, r * C + 1, C - 2, C - 2);
       if (t === 'G') {
         ctx.fillStyle = '#f5ead8'; ctx.font = '700 30px sans-serif';
@@ -346,10 +351,10 @@ class Component extends DCLogic {
     const ar = Math.floor(this.s / 4), ac = this.s % 4;
     ctx.beginPath();
     ctx.arc(ac * C + C / 2, ar * C + C / 2, 16, 0, Math.PI * 2);
-    ctx.fillStyle = '#201e1d'; ctx.fill();
+    ctx.fillStyle = pal.ink; ctx.fill();
     ctx.beginPath();
     ctx.arc(ac * C + C / 2 - 5, ar * C + C / 2 - 5, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#f5ead8'; ctx.fill();
+    ctx.fillStyle = pal.tile; ctx.fill();
   }
 
   renderVals() {
@@ -357,7 +362,13 @@ class Component extends DCLogic {
     const rate = this.wins && this.wins.length ? Math.round(100 * this.wins.reduce((a, b) => a + b, 0) / this.wins.length) + '%' : '—';
     return {
       deepDives: this.props.deepDives ?? true,
-      canvasRef: (n) => { this.canvas = n; },
+      canvasRef: (n) => {
+        this.canvas = n;
+        if (n && !this._themeRedraw) {
+          this._themeRedraw = () => { if (this.Q && this.canvas) this.draw(); };
+          window.addEventListener('rl-theme-change', this._themeRedraw);
+        }
+      },
       togglePlay: () => this.setState({ running: !this.state.running }),
       playLabel: st.running ? 'Pause' : '▶ Play',
       resetSim: () => { this.resetQ(); this.draw(); this.setState({ tick: 0, running: false }); },
