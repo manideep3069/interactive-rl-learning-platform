@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch6" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch6 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 6 · Proximal Policy Optimization</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Squeeze the data, gently</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Chapter 5 ended with a confession: after one gradient step, the batch is garbage. PPO's whole ambition is to take <em>many</em> steps on the same batch without breaking anything — importance sampling to make it legal, clipping to make it safe. It is the default algorithm of modern RL, from game agents to RLHF, and it's all in the repo's <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">ppo.py</span> (lineage: CleanRL).</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~50 min</span>
+        <span class="tag tag-neutral">7 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">136 XP on offer</span>
+        <span class="tag tag-accent-2">the summit</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 Importance sampling" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Borrowing another policy's data</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">You have samples from <span data-tex="\pi_{\theta_{\text{old}}}"></span> but want an expectation under <span data-tex="\pi_\theta"></span>. Statistics has sold this correction for a century — reweight each sample by how much more (or less) the new policy likes it. That gives the <strong>surrogate objective</strong>:</p>
+      <div data-tex="L(\theta) = \mathbb{E}_t \Bigl[ \, r_t(\theta)\, A_t \, \Bigr], \qquad r_t(\theta) \doteq \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">At <span data-tex="\theta = \theta_{\text{old}}"></span> every ratio is 1 and the surrogate's gradient equals the true policy gradient — so maximizing L locally is maximizing J. In code the ratio is computed in log space (stable, and it gives you a KL estimate for free):</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">_, newlogprob, entropy, newvalue = agent.get_action_and_value(b_obs[mb_inds], b_actions.long()[mb_inds])
+logratio = newlogprob - b_logprobs[mb_inds]   # log pi_theta - log pi_theta_old
+ratio = logratio.exp()</pre>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">The catch</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">The correction is only trustworthy while <span data-tex="\pi_\theta"></span> stays <em>near</em> <span data-tex="\pi_{\theta_{\text{old}}}"></span> — the states in the batch were visited by the old policy, and the reweighting says nothing about states the new policy would visit instead. Wander far and the surrogate flatters you while the real objective collapses. TRPO's answer was a hard KL-divergence constraint (a trust region) enforced with second-order machinery. PPO wanted something you can write in two lines.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Using last year's customer survey for this year's redesigned product: reweight each respondent by how much they resemble the new customer base. Right on average — but a few extreme weights can dominate the whole estimate.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — off-policy evaluation</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Ad platforms and recommenders estimate "how would the new ranking policy have performed?" from logs of the <em>old</em> policy via these same importance ratios — evaluating without deploying. The variance blow-up you see here is their daily problem too.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 2 Clipping" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The clipped surrogate</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Here are the two lines. Cap the ratio's <em>reward</em> at the edge of a small interval, and always take the pessimistic branch:</p>
+      <div data-tex="L^{\text{CLIP}}(\theta) = \mathbb{E}_t \Bigl[ \min\bigl( r_t(\theta)\, A_t, \;\; \text{clip}(r_t(\theta),\, 1-\epsilon,\, 1+\epsilon)\, A_t \bigr) \Bigr], \qquad \epsilon = 0.2" data-display style="margin: 26px 0 6px; font-size: 16.5px; overflow-x: auto;"></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px; margin: 26px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 22px 26px;">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Good action — A &gt; 0</div>
+          <p style="font-size: 14.5px; line-height: 1.6; margin: 0;">You'd like to raise its probability. Fine — but once <span data-tex="r_t &gt; 1 + \epsilon"></span>, the clipped term stops growing: <strong>no further reward</strong> for pushing harder. The incentive to overshoot is surgically removed.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 22px 26px;">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;">Bad action — A &lt; 0</div>
+          <p style="font-size: 14.5px; line-height: 1.6; margin: 0;">You'd like to suppress it. Same deal in mirror: below <span data-tex="r_t &lt; 1 - \epsilon"></span> the objective flattens. And thanks to the min, if a <em>previous</em> epoch already moved the ratio too far, the objective can still pull it back — the bound is one-sided in your disfavor, by design.</p>
+        </div>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">The repo's version looks upside-down because it minimizes a loss — negate everything and min becomes max:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">pg_loss1 = -mb_advantages * ratio
+pg_loss2 = -mb_advantages * torch.clamp(ratio, 1 - args.clip_coef, 1 + args.clip_coef)
+pg_loss = torch.max(pg_loss1, pg_loss2).mean()   # max of losses = min of objectives</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">That's the whole trick. With the ratio's incentives fenced in, PPO happily runs <strong>4 epochs of minibatch SGD on every batch</strong> — the sample-reuse that vanilla policy gradients could never afford.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A driving instructor's speed limiter: improve your lap however you like, but the car physically cannot lurch more than ε from the last safe speed. Progress is welcome; leaps of faith are clipped off.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — OpenAI Five &amp; RLHF</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">PPO trained OpenAI Five to beat Dota 2 world champions, and it is the workhorse of RLHF — the clip is what keeps a language model from lurching away from coherent text while chasing reward. Arguably the most-run RL algorithm in production today.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 3 GAE loop" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3 · from the repo</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Advantages on an unfinished story</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">One structural change from vpg.py: PPO collects a <em>fixed window</em> — 128 steps × 4 environments — not complete episodes. Rollouts end mid-episode, so the GAE loop must bootstrap the tail from the critic and re-zero itself at episode boundaries. Every index in these lines earns its keep:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">with torch.no_grad():
+    next_value = agent.get_value(next_obs).reshape(1, -1)   # critic values the cut-off tail
+    lastgaelam = 0
+    for t in reversed(range(args.num_steps)):
+        if t == args.num_steps - 1:
+            nextnonterminal = 1.0 - next_done
+            nextvalues = next_value                          # bootstrap past the window edge
+        else:
+            nextnonterminal = 1.0 - dones[t + 1]
+            nextvalues = values[t + 1]
+        delta = rewards[t] + args.gamma * nextvalues * nextnonterminal - values[t]
+        advantages[t] = lastgaelam = delta + args.gamma * args.gae_lambda * nextnonterminal * lastgaelam
+    returns = advantages + values                            # critic targets: lambda-returns</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;"><code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">nextnonterminal</code> is Chapter 4's <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">(1 - dones)</code> doing double duty: it kills the bootstrap <em>and</em> stops the GAE decay from leaking credit across episode boundaries. The <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">returns = advantages + values</code> line quietly builds the critic's λ-return targets from the same pass.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Judging a team mid-season. The season isn't over, but you don't pretend it is: you count the games played, then <em>bootstrap</em> the rest from expectations. Cutting a rollout is not ending an episode — the mask below keeps the two cases straight.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — continuous control</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Walking robots and simulated locomotion tasks never "finish" — every PPO implementation slices experience into fixed windows and bootstraps V(s) at the cut. Getting this mask wrong is the classic silent PPO bug.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 4 One loss" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 4</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">One loss, three jobs</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Unlike vpg.py's separate optimizers, PPO sums everything into a single loss with two knobs:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">entropy_loss = entropy.mean()
+loss = pg_loss - args.ent_coef * entropy_loss + v_loss * args.vf_coef
+#      policy    exploration bonus (0.01)       critic (0.5)</pre>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Entropy bonus:</strong> penalizes overly confident policies, keeping exploration alive — a soft, differentiable cousin of ε-greedy.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Clipped value loss:</strong> the critic gets the same "don't move too fast" treatment as the actor (clip_vloss) — same instinct, applied to values.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Guard rails:</strong> advantage normalization per minibatch, gradient-norm clipping at 0.5, learning-rate annealing to zero, and an optional early stop when <code style="background: var(--color-neutral-800); color: var(--color-neutral-100); padding: 2px 6px; border-radius: 6px; font-size: 13px;">approx_kl</code> exceeds a threshold.</p></div>
+      </div>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Reading the dashboard</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">The file logs the vital signs of a healthy run: <strong>clipfrac</strong> (what fraction of ratios hit the fence — a steady 0.1–0.2 is normal; ~0 means steps too timid, huge means too bold), <strong>approx_kl</strong> (how far the policy actually drifted per update), and <strong>explained_variance</strong> (is the critic earning its keep — near 1 is good, near 0 means your baseline is decoration). Learn to read these three and you can debug most PPO runs. Then go break things on purpose: <a href="Home.dc.html#projects">Project 4</a>.</p>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 24px 0 0;">And that's the book's arc, complete: a table of numbers on a frozen lake, patiently generalized — function approximation, direct policies, trust regions — into the algorithm that fine-tunes language models. Retake any quiz to raise your best score; the <a href="Home.dc.html#projects">projects</a> and <a href="Home.dc.html#library">library</a> are waiting on the home page.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A report card mixing exam score, class participation, and a curiosity bonus — one number balancing achievement, self-assessment, and staying adventurous. Weight them badly and the student either grinds or daydreams.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — the entropy knob</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">OpenAI Five's entropy bonus kept ten heroes exploring strategies through months of self-play; in RLHF the same coefficient trades reward-chasing against diversity of responses. Three terms, three jobs, tuned by two scalars.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Ch6 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch6" heading="PPO checkpoint — the final one" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch6 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch6" heading="Key terms — Chapter 6" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch6 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch6" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'The ratio <span data-tex="r_t(\\theta) = \\pi_\\theta(a_t|s_t) / \\pi_{\\theta_{old}}(a_t|s_t)"></span> exists to…',
+          options: [
+            'measure the entropy of the policy',
+            'reweight samples from the old policy so they estimate expectations under the new one (importance sampling)',
+            'normalize the advantages',
+            'replace the discount factor'
+          ],
+          answer: 1,
+          explain: 'It is the importance-sampling correction — the price of reusing a batch for several epochs. At θ = θ_old all ratios are 1 and the surrogate\u2019s gradient equals the true policy gradient.'
+        },
+        {
+          type: 'fill',
+          q: 'Complete the repo\u2019s line: <code>ratio = (newlogprob - b_logprobs[mb_inds]).</code> ____ <code>()</code>',
+          accept: ['exp', 'exp()'],
+          placeholder: 'a tensor method',
+          explain: '<span data-tex="e^{\\log \\pi_\\theta - \\log \\pi_{old}} = \\pi_\\theta / \\pi_{old}"></span>. Computing in log space avoids underflow, and the same <code>logratio</code> doubles as a cheap KL estimator: <code>approx_kl = ((ratio - 1) - logratio).mean()</code>.'
+        },
+        {
+          type: 'mcq',
+          q: 'What does the <strong>clip</strong> actually accomplish?',
+          options: [
+            'it bounds the rewards from the environment',
+            'it removes the objective\u2019s incentive to push the ratio beyond 1 ± ε, keeping the new policy near the one that generated the data',
+            'it guarantees monotonic improvement, like TRPO\u2019s proof',
+            'it prevents gradients from exceeding max_grad_norm'
+          ],
+          answer: 1,
+          explain: 'Once the ratio crosses the fence, the clipped branch is flat — zero gradient, no reason to go further. It is a soft trust region built from a min and a clamp, replacing TRPO\u2019s second-order constraint. (Gradient clipping is a separate, additional guard rail.)'
+        },
+        {
+          type: 'predict',
+          q: 'One PPO loss term by hand: a good action (A = 2) whose ratio already overshot to 1.5, with ε = 0.2. What prints?',
+          code: 'adv, ratio, eps = 2.0, 1.5, 0.2\nloss1 = -adv * ratio                                  # -3.0\nclipped = max(min(ratio, 1 + eps), 1 - eps)           # clamp to [0.8, 1.2]\nloss2 = -adv * clipped\nprint(max(loss1, loss2))',
+          options: ['-3.0', '-2.4', '-1.2', '0.0'],
+          answer: 1,
+          explain: 'clipped = 1.2, so loss2 = −2.4; max(−3.0, −2.4) = <strong>−2.4</strong> — the pessimistic branch wins. Its gradient w.r.t. the ratio is zero: the overshoot earns nothing more, which is the whole point.'
+        },
+        {
+          type: 'mcq',
+          q: 'The entropy bonus (<code>ent_coef = 0.01</code>) is there to…',
+          options: [
+            'speed up convergence of the critic',
+            'keep the policy from collapsing to near-deterministic too early — a differentiable form of exploration pressure',
+            'reduce the variance of GAE',
+            'penalize large weights, like L2 regularization'
+          ],
+          answer: 1,
+          explain: 'Maximizing entropy pushes probability mass to stay spread out. It plays the role ε-greedy played for value methods — except here exploration is a term in the loss rather than a coin flip.'
+        },
+        {
+          type: 'mcq',
+          q: 'Why can PPO run <strong>4 epochs of minibatch updates</strong> on one batch, when REINFORCE dies after one step?',
+          options: [
+            'PPO\u2019s batch is larger, so it contains more information',
+            'the ratio corrects for the shifting policy, and the clip keeps the shift small enough for that correction to stay valid',
+            'PPO stores its data in a replay buffer like DQN',
+            'the critic makes the data on-policy again'
+          ],
+          answer: 1,
+          explain: 'Two mechanisms, both required: importance sampling makes reuse <em>legal</em>, clipping makes it <em>safe</em>. Without the clip, epoch 3 would be optimizing a surrogate that flatters a policy far from the data. (DQN\u2019s replay works for a different reason: Q-learning is off-policy by nature.)'
+        },
+        {
+          type: 'desc',
+          q: 'Explain the clipped objective\u2019s behavior in words — separately for a <strong>positive-advantage</strong> and a <strong>negative-advantage</strong> action. Why the min?',
+          model: '<strong>A &gt; 0:</strong> the objective rewards raising the action\u2019s probability, but only until r = 1 + ε; past the fence the clipped branch is flat, so the incentive to overshoot vanishes. <strong>A &lt; 0:</strong> mirror image — suppress the action, but the reward for suppression flattens below 1 − ε. <strong>The min</strong> makes the bound one-sided against you: clipping only ever <em>removes reward</em>, never removes penalty. If earlier epochs already dragged the ratio outside the region in a harmful direction, the unclipped branch (being lower) is the one chosen, and its gradient can still pull the ratio back. L^CLIP is a pessimistic lower bound on the true surrogate.',
+          explain: 'The one-sidedness is the subtle part most explanations skip: clipping caps rewards, never caps corrections.'
+        }
+      ],
+      cards: [
+        { f: 'Importance sampling ratio', b: '<span data-tex="r_t(\\theta) = \\pi_\\theta(a_t|s_t)/\\pi_{\\theta_{old}}(a_t|s_t)"></span> — reweights old-policy samples to estimate new-policy expectations. Computed as <code>logratio.exp()</code>.' },
+        { f: 'Surrogate objective', b: '<span data-tex="L = \\mathbb{E}[r_t(\\theta) A_t]"></span>. Matches the true policy gradient at θ_old; trustworthy only while the new policy stays close to the old one.' },
+        { f: 'Clipped objective L^CLIP', b: '<span data-tex="\\min(r A, \\text{clip}(r, 1\\pm\\epsilon) A)"></span> — a soft trust region. Flattens the incentive beyond the fence; the min keeps the bound pessimistic.' },
+        { f: 'Entropy bonus', b: 'Term −ent_coef · H penalizing overconfident policies. Exploration as a loss term — the policy-gradient world\u2019s ε-greedy.' },
+        { f: 'Fixed-window rollouts', b: '128 steps × 4 envs per iteration, episodes cut mid-flight — so GAE bootstraps the tail from the critic and re-zeros at every done via nextnonterminal.' },
+        { f: 'clipfrac', b: 'Fraction of ratios hitting the clip fence each update. Healthy: ~0.1–0.2. Near zero: steps too small. Large: policy moving too fast per batch.' },
+        { f: 'approx_kl', b: 'Cheap estimate of KL(π_old ‖ π_θ) from the same logratio: <code>((ratio − 1) − logratio).mean()</code>. Used to early-stop an update that drifted too far.' },
+        { f: 'PPO in one line', b: 'Actor-critic with GAE + importance-sampled reuse of each batch (4 epochs of minibatches) + clipping to keep every step inside a soft trust region.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

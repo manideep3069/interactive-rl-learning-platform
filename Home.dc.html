@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; overflow-x: clip; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+    html { scroll-behavior: smooth; }
+  </style>
+</helmet>
+<div ref="{{ setNode }}">
+  <nav class="nav" style="position: relative; z-index: 2;">
+    <span class="nav-brand">The Little Book of RL</span>
+    <a href="#path" style="text-decoration: none;">Chapters</a>
+    <a href="#goals" style="text-decoration: none;">Goals</a>
+    <a href="#projects" style="text-decoration: none;">Projects</a>
+    <a href="#library" style="text-decoration: none;">Library</a>
+    <a class="btn btn-primary" href="{{ continueHref }}" style="text-decoration: none;">{{ continueLabel }}</a>
+  </nav>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 72px);">
+
+    <section style="position: relative; padding: 96px 0 56px;">
+      <div style="position: absolute; right: -140px; top: -220px; width: 420px; height: 420px; border-radius: 50%; background: var(--color-accent-2-200); pointer-events: none; z-index: 0;"></div>
+      <div style="position: relative; z-index: 1;">
+        <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(40px, 5.6vw, 72px); line-height: 1.08; letter-spacing: 0; margin: 0 0 0 -0.028em;">
+          <span style="display: block;">Reinforcement learning,</span>
+          <span style="display: block;">learned by doing.</span>
+        </h1>
+        <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 28px 0 0;">An interactive companion to <em>The Little Book of Reinforcement Learning</em> — six chapters from MDPs to PPO, grounded in the book's real PyTorch code, backed by Sutton &amp; Barto for the proofs. Quizzes, flashcards, a live gridworld, and XP for every step. No hurry; the value function converges either way.</p>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: 28px; align-items: center;">
+          <a class="btn btn-primary" href="{{ continueHref }}" style="text-decoration: none;">{{ continueCta }}</a>
+          <a class="btn btn-ghost" href="#path" style="text-decoration: none;">See the path</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 36px; flex-wrap: wrap;">
+          <span class="tag tag-accent">Level {{ levelN }} · {{ levelName }}</span>
+          <div style="flex: none; width: 220px; height: 10px; border-radius: 999px; background: var(--color-neutral-200); overflow: hidden;">
+            <div style="height: 100%; border-radius: 999px; background: var(--color-accent); width: {{ levelPct }}%; transition: width .4s;"></div>
+          </div>
+          <span style="font-size: 13px; color: var(--color-neutral-600);">{{ levelHint }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Your numbers" style="display: flex; gap: 20px; flex-wrap: wrap; padding: 28px 0 40px; align-items: flex-start;">
+      <sc-for list="{{ seeds }}" as="seed" hint-placeholder-count="4">
+        <div style="width: {{ seed.size }}px; aspect-ratio: 1; border-radius: 50%; background: {{ seed.bg }}; display: grid; place-content: center; text-align: center; padding: 20px; box-sizing: border-box; transform: translateY({{ seed.dy }}px);">
+          <div style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 38px; color: {{ seed.ink }};">{{ seed.num }}</div>
+          <div style="font-size: 12.5px; line-height: 1.35; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: color-mix(in srgb, var(--color-text) 70%, transparent); margin-top: 10px; max-width: 15ch;">{{ seed.label }}</div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section id="path" style="padding: 48px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">The learning path</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px;">Six chapters, one book</h2>
+      <p style="font-size: 15.5px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 58ch; margin: 0 0 32px;">Wander freely — nothing is locked. Each chapter ends with a quiz and a deck of flashcards; the map below remembers how far you've grown.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 24px;">
+        <sc-for list="{{ chapters }}" as="chap" hint-placeholder-count="6">
+          <a href="{{ chap.href }}" data-screen-label="{{ chap.title }}" style="text-decoration: none; color: var(--color-text); background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 28px; display: flex; gap: 20px; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s;" style-hover="box-shadow: var(--shadow-md); transform: translateY(-2px);">
+            <div style="flex: none; width: 64px; height: 64px; border-radius: 50%; background: {{ chap.circleBg }}; color: {{ chap.circleInk }}; display: grid; place-content: center; font-family: var(--font-heading); font-size: 26px;">{{ chap.n }}</div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+                <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 21px; margin: 0;">{{ chap.title }}</h3>
+                <span style="font-size: 12.5px; color: var(--color-neutral-600);">~{{ chap.mins }} min · {{ chap.pct }}% done</span>
+              </div>
+              <p style="font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 8px 0 12px;">{{ chap.blurb }}</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+                <sc-for list="{{ chap.topics }}" as="topic" hint-placeholder-count="3">
+                  <span class="tag tag-neutral" style="font-size: 12px;">{{ topic.t }}</span>
+                </sc-for>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="flex: 1; height: 8px; border-radius: 999px; background: var(--color-neutral-200); overflow: hidden;">
+                  <div style="height: 100%; border-radius: 999px; background: {{ chap.barColor }}; width: {{ chap.pct }}%; transition: width .4s;"></div>
+                </div>
+                <span style="font-size: 13px; font-weight: 700; color: var(--color-accent-700);">{{ chap.cta }}</span>
+              </div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="goals" style="padding: 64px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Little rituals</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px;">Daily, weekly, monthly</h2>
+      <p style="font-size: 15.5px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 58ch; margin: 0 0 32px;">Small goals that reset with the calendar — each one is +5 XP. Add your own; unchecking is allowed, guilt is not.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 24px;">
+        <sc-for list="{{ goalCols }}" as="col" hint-placeholder-count="3">
+          <div style="background: {{ col.bg }}; border-radius: calc(2 * var(--radius-lg)); padding: 26px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 18px;">
+              <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0;">{{ col.label }}</h3>
+              <span style="font-size: 12.5px; color: var(--color-neutral-600);">{{ col.sub }}</span>
+            </div>
+            <div style="display: grid; gap: 10px;">
+              <sc-for list="{{ col.goals }}" as="goal" hint-placeholder-count="3">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <button onClick="{{ goal.toggle }}" aria-label="toggle goal" style="flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid {{ goal.ringColor }}; background: {{ goal.fill }}; color: #fff; display: grid; place-content: center; cursor: pointer; font-weight: 800; font-size: 14px; line-height: 1; padding: 0;">{{ goal.mark }}</button>
+                  <span style="flex: 1; font-size: 14.5px; line-height: 1.4; text-decoration: {{ goal.strike }}; color: {{ goal.ink }};">{{ goal.text }}</span>
+                  <sc-if value="{{ goal.removable }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ goal.remove }}" aria-label="remove goal" style="flex: none; border: none; background: transparent; color: var(--color-neutral-500); cursor: pointer; font-size: 16px; padding: 2px 6px;">×</button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 18px;">
+              <input class="input" value="{{ col.input }}" onChange="{{ col.onInput }}" onKeyDown="{{ col.onKey }}" placeholder="Add your own…" style="flex: 1; min-width: 0; font-size: 13.5px;">
+              <button class="btn btn-secondary" onClick="{{ col.add }}">Add</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="badges" style="padding: 64px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Trophy shelf</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 32px;">Badges</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 20px;">
+        <sc-for list="{{ badgeList }}" as="badge" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 14px; opacity: {{ badge.op }};">
+            <div style="flex: none; width: 54px; height: 54px; border-radius: 50%; background: {{ badge.bg }}; color: {{ badge.ink }}; display: grid; place-content: center;">
+              <i data-lucide="{{ badge.icon }}" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 15px;">{{ badge.name }}</div>
+              <div style="font-size: 13px; color: var(--color-neutral-600); line-height: 1.35;">{{ badge.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <sc-if value="{{ showProjects }}" hint-placeholder-val="{{ true }}">
+      <section id="projects" style="padding: 64px 0 24px;">
+        <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Get your hands dirty</span>
+        <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px;">Projects</h2>
+        <p style="font-size: 15.5px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 58ch; margin: 0 0 32px;">Run the book's real code from the repo. Each project is +100 XP — on your honor, the way all good gardens grow.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 24px;">
+          <sc-for list="{{ projectList }}" as="proj" hint-placeholder-count="4">
+            <div style="background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 28px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0;">{{ proj.title }}</h3>
+                <span class="tag tag-accent-2" style="font-size: 11.5px; font-family: ui-monospace, monospace;">{{ proj.file }}</span>
+              </div>
+              <p style="font-size: 14.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 0; flex: 1;">{{ proj.desc }}</p>
+              <div>
+                <button class="btn {{ proj.btnClass }}" onClick="{{ proj.toggle }}">{{ proj.btnLabel }}</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showResources }}" hint-placeholder-val="{{ true }}">
+      <section id="library" style="padding: 64px 0 24px;">
+        <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">When you want more</span>
+        <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 32px;">The library</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px;">
+          <div style="background: var(--color-accent-2-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px;">
+            <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0 0 16px;">Books</h3>
+            <div style="display: grid; gap: 14px; font-size: 14.5px; line-height: 1.5;">
+              <div><a href="https://github.com/alxndrTL/little-book-rl" target="_blank" rel="noopener">The Little Book of RL — the repo</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">The source of this site's code: all six algorithms in clean PyTorch.</span></div>
+              <div><a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank" rel="noopener">Sutton &amp; Barto — RL: An Introduction</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">The canonical reference; free online. Our proofs follow its notation.</span></div>
+              <div><a href="https://www.amazon.fr/Little-Book-Reinforcement-Learning/dp/B0H3W5PJH6" target="_blank" rel="noopener">The Little Book of RL — in print</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">Alexandre Torres-Leguet's book itself, for your shelf.</span></div>
+            </div>
+          </div>
+          <div style="background: var(--color-accent-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px;">
+            <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0 0 16px;">Courses</h3>
+            <div style="display: grid; gap: 14px; font-size: 14.5px; line-height: 1.5;">
+              <div><a href="https://spinningup.openai.com" target="_blank" rel="noopener">OpenAI Spinning Up</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">The best bridge from math to working deep-RL code.</span></div>
+              <div><a href="https://www.davidsilver.uk/teaching/" target="_blank" rel="noopener">David Silver's RL course (UCL)</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">Ten lectures that made a generation of RL researchers.</span></div>
+              <div><a href="https://huggingface.co/learn/deep-rl-course" target="_blank" rel="noopener">Hugging Face Deep RL course</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">Hands-on and free, with leaderboards to keep it fun.</span></div>
+            </div>
+          </div>
+          <div style="background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0 0 16px;">Blogs &amp; posts</h3>
+            <div style="display: grid; gap: 14px; font-size: 14.5px; line-height: 1.5;">
+              <div><a href="https://lilianweng.github.io/posts/2018-02-19-rl-overview/" target="_blank" rel="noopener">Lilian Weng — A (Long) Peek into RL</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">The best single-page map of the whole field.</span></div>
+              <div><a href="http://karpathy.github.io/2016/05/31/rl/" target="_blank" rel="noopener">Karpathy — Pong from Pixels</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">Policy gradients explained with a game and 130 lines of Python.</span></div>
+              <div><a href="https://docs.cleanrl.dev" target="_blank" rel="noopener">CleanRL docs</a><br><span style="color: var(--color-neutral-700); font-size: 13.5px;">The implementation lineage of this book's DQN and PPO.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <footer style="padding: 72px 0 56px; font-size: 13px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 70%, transparent);">
+      Built on <em>The Little Book of Reinforcement Learning</em> by Alexandre Torres-Leguet (CC BY-SA 4.0) · code from <a href="https://github.com/alxndrTL/little-book-rl" target="_blank" rel="noopener">alxndrTL/little-book-rl</a> · your progress lives in this browser only.
+    </footer>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showProjects&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot;}, &quot;showResources&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { inputs: { daily: '', weekly: '', monthly: '' } };
+  setNode = (n) => { this.node = n; };
+  componentDidMount() {
+    this.onChange = () => this.forceUpdate();
+    window.addEventListener('rl:change', this.onChange);
+    if (!window.RL) {
+      const t = setInterval(() => { if (window.RL) { clearInterval(t); this.forceUpdate(); } }, 80);
+      this._t = t;
+    }
+    this.paint();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('rl:change', this.onChange);
+    if (this._t) clearInterval(this._t);
+  }
+  componentDidUpdate() { this.paint(); }
+  paint() { if (window.RL) window.RL.icons(); }
+
+  renderVals() {
+    const RL = window.RL;
+    if (!RL) {
+      return {
+        continueHref: '#path', continueLabel: 'Start learning', continueCta: 'Start Chapter 1',
+        levelN: 1, levelName: 'Random Policy', levelPct: 0, levelHint: '', seeds: [], chapters: [],
+        goalCols: [], badgeList: [], projectList: [], showProjects: true, showResources: true
+      };
+    }
+    const lvl = RL.levelInfo();
+    const chapters = RL.CHAPTERS.map((c) => {
+      const pct = RL.chapterPct(c.id);
+      return {
+        n: c.n, title: c.title, blurb: c.blurb, mins: c.mins, pct,
+        topics: c.topics.map((t) => ({ t })),
+        href: c.file,
+        circleBg: pct >= 100 ? 'var(--color-accent-2)' : pct > 0 ? 'var(--color-accent-200)' : 'var(--color-accent-100)',
+        circleInk: pct >= 100 ? '#fff' : 'var(--color-accent-700)',
+        barColor: pct >= 100 ? 'var(--color-accent-2)' : 'var(--color-accent)',
+        cta: pct >= 100 ? 'Review →' : pct > 0 ? 'Continue →' : 'Start →'
+      };
+    });
+    const next = chapters.find((c) => c.pct < 100) || chapters[chapters.length - 1];
+    const doneCount = chapters.filter((c) => c.pct >= 100).length;
+    const badges = RL.badges();
+    const earned = badges.filter((b) => b.ok).length;
+
+    const seedDefs = [
+      { num: String(lvl.xp), label: 'XP collected', bg: 'var(--color-accent-100)', ink: 'var(--color-accent-700)', size: 190, dy: 0 },
+      { num: String(RL.streak()), label: 'day streak', bg: 'var(--color-accent-2-100)', ink: 'var(--color-accent-2-700)', size: 160, dy: 24 },
+      { num: doneCount + '/6', label: 'chapters done', bg: 'var(--color-accent-200)', ink: 'var(--color-accent-700)', size: 175, dy: 8 },
+      { num: earned + '/' + badges.length, label: 'badges earned', bg: 'var(--color-accent-2-300)', ink: 'var(--color-accent-2-800)', size: 150, dy: 30 }
+    ];
+
+    const goalCols = ['daily', 'weekly', 'monthly'].map((period, k) => {
+      const label = { daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly' }[period];
+      const sub = { daily: 'resets each day', weekly: 'resets each Monday', monthly: 'resets each month' }[period];
+      const bg = ['var(--color-accent-100)', 'var(--color-accent-2-100)', 'var(--color-neutral-100)'][k];
+      const goals = RL.goalList(period).map((g) => {
+        const done = RL.goalDone(period, g.id);
+        return {
+          text: g.text,
+          mark: done ? '✓' : '',
+          fill: done ? 'var(--color-accent-2)' : 'transparent',
+          ringColor: done ? 'var(--color-accent-2)' : 'var(--color-neutral-400)',
+          strike: done ? 'line-through' : 'none',
+          ink: done ? 'var(--color-neutral-600)' : 'var(--color-text)',
+          toggle: () => RL.toggleGoal(period, g.id),
+          removable: String(g.id).charAt(0) === 'c',
+          remove: () => RL.removeCustomGoal(g.id)
+        };
+      });
+      const add = () => {
+        const v = this.state.inputs[period];
+        if (v && v.trim()) { RL.addCustomGoal(period, v); this.setState({ inputs: { ...this.state.inputs, [period]: '' } }); }
+      };
+      return {
+        key: period, label, sub, bg, goals,
+        input: this.state.inputs[period],
+        onInput: (e) => this.setState({ inputs: { ...this.state.inputs, [period]: e.target.value } }),
+        onKey: (e) => { if (e.key === 'Enter') add(); },
+        add
+      };
+    });
+
+    const badgeList = badges.map((b) => ({
+      icon: b.icon, name: b.name, desc: b.desc,
+      bg: b.ok ? 'var(--color-accent)' : 'var(--color-neutral-200)',
+      ink: b.ok ? '#fff' : 'var(--color-neutral-500)',
+      op: b.ok ? 1 : 0.55
+    }));
+
+    const projectList = RL.PROJECTS.map((p) => {
+      const done = RL.projectDone(p.id);
+      return {
+        title: p.title, desc: p.desc, file: p.file,
+        btnClass: done ? 'btn-secondary' : 'btn-primary',
+        btnLabel: done ? '✓ Shipped — undo' : 'Mark shipped (+100 XP)',
+        toggle: () => RL.toggleProject(p.id)
+      };
+    });
+
+    return {
+      continueHref: next.href,
+      continueLabel: next.pct > 0 ? 'Continue' : 'Start learning',
+      continueCta: (next.pct > 0 ? 'Continue Chapter ' : 'Start Chapter ') + next.n + ' — ' + next.title,
+      levelN: lvl.n, levelName: lvl.name, levelPct: lvl.pct,
+      levelHint: lvl.next ? (lvl.next - lvl.xp) + ' XP to ' + lvl.nextName : 'Maximum level — you converged.',
+      seeds: seedDefs, chapters, goalCols, badgeList, projectList,
+      showProjects: this.props.showProjects ?? true,
+      showResources: this.props.showResources ?? true
+    };
+  }
+}
+
+</script>
+</body>
+</html>

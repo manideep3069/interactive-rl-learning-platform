@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: transparent; font-family: var(--font-body); }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div ref="{{ setNode }}" style="background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: clamp(24px, 4vw, 40px); font-family: var(--font-body); color: var(--color-text); box-shadow: var(--shadow-sm);">
+  <sc-if value="{{ playing }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--color-accent); color: #fff; display: grid; place-content: center; font-family: var(--font-heading); font-size: 19px;">{{ qNum }}</span>
+        <div>
+          <div style="font-weight: 700; font-size: 17px;">{{ headingText }}</div>
+          <div style="font-size: 13px; color: var(--color-neutral-600); margin-top: 2px;">Question {{ qNum }} of {{ total }} · {{ kindLabel }}</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 7px;">
+        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="6">
+          <span style="width: 11px; height: 11px; border-radius: 50%; background: {{ d.bg }};"></span>
+        </sc-for>
+      </div>
+    </div>
+    {{ promptEl }}
+    <sc-if value="{{ hasCode }}" hint-placeholder-val="{{ false }}">{{ codeEl }}</sc-if>
+    <sc-if value="{{ isChoice }}" hint-placeholder-val="{{ true }}">
+      <div style="display: grid; gap: 10px; margin-top: 20px;">
+        <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+          <button onClick="{{ opt.pick }}" style="display: flex; align-items: center; gap: 14px; text-align: left; border: 2px solid {{ opt.border }}; background: {{ opt.bg }}; color: var(--color-text); padding: 13px 18px; border-radius: var(--radius-lg); font-family: var(--font-body); font-size: 15px; line-height: 1.45; cursor: pointer; transition: border-color .15s, background .15s;">
+            <span style="flex: none; width: 28px; height: 28px; border-radius: 50%; background: {{ opt.lbg }}; color: {{ opt.lcol }}; display: grid; place-content: center; font-weight: 700; font-size: 13px;">{{ opt.letter }}</span>
+            <span>{{ opt.text }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isFill }}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; align-items: center;">
+        <input class="input" value="{{ input }}" onChange="{{ onInput }}" onKeyDown="{{ onKey }}" placeholder="{{ placeholder }}" style="flex: 1; min-width: 240px; font-family: ui-monospace, monospace; font-size: 15px;">
+      </div>
+    </sc-if>
+    <sc-if value="{{ isDesc }}" hint-placeholder-val="{{ false }}">
+      <textarea value="{{ input }}" onChange="{{ onInput }}" placeholder="Write your answer in your own words — then compare with the model answer." rows="4" style="width: 100%; box-sizing: border-box; margin-top: 20px; font-family: var(--font-body); font-size: 15px; line-height: 1.55; padding: 14px 18px; border-radius: var(--radius-lg); border: 2px solid var(--color-neutral-300); background: var(--color-bg); color: var(--color-text); resize: vertical;"></textarea>
+    </sc-if>
+    <sc-if value="{{ showCheck }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top: 20px;">
+        <button class="btn btn-primary" onClick="{{ check }}" disabled="{{ checkDisabled }}" style="white-space: nowrap;">{{ checkLabel }}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top: 22px; background: {{ fbBg }}; border-radius: var(--radius-lg); padding: 18px 22px;">
+        <div style="font-weight: 700; font-size: 15px; color: {{ fbInk }}; display: flex; align-items: center; gap: 8px;">{{ fbTitle }}</div>
+        <sc-if value="{{ showModel }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: 14px;">Model answer</div>
+          {{ modelEl }}
+        </sc-if>
+        {{ explainEl }}
+        <sc-if value="{{ needsMark }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+            <button class="btn btn-primary" onClick="{{ markGood }}" style="white-space: nowrap;">I nailed it (+8 XP)</button>
+            <button class="btn btn-secondary" onClick="{{ markPart }}" style="white-space: nowrap;">Partly (+4 XP)</button>
+            <button class="btn btn-ghost" onClick="{{ markMiss }}" style="white-space: nowrap;">I missed it</button>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ canNext }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top: 18px; display: flex; justify-content: flex-end;">
+          <button class="btn btn-primary" onClick="{{ next }}">{{ nextLabel }}</button>
+        </div>
+      </sc-if>
+    </sc-if>
+  </sc-if>
+  <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
+    <div style="text-align: center; padding: 24px 12px;">
+      <div style="width: 110px; height: 110px; border-radius: 50%; background: {{ scoreBg }}; display: grid; place-content: center; margin: 0 auto;">
+        <span style="font-family: var(--font-heading); font-size: 30px; color: {{ scoreInk }};">{{ scorePct }}%</span>
+      </div>
+      <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 26px; margin: 22px 0 0;">{{ scoreTitle }}</h3>
+      <p style="font-size: 15px; color: var(--color-neutral-700); margin: 10px auto 0; max-width: 46ch; line-height: 1.55;">{{ scoreMsg }}</p>
+      <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+        <button class="btn btn-secondary" onClick="{{ retry }}">Try again</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 860, &quot;height&quot;: 620}, &quot;questions&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;Array&lt;{type: 'mcq'|'fill'|'predict'|'desc', q: string, code?: string, options?: string[], answer?: number, accept?: string[], placeholder?: string, model?: string, explain: string}&gt;&quot;}, &quot;chapter&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;ch1&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;heading&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Checkpoint quiz&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0, revealed: false, sel: null, input: '', mark: null, results: [], awarded: {}, finished: false };
+  setNode = (n) => { this.node = n; };
+  componentDidMount() { this.paint(); }
+  componentDidUpdate() { this.paint(); }
+  paint() { if (window.RL && this.node) window.RL.paint(this.node); }
+  qs() { return this.props.questions || []; }
+  html(h, style) { return React.createElement('div', { style: style || {}, dangerouslySetInnerHTML: { __html: h || '' } }); }
+
+  reset() { this.setState({ i: 0, revealed: false, sel: null, input: '', mark: null, results: [], awarded: {}, finished: false }); }
+
+  reveal(pts, xp, label) {
+    const { i, awarded } = this.state;
+    const results = this.state.results.slice(); results[i] = pts;
+    if (xp > 0 && !awarded[i] && window.RL) window.RL.addXP(xp, label);
+    this.setState({ revealed: true, results, awarded: { ...awarded, [i]: true } });
+  }
+
+  next = () => {
+    const qs = this.qs(), i = this.state.i;
+    if (i + 1 >= qs.length) {
+      const score = this.state.results.reduce((a, b) => a + (b || 0), 0);
+      if (window.RL) {
+        window.RL.recordQuiz(this.props.chapter || 'x', score, qs.length);
+        if (qs.length && score / qs.length >= 0.8) window.RL.confetti();
+      }
+      this.setState({ finished: true });
+    } else {
+      this.setState({ i: i + 1, revealed: false, sel: null, input: '', mark: null });
+    }
+  };
+
+  fillOk(q) {
+    const norm = (t) => (t || '').trim().toLowerCase().replace(/\s+/g, '').replace(/_/g, '');
+    return (q.accept || []).some((a) => norm(a) === norm(this.state.input));
+  }
+
+  renderVals() {
+    const qs = this.qs(), st = this.state, i = st.i;
+    const q = qs[i] || {}, kind = q.type || 'mcq';
+    const revealed = st.revealed;
+    const isChoice = kind === 'mcq' || kind === 'predict';
+    const isFill = kind === 'fill', isDesc = kind === 'desc';
+    const hlOk = window.RL && window.RL.hl;
+
+    const options = (q.options || []).map((o, j) => {
+      const isAns = j === q.answer, picked = st.sel === j;
+      let bg = 'var(--color-bg)', border = 'var(--color-neutral-300)', lbg = 'var(--color-neutral-200)', lcol = 'var(--color-neutral-800)';
+      if (!revealed && picked) { bg = 'var(--color-accent-100)'; border = 'var(--color-accent)'; lbg = 'var(--color-accent)'; lcol = '#fff'; }
+      if (revealed && isAns) { bg = 'var(--color-accent-2-100)'; border = 'var(--color-accent-2)'; lbg = 'var(--color-accent-2)'; lcol = '#fff'; }
+      if (revealed && picked && !isAns) { bg = 'var(--color-accent-100)'; border = 'var(--color-accent)'; lbg = 'var(--color-accent)'; lcol = '#fff'; }
+      return {
+        key: j, text: o, bg, border, lbg, lcol, letter: String.fromCharCode(65 + j),
+        pick: () => { if (!this.state.revealed) this.setState({ sel: j }); }
+      };
+    });
+
+    const correct = isChoice ? st.sel === q.answer : isFill ? this.fillOk(q) : null;
+    const dots = qs.map((_, j) => ({
+      bg: j < i || (j === i && revealed) ? ((st.results[j] || 0) >= 1 ? 'var(--color-accent-2)' : (st.results[j] ? 'var(--color-accent-300)' : 'var(--color-accent)')) : j === i ? 'var(--color-neutral-500)' : 'var(--color-neutral-300)'
+    }));
+
+    const check = () => {
+      if (isDesc) { this.setState({ revealed: true }); return; }
+      const ok = isChoice ? this.state.sel === q.answer : this.fillOk(q);
+      this.reveal(ok ? 1 : 0, ok ? 10 : 0, ok ? 'correct answer' : null);
+    };
+
+    const mk = (pts, xp) => () => {
+      if (this.state.mark !== null) return;
+      this.setState({ mark: pts });
+      this.reveal(pts, xp, xp ? 'self-checked' : null);
+    };
+
+    const fbOk = isDesc ? (st.mark !== null && st.mark >= 1) : correct;
+    const fbBg = isDesc && st.mark === null ? 'var(--color-neutral-200)' : fbOk ? 'var(--color-accent-2-100)' : (isDesc && st.mark === 0.5) ? 'var(--color-accent-2-100)' : 'var(--color-accent-100)';
+    const fbInk = fbOk || (isDesc && st.mark === 0.5) ? 'var(--color-accent-2-800)' : 'var(--color-accent-800)';
+    const fbTitle = isDesc
+      ? (st.mark === null ? 'How close were you?' : st.mark >= 1 ? 'Nailed it!' : st.mark > 0 ? 'Halfway there — worth a re-read.' : 'No worries — this one is subtle.')
+      : correct ? 'Correct! +10 XP' : 'Not quite — here is the idea:';
+
+    const kindLabel = { mcq: 'multiple choice', fill: 'fill in the blank', predict: 'predict the output', desc: 'explain it yourself' }[kind] || '';
+    const score = st.results.reduce((a, b) => a + (b || 0), 0);
+    const pct = qs.length ? Math.round(100 * score / qs.length) : 0;
+
+    return {
+      playing: !st.finished && qs.length > 0,
+      finished: st.finished,
+      headingText: this.props.heading ?? 'Checkpoint quiz',
+      qNum: i + 1, total: qs.length, kindLabel, dots,
+      promptEl: this.html(q.q, { fontSize: '16px', lineHeight: '1.6', maxWidth: '68ch' }),
+      hasCode: !!q.code,
+      codeEl: q.code ? React.createElement('pre', {
+        style: { background: 'var(--color-neutral-900)', color: 'var(--color-neutral-100)', borderRadius: 'var(--radius-lg)', padding: '16px 20px', fontSize: '13.5px', lineHeight: '1.6', overflowX: 'auto', margin: '16px 0 0', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' },
+        dangerouslySetInnerHTML: { __html: hlOk ? window.RL.hl(q.code) : (q.code || '').replace(/</g, '&lt;') }
+      }) : null,
+      isChoice, isFill, isDesc, options,
+      input: st.input,
+      onInput: (e) => this.setState({ input: e.target.value }),
+      onKey: (e) => { if (e.key === 'Enter' && this.state.input.trim() && !this.state.revealed) check(); },
+      placeholder: q.placeholder || 'type your answer…',
+      showCheck: !revealed,
+      checkDisabled: isChoice ? st.sel === null : isFill ? !st.input.trim() : false,
+      checkLabel: isDesc ? 'Compare with model answer' : 'Check answer',
+      check,
+      revealed,
+      fbBg, fbInk, fbTitle,
+      showModel: isDesc,
+      modelEl: isDesc ? this.html(q.model, { fontSize: '15px', lineHeight: '1.6', marginTop: '6px' }) : null,
+      explainEl: this.html(q.explain, { fontSize: '15px', lineHeight: '1.6', marginTop: '12px', color: 'var(--color-neutral-800)' }),
+      needsMark: isDesc && st.mark === null,
+      markGood: mk(1, 8), markPart: mk(0.5, 4), markMiss: mk(0, 0),
+      canNext: !isDesc || st.mark !== null,
+      nextLabel: i + 1 >= qs.length ? 'Finish quiz' : 'Next question',
+      next: this.next,
+      scorePct: pct,
+      scoreBg: pct >= 80 ? 'var(--color-accent-2-200)' : 'var(--color-accent-100)',
+      scoreInk: pct >= 80 ? 'var(--color-accent-2-800)' : 'var(--color-accent-800)',
+      scoreTitle: pct >= 100 ? 'Flawless run!' : pct >= 80 ? 'Sharp shooting!' : pct >= 50 ? 'Solid — keep going.' : 'Every expert was once here.',
+      scoreMsg: 'You scored ' + score + ' of ' + qs.length + '. Your best score is saved to your progress' + (pct < 80 ? ' — a re-read of the tricky bits and a retry usually does it.' : '.'),
+      retry: () => this.reset()
+    };
+  }
+}
+
+</script>
+</body>
+</html>

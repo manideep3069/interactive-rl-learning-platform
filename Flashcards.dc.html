@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: transparent; font-family: var(--font-body); }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div ref="{{ setNode }}" style="font-family: var(--font-body); color: var(--color-text);">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px;">
+    <div style="font-weight: 700; font-size: 17px;">{{ headingText }}</div>
+    <div style="font-size: 13px; color: var(--color-neutral-600);">Card {{ cNum }} of {{ total }} · {{ knownCount }} marked as known</div>
+  </div>
+  <div onClick="{{ flip }}" style="background: {{ faceBg }}; border-radius: calc(2 * var(--radius-lg)); min-height: 230px; padding: clamp(24px, 4vw, 40px); display: grid; place-content: center; text-align: center; cursor: pointer; box-shadow: var(--shadow-sm); transition: background .25s; user-select: none;">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: {{ faceKickerInk }}; margin-bottom: 14px;">{{ faceLabel }}</div>
+    {{ faceEl }}
+    <div style="font-size: 12.5px; color: var(--color-neutral-600); margin-top: 18px;">click to flip</div>
+  </div>
+  <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px;">
+    <button class="btn btn-ghost" onClick="{{ prev }}" style="white-space: nowrap;">Back</button>
+    <button class="btn btn-secondary" onClick="{{ later }}" style="white-space: nowrap;">See it again later</button>
+    <button class="btn btn-primary" onClick="{{ gotIt }}" disabled="{{ gotDisabled }}" style="white-space: nowrap;">{{ gotLabel }}</button>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 760, &quot;height&quot;: 460}, &quot;cards&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;Array&lt;{f: string, b: string}&gt;&quot;}, &quot;chapter&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;ch1&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;heading&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Flashcards&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0, flip: false, known: {} };
+  setNode = (n) => { this.node = n; };
+  componentDidMount() { this.paint(); }
+  componentDidUpdate() { this.paint(); }
+  paint() { if (window.RL && this.node) window.RL.paint(this.node); }
+  cards() { return this.props.cards || []; }
+  html(h, style) { return React.createElement('div', { style: style || {}, dangerouslySetInnerHTML: { __html: h || '' } }); }
+  go(d) {
+    const n = this.cards().length; if (!n) return;
+    this.setState({ i: (this.state.i + d + n) % n, flip: false });
+  }
+  renderVals() {
+    const cs = this.cards(), st = this.state, c = cs[st.i] || {};
+    const known = !!st.known[st.i];
+    const face = st.flip ? c.b : c.f;
+    return {
+      headingText: this.props.heading ?? 'Flashcards',
+      cNum: st.i + 1, total: cs.length,
+      knownCount: Object.keys(st.known).length,
+      faceBg: st.flip ? 'var(--color-accent-2-100)' : 'var(--color-accent-100)',
+      faceKickerInk: st.flip ? 'var(--color-accent-2-800)' : 'var(--color-accent-700)',
+      faceLabel: st.flip ? 'What it means' : 'Term',
+      faceEl: this.html(face, { fontSize: st.flip ? '16px' : '22px', fontFamily: st.flip ? 'var(--font-body)' : 'var(--font-heading)', lineHeight: '1.55', maxWidth: '52ch' }),
+      flip: () => this.setState({ flip: !this.state.flip }),
+      prev: () => this.go(-1),
+      later: () => this.go(1),
+      gotIt: () => {
+        if (this.state.known[this.state.i]) { this.go(1); return; }
+        const known2 = { ...this.state.known, [this.state.i]: true };
+        this.setState({ known: known2 });
+        if (window.RL) { window.RL.bumpCard(this.props.chapter || 'x'); window.RL.addXP(2, 'card learned'); }
+        setTimeout(() => this.go(1), 250);
+      },
+      gotDisabled: false,
+      gotLabel: known ? 'Known — next' : 'Got it (+2 XP)'
+    };
+  }
+}
+
+</script>
+</body>
+</html>

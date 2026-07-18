@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch2" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch2 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 2 · Dynamic Programming</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Planning, when you know the rules</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Give me the MDP's dynamics and I don't need to <em>learn</em> anything — I can <em>compute</em> the optimal policy. This chapter is that computation: policy evaluation, policy improvement, and the two great algorithms they combine into. It's also where the proofs live; the ideas here certify everything that comes later.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~40 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 7 cards</span>
+        <span class="tag tag-accent">124 XP on offer</span>
+        <span class="tag tag-accent-2">needs Chapter 1</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 Planning vs learning" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Planning is not learning</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Dynamic programming assumes the one thing real agents rarely have: the full dynamics <span data-tex="p(s', r \mid s, a)"></span>, as a table you can read. Under that assumption the Bellman equations stop being descriptions and become <strong>algorithms</strong> — apply them repeatedly and they compute value functions for you. No environment interaction, no data, no luck.</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 16px 0 0;">The book covers DP briefly; the repo's <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">supplementary/</span> folder carries the author's fully rigorous treatment. This chapter walks the same road with the key proofs inline.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Planning is studying the city map at your kitchen table — you know every street (the model), you just have to compute the route. Learning is being dropped in a foreign city with no map: knowledge only comes from walking.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — AlphaZero vs robotics</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">AlphaZero <em>plans</em>: the rules of chess are a perfect model, so its search simulates futures without playing them. A warehouse robot has no such model of friction, wear and clutter — it must <em>learn</em> from real interaction. Same math, opposite information.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 2 Policy evaluation" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Iterative policy evaluation</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Chapter 1 left us with a linear system: the Bellman expectation equation, one equation per state. You could invert a matrix — or you could do something far more RL-flavored: start with any guess <span data-tex="v_0"></span> and repeatedly <em>apply the Bellman equation as an update</em>:</p>
+      <div data-tex="v_{k+1}(s) \;\leftarrow\; \sum_{a} \pi(a \mid s) \sum_{s',\, r} p(s', r \mid s, a)\bigl[\, r + \gamma\, v_k(s') \,\bigr] \quad \text{for every } s" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Each sweep replaces every state's value with a one-step lookahead built from the previous values. The remarkable fact: <span data-tex="v_k \to v_\pi"></span> from <em>any</em> starting point, at a geometric rate. That deserves a real proof.</p>
+      <sc-if value="{{ deepDives }}" hint-placeholder-val="{{ true }}">
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 22px 26px; max-width: 74ch; margin: 24px 0 0; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">Deep dive — the contraction proof</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Write the sweep as an operator <span data-tex="T^\pi"></span> on value vectors, so the update is <span data-tex="v_{k+1} = T^\pi v_k"></span>. Take any two value functions <span data-tex="u, v"></span> and measure distance in the sup norm <span data-tex="\lVert u - v \rVert_\infty = \max_s |u(s) - v(s)|"></span>. Then for every state:</p>
+          <div data-tex="\bigl| (T^\pi u)(s) - (T^\pi v)(s) \bigr| = \Bigl| \gamma \sum_a \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\bigl[ u(s') - v(s') \bigr] \Bigr| \;\le\; \gamma \, \lVert u - v \rVert_\infty" data-display style="margin: 16px 0 8px; font-size: 15px; overflow-x: auto;"></div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">(The rewards cancel; what remains is a convex combination of gaps, bounded by the largest gap.) So <span data-tex="T^\pi"></span> is a <strong>γ-contraction</strong>. By Banach's fixed-point theorem it has exactly one fixed point — which, by the Bellman equation, is <span data-tex="v_\pi"></span> — and iterating from anywhere converges to it with error shrinking like <span data-tex="\gamma^k"></span>. Chapter 1's bound <span data-tex="R_{\max}/(1-\gamma)"></span> was this theorem's quiet setup.</p>
+        </div>
+      </sc-if>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Gossip converging in a village. Each house updates its story from its neighbors' latest versions; after enough rounds of sweeps, every version agrees and the story stops changing. The fixed point is v<sub>π</sub>.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — the critic in actor-critic</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Evaluating a <em>fixed</em> policy is half of every actor-critic system (Chapters 5–6): the value network ("critic") does policy evaluation continuously while the actor behaves. Insurers do the discrete version when pricing a fixed underwriting policy.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 3 Policy improvement" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Policy improvement</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Evaluation tells you how good <span data-tex="\pi"></span> is. Now improve it: in each state, act greedily with respect to <span data-tex="\pi"></span>'s own values,</p>
+      <div data-tex="\pi'(s) \;\doteq\; \arg\max_a q_\pi(s, a) \;=\; \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[ r + \gamma\, v_\pi(s') \bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The <strong>policy improvement theorem</strong> guarantees this never backfires: if <span data-tex="q_\pi(s, \pi'(s)) \ge v_\pi(s)"></span> for all states, then <span data-tex="v_{\pi'}(s) \ge v_\pi(s)"></span> everywhere — and if any inequality is strict, the new policy is strictly better.</p>
+      <sc-if value="{{ deepDives }}" hint-placeholder-val="{{ true }}">
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 22px 26px; max-width: 74ch; margin: 24px 0 0; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">Deep dive — proof by telescoping</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Start from the premise and keep unrolling one step of <span data-tex="\pi'"></span> at a time:</p>
+          <div data-tex="\begin{aligned} v_\pi(s) &amp;\le q_\pi(s, \pi'(s)) = \mathbb{E}\bigl[ R_{t+1} + \gamma\, v_\pi(S_{t+1}) \mid S_t = s,\, A_t = \pi'(s) \bigr] \\ &amp;\le \mathbb{E}_{\pi'}\bigl[ R_{t+1} + \gamma\, q_\pi(S_{t+1}, \pi'(S_{t+1})) \mid S_t = s \bigr] \\ &amp;\le \mathbb{E}_{\pi'}\bigl[ R_{t+1} + \gamma R_{t+2} + \gamma^2\, v_\pi(S_{t+2}) \mid S_t = s \bigr] \;\le\; \cdots \;\le\; \mathbb{E}_{\pi'}\bigl[ G_t \mid S_t = s \bigr] = v_{\pi'}(s) \end{aligned}" data-display style="margin: 16px 0 8px; font-size: 14.5px; overflow-x: auto;"></div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Each application of the premise swaps one more early action from <span data-tex="\pi"></span> to <span data-tex="\pi'"></span>; the leftover <span data-tex="\gamma^k v_\pi"></span> term is squeezed to zero by discounting. In the limit the whole trajectory follows <span data-tex="\pi'"></span>.</p>
+        </div>
+      </sc-if>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800);  margin-bottom: 8px;">Intuition</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">"If deviating from the plan for one step helps, deviating forever helps at least as much." This theorem is the engine of almost all of RL: it's why acting greedily on learned values (Chapter 3), or nudging a policy toward higher-advantage actions (Chapters 5–6), makes things better and not worse.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Reviewing your commute with fresh eyes: at each intersection, ask "given what I now know about travel times, is a different turn better?" If yes anywhere, switch. The theorem guarantees switching never hurts.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — AlphaZero's improvement loop</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">AlphaZero's search is policy improvement made concrete: MCTS looks one-step-deeper than the raw network and returns better move probabilities; the network then trains to imitate the search. Improve, evaluate, repeat.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 4 Policy iteration" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 4</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Policy iteration</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Alternate the two moves and you get the first complete algorithm of the book: <strong>evaluate</strong> the current policy to get <span data-tex="v_\pi"></span>, <strong>improve</strong> it greedily, repeat.</p>
+      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 28px 0 4px; font-family: var(--font-heading); font-size: 18px;">
+        <span style="background: var(--color-accent-100); border-radius: 999px; padding: 12px 26px;">π₀</span><span style="color: var(--color-accent-700); font-size: 15px; font-weight: 700; font-family: var(--font-body);">evaluate →</span>
+        <span style="background: var(--color-accent-2-100); border-radius: 999px; padding: 12px 26px;">v(π₀)</span><span style="color: var(--color-accent-2-700); font-size: 15px; font-weight: 700; font-family: var(--font-body);">improve →</span>
+        <span style="background: var(--color-accent-100); border-radius: 999px; padding: 12px 26px;">π₁</span><span style="color: var(--color-accent-700); font-size: 15px; font-weight: 700; font-family: var(--font-body);">evaluate →</span>
+        <span style="background: var(--color-accent-2-100); border-radius: 999px; padding: 12px 26px;">v(π₁)</span><span style="color: var(--color-accent-2-700); font-size: 15px; font-weight: 700; font-family: var(--font-body);">… →</span>
+        <span style="background: var(--color-accent); color: #fff; border-radius: 999px; padding: 12px 26px;">π*</span>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">For a finite MDP this <strong>terminates</strong>, and at the optimum: there are finitely many deterministic policies, each improvement step is strictly better unless the policy is already greedy with respect to its own values — and a policy that is greedy w.r.t. its own value function satisfies the Bellman <em>optimality</em> equation, so it is optimal. No cycles, no infinite descent: a staircase with a top.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A sports team's seasons: play a full season under one game plan (evaluation), then let the coaches revise the plan over the off-season (improvement). Repeat until the plan survives review unchanged — that plan is optimal.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — self-play generations</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">AlphaZero's training is generalized policy iteration at scale: generation N's network plays out games (evaluation data), training on them produces generation N+1 (improvement), and the cycle ran for ~700,000 iterations for chess.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 5 Value iteration" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 5</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Value iteration</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Full evaluation between improvements is wasteful — why polish <span data-tex="v_\pi"></span> to convergence if you'll discard <span data-tex="\pi"></span> next step? Truncate the evaluation to a <em>single</em> sweep and fold the greedy max straight into the update:</p>
+      <div data-tex="v_{k+1}(s) \;\leftarrow\; \max_a \sum_{s',\, r} p(s', r \mid s, a)\bigl[\, r + \gamma\, v_k(s') \,\bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">This is the Bellman <em>optimality</em> operator, and the same contraction argument applies (a max of contractions is a contraction): <span data-tex="v_k \to v_*"></span> geometrically. Stop when a sweep changes nothing much, then read the optimal policy off greedily. In code, value iteration is almost embarrassingly short:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># value iteration, dense-matrix style (P: [S,A,S'] transitions, R: [S,A] expected rewards)
+V = np.zeros(n_states)
+while True:
+    Q_sa = R + gamma * P @ V          # one-step lookahead for every (s, a)
+    V_new = Q_sa.max(axis=1)          # Bellman optimality backup
+    if np.max(np.abs(V_new - V)) &lt; 1e-8:
+        break
+    V = V_new
+pi_star = Q_sa.argmax(axis=1)         # greedy policy, read off at the end</pre>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Generalized policy iteration</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Policy iteration and value iteration are two points on a dial: how much evaluation between improvements. Sutton &amp; Barto call the whole dial <strong>GPI</strong> — evaluation and improvement chasing each other until they agree, and the only place they can agree is <span data-tex="\pi_*"></span>. Keep this picture; every algorithm from here on is GPI with the "evaluate" box replaced by sampling.</p>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">So why isn't the book over? Because DP needs <span data-tex="p"></span> — which you almost never have — and sweeps <em>every</em> state, which the curse of dimensionality forbids (chess has ~10⁴³ states). Chapter 3 keeps the GPI skeleton and replaces the model with experience.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Water flooding a maze from the exit. Each sweep, the water seeps one step further backwards from the goal; a state's depth is its distance-to-reward. Stop when the water level stops rising — then just swim uphill.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — warehouse routing</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Value iteration solves small exact problems everywhere: robot path planning on grid maps, elevator dispatch policies, and inventory control — anywhere the state space fits in memory and the model is known.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Ch2 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch2" heading="Dynamic programming checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch2 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch2" heading="Key terms — Chapter 2" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch2 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch2" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      deepDives: this.props.deepDives ?? true,
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'What does dynamic programming <strong>require</strong> that the algorithms of Chapter 3 will not?',
+          options: [
+            'a neural network to approximate values',
+            'full knowledge of the dynamics p(s\u2032, r | s, a)',
+            'a stream of sampled episodes',
+            'a deterministic environment'
+          ],
+          answer: 1,
+          explain: 'DP is <em>planning</em>: it computes with the model instead of learning from experience. That is both its power (no samples needed, exact answers) and its irrelevance to most real problems.'
+        },
+        {
+          type: 'fill',
+          q: 'Complete the iterative policy-evaluation sweep: <span data-tex="v_{k+1}(s) \\leftarrow \\sum_a \\pi(a \\mid s) \\sum_{s\',r} p(s\',r \\mid s,a)\\,[\\,r + \\gamma \\cdot"></span> ____ <span data-tex="]"></span>',
+          accept: ['v_k(s\')', 'vk(s\')', 'v_k(s prime)', 'v_k s\'', 'vk s\''],
+          placeholder: 'e.g.  v_k(s\')',
+          explain: 'The lookahead bootstraps from the <em>previous iterate\u2019s</em> value of the successor state: <span data-tex="r + \\gamma v_k(s\')"></span>. Applying this everywhere is one application of the operator <span data-tex="T^\\pi"></span>.'
+        },
+        {
+          type: 'mcq',
+          q: 'The Bellman operator is a contraction in the sup norm. By what factor does each sweep shrink the distance to <span data-tex="v_\\pi"></span>?',
+          options: ['1/2', 'γ', '1 − γ', 'it depends on the initial guess'],
+          answer: 1,
+          explain: '<span data-tex="\\lVert T^\\pi u - T^\\pi v \\rVert_\\infty \\le \\gamma \\lVert u - v \\rVert_\\infty"></span>: rewards cancel and the leftover is a γ-scaled average of gaps. Banach then gives a unique fixed point and geometric convergence from anywhere — the initial guess only shifts the constant, never the rate.'
+        },
+        {
+          type: 'mcq',
+          q: 'The policy improvement theorem says: if <span data-tex="q_\\pi(s, \\pi\'(s)) \\ge v_\\pi(s)"></span> for all s, then…',
+          options: [
+            'π\u2032 is optimal',
+            'v_π\u2032(s) ≥ v_π(s) in every state',
+            'π\u2032 equals π',
+            'v_π\u2032(s) ≥ v_π(s) only in the states where the premise is strict'
+          ],
+          answer: 1,
+          explain: 'One-step betterness telescopes into whole-trajectory betterness. It does <em>not</em> make π\u2032 optimal — just no worse anywhere, and strictly better somewhere unless π was already greedy w.r.t. its own values (which is exactly the optimality condition).'
+        },
+        {
+          type: 'predict',
+          q: 'A one-state MDP: every step earns reward 1, with γ = 0.5. This loop runs value iteration on it. What does it print?',
+          code: 'v = 0.0\nfor _ in range(100):\n    v = 1 + 0.5 * v\nprint(round(v, 2))',
+          options: ['1.5', '2.0', '100.0', 'inf'],
+          answer: 1,
+          explain: 'The fixed point solves <span data-tex="v = 1 + 0.5\\,v"></span>, i.e. <span data-tex="v = 1/(1-\\gamma) = 2"></span> — the geometric series from Chapter 1, now computed by iteration. After 100 sweeps the error <span data-tex="\\gamma^{100}"></span> is far below rounding.'
+        },
+        {
+          type: 'desc',
+          q: 'Argue that <strong>policy iteration terminates</strong> — in finitely many steps — on a finite MDP.',
+          model: 'A finite MDP has finitely many deterministic policies (at most <span data-tex="|\\mathcal{A}|^{|\\mathcal{S}|}"></span>). Each improvement step produces a policy that is at least as good everywhere (policy improvement theorem), and <em>strictly better in some state</em> unless the current policy is already greedy with respect to its own value function. Strict improvement means we can never revisit a policy, so the sequence must stop. And stopping means the policy is greedy w.r.t. its own values — the Bellman optimality equation — so the policy we stop at is optimal.',
+          explain: 'Three ingredients: finiteness, monotone strict improvement (no cycles), and "greedy w.r.t. own values ⇒ optimal" for the stopping condition.'
+        }
+      ],
+      cards: [
+        { f: 'Dynamic programming', b: 'Computing value functions and optimal policies from a <em>known</em> model by iterating Bellman equations. Planning, not learning.' },
+        { f: 'Iterative policy evaluation', b: 'Repeat <span data-tex="v_{k+1} = T^\\pi v_k"></span>: replace every state\u2019s value with the one-step Bellman lookahead. Converges to <span data-tex="v_\\pi"></span> geometrically from any start.' },
+        { f: 'γ-contraction', b: '<span data-tex="\\lVert T u - T v \\rVert_\\infty \\le \\gamma \\lVert u - v \\rVert_\\infty"></span>. Banach\u2019s theorem then gives a unique fixed point and convergence of iteration — the certificate behind both DP algorithms.' },
+        { f: 'Policy improvement theorem', b: 'If <span data-tex="q_\\pi(s, \\pi\'(s)) \\ge v_\\pi(s)"></span> everywhere, then <span data-tex="v_{\\pi\'} \\ge v_\\pi"></span> everywhere. Greedy on your values never hurts.' },
+        { f: 'Policy iteration', b: 'Evaluate fully, improve greedily, repeat. Terminates at π* on finite MDPs because policies are finite and improvement is strict until optimal.' },
+        { f: 'Value iteration', b: '<span data-tex="v_{k+1}(s) = \\max_a \\sum_{s\',r} p\\,[r + \\gamma v_k(s\')]"></span> — evaluation truncated to one sweep with the max folded in. Converges to <span data-tex="v_*"></span>.' },
+        { f: 'Generalized policy iteration', b: 'The master pattern: an evaluation process and an improvement process pushing against each other until they agree — and they can only agree at optimality. All of RL is GPI variants.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

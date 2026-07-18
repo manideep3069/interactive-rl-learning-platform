@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch1" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch1 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 1 · Foundations</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Where the game is defined</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Everything in RL — from a Q-table to PPO — is an answer to one question posed in one language. This chapter teaches the language: agents and environments, Markov decision processes, returns, value functions, and the Bellman equations that hold the whole field together.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~45 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">no prerequisites</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 The loop" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The loop</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">An <strong>agent</strong> lives inside an <strong>environment</strong>. At each time step <span data-tex="t"></span> it observes a state <span data-tex="S_t"></span>, picks an action <span data-tex="A_t"></span>, and the environment answers with a reward <span data-tex="R_{t+1}"></span> and a next state <span data-tex="S_{t+1}"></span>. That's it. That loop, repeated, is the entire stage on which reinforcement learning happens.</p>
+      <div style="display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0 24px; max-width: 640px; margin: 32px 0 8px;">
+        <div style="background: var(--color-accent-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px 34px; font-family: var(--font-heading); font-size: 21px; text-align: center;">Agent</div>
+        <div style="display: grid; gap: 14px; text-align: center;">
+          <div style="font-size: 13.5px; font-weight: 700; color: var(--color-accent-700); border-bottom: 3px solid var(--color-accent-300); padding-bottom: 6px;">action <span data-tex="A_t"></span> ⟶</div>
+          <div style="font-size: 13.5px; font-weight: 700; color: var(--color-accent-2-700); border-top: 3px solid var(--color-accent-2-300); padding-top: 6px;">⟵ state <span data-tex="S_{t+1}"></span> · reward <span data-tex="R_{t+1}"></span></div>
+        </div>
+        <div style="background: var(--color-accent-2-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px 34px; font-family: var(--font-heading); font-size: 21px; text-align: center;">Environment</div>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The book's running example is <em>FrozenLake</em>: a 4×4 sheet of ice, some tiles are holes, one tile is a gift. States are tile indices (0–15), actions are the four directions, and the reward is 1 for reaching the gift, 0 otherwise. Small enough to hold in your head — rich enough to break your intuitions.</p>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Intuition</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">RL differs from supervised learning in two brutal ways: nobody tells the agent the <em>right</em> action (only a scalar reward, often delayed), and the agent's own actions decide which data it will ever see. Learning and data collection are the same act.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Training a puppy. There is no manual of correct actions — just treats (reward) after good behavior. And crucially, the puppy's own choices decide what situations it ever finds itself in: a dog that never leaves the couch never learns the park.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — RLHF for chatbots</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">The loop behind ChatGPT-style fine-tuning is exactly this diagram: the model (agent) writes a response (action) to a prompt (state), a reward model scores it, and the loop repeats millions of times. Same loop, different costume.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 2 MDPs" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Markov decision processes</h2>
+      <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 22px 26px; max-width: 74ch; margin: 22px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;">Definition — finite MDP</div>
+        <p style="font-size: 15.5px; line-height: 1.65; margin: 0;">A finite MDP is a tuple <span data-tex="(\mathcal{S}, \mathcal{A}, p, \gamma)"></span>: a finite state set, a finite action set, a discount factor <span data-tex="\gamma \in [0,1]"></span>, and a dynamics function</p>
+        <div data-tex="p(s', r \mid s, a) \doteq \Pr\{S_{t+1}=s',\, R_{t+1}=r \mid S_t=s,\, A_t=a\}" data-display style="margin: 16px 0 4px; font-size: 16px; overflow-x: auto;"></div>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">The one load-bearing assumption is the <strong>Markov property</strong>: the distribution above conditions <em>only</em> on the current <span data-tex="(s, a)"></span>, not on the history. The present state is a sufficient statistic of the past — whatever happened before is either baked into <span data-tex="s"></span> or irrelevant. Every algorithm in this book leans on this: it is what lets a value be attached to a <em>state</em> rather than to an entire life story.</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 16px 0 0;">Tasks come in two flavors. <strong>Episodic</strong> tasks end — FrozenLake ends when you drown or deliver. <strong>Continuing</strong> tasks run forever. The discount factor lets us treat both with one formalism, as you're about to see.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A chess position. To pick your next move you never need to know <em>how</em> the pieces got there — the board in front of you is a complete summary. That is the Markov property: the present state carries everything relevant about the past.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — AlphaZero</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">AlphaZero treats Go, chess and shogi as MDPs: the board is the state, legal moves are actions, and the only reward is +1/−1 at the end of the game. The entire superhuman system rests on the board being Markov.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 3 Returns" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Returns and discounting</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The agent's goal is not the next reward but the long game. We define the <strong>return</strong> from time <span data-tex="t"></span> as the discounted sum of everything still to come:</p>
+      <div data-tex="G_t \doteq R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots \;=\; \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Peel one term off the sum and the return eats its own tail — the single most-used identity in RL:</p>
+      <div data-tex="G_t = R_{t+1} + \gamma\, G_{t+1}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <sc-if value="{{ deepDives }}" hint-placeholder-val="{{ true }}">
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 22px 26px; max-width: 74ch; margin: 24px 0 0; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">Deep dive — why the infinite sum behaves</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Suppose rewards are bounded, <span data-tex="|R_t| \le R_{\max}"></span>, and <span data-tex="\gamma &lt; 1"></span>. Then the return is bounded by a geometric series:</p>
+          <div data-tex="|G_t| \;\le\; \sum_{k=0}^{\infty} \gamma^k R_{\max} \;=\; \frac{R_{\max}}{1-\gamma}" data-display style="margin: 16px 0 8px; font-size: 16px; overflow-x: auto;"></div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">So even a task that never ends has a finite, well-defined objective. This bound reappears constantly: it is why value functions exist, and (in Chapter 2) why the Bellman operator is a contraction with factor <span data-tex="\gamma"></span>.</p>
+        </div>
+      </sc-if>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Intuition</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Read <span data-tex="\gamma"></span> three ways: an interest rate (a reward tomorrow is worth <span data-tex="\gamma"></span> of a reward today), a soft horizon (the agent effectively looks <span data-tex="\approx 1/(1-\gamma)"></span> steps ahead — <span data-tex="\gamma = 0.99"></span> means ~100 steps), or the probability of surviving each step. At <span data-tex="\gamma = 0"></span> the agent is perfectly myopic; as <span data-tex="\gamma \to 1"></span> it becomes far-sighted.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Money. $100 today beats $100 next year — you could invest it, or the promise might fall through. γ is the exchange rate between tomorrow's reward and today's, and compounding it gives a soft planning horizon.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — data-center cooling</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">DeepMind's cooling controller for Google's data centers optimizes long-run energy use, not the next five minutes — a high γ makes it willing to pay a small cost now (spin up a pump) for hours of savings later.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 4 Policies and values" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 4</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Policies and value functions</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">A <strong>policy</strong> <span data-tex="\pi(a \mid s)"></span> is the agent's behavior: a probability of choosing each action in each state. Fix a policy and every state acquires a worth — the return you can expect if you start there and follow <span data-tex="\pi"></span> forever:</p>
+      <div data-tex="v_\pi(s) \doteq \mathbb{E}_\pi\!\left[ G_t \mid S_t = s \right] \qquad\quad q_\pi(s, a) \doteq \mathbb{E}_\pi\!\left[ G_t \mid S_t = s,\, A_t = a \right]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;"><span data-tex="v_\pi"></span> is the <strong>state-value</strong> function; <span data-tex="q_\pi"></span> is the <strong>action-value</strong> function — the value of committing to action <span data-tex="a"></span> first and only then following the policy. They are tied together by averaging over the policy's first choice:</p>
+      <div data-tex="v_\pi(s) = \sum_{a} \pi(a \mid s)\, q_\pi(s, a)" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Intuition</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Value functions are the field's great trick: they convert a long-horizon problem ("what will happen over the next thousand steps?") into a lookup ("how good is <em>here</em>?"). Half of this book — Chapters 2, 3 and 4 — is about estimating them. The other half uses them to steer.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A strong chess player glances at a position and <em>feels</em> "White is winning" without calculating to checkmate. That instinct is a value function. Their style of play — aggressive, positional — is the policy.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — AlphaZero's two heads</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">AlphaZero's network has literally these two outputs: a <strong>policy head</strong> (a distribution over moves, π) and a <strong>value head</strong> (who wins from here, v). Chapter 1's two definitions became two tensors.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 5 Bellman" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 5</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The Bellman expectation equation</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Combine the return's recursion with the Markov property and value functions inherit a recursion of their own — a consistency condition every value function must satisfy:</p>
+      <div data-tex="v_\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s',\, r} p(s', r \mid s, a)\Bigl[\, r + \gamma\, v_\pi(s') \,\Bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <sc-if value="{{ deepDives }}" hint-placeholder-val="{{ true }}">
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 22px 26px; max-width: 74ch; margin: 24px 0 0; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">Deep dive — the derivation, honestly</div>
+          <div data-tex="\begin{aligned} v_\pi(s) &amp;= \mathbb{E}_\pi[G_t \mid S_t = s] \\ &amp;= \mathbb{E}_\pi[R_{t+1} + \gamma G_{t+1} \mid S_t = s] \\ &amp;= \sum_a \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\bigl[ r + \gamma\, \mathbb{E}_\pi[G_{t+1} \mid S_{t+1} = s'] \bigr] \\ &amp;= \sum_a \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\bigl[ r + \gamma\, v_\pi(s') \bigr] \end{aligned}" data-display style="margin: 8px 0; font-size: 15px; overflow-x: auto;"></div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 8px 0 0;">Line 2 uses the return's recursion; line 3 uses the law of total expectation over <span data-tex="(a, s', r)"></span>. The subtle step is the third line: conditioning <span data-tex="G_{t+1}"></span> on <span data-tex="S_{t+1} = s'"></span> alone is only legal because the Markov property makes everything before <span data-tex="t+1"></span> irrelevant. The same argument gives the action-value version: <span data-tex="q_\pi(s,a) = \sum_{s',r} p(s',r \mid s,a)\bigl[r + \gamma \sum_{a'} \pi(a' \mid s')\, q_\pi(s',a')\bigr]"></span>.</p>
+        </div>
+      </sc-if>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Intuition</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Picture it as a <em>backup</em>: the value of a state is a weighted average over one step of lookahead — over what you might do, where you might land, what you'd collect on the way. For a finite MDP this is a system of <span data-tex="|\mathcal{S}|"></span> linear equations in <span data-tex="|\mathcal{S}|"></span> unknowns, and <span data-tex="v_\pi"></span> is its unique solution. Chapter 2 solves it by iteration.</p>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Google Maps ETAs. Your time-to-destination equals time-to-the-next-intersection plus the ETA from there. Adjacent estimates must agree — and when traffic changes one segment, the correction propagates through all upstream ETAs. That consistency <em>is</em> a Bellman equation.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — navigation and routing</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Route planners, network packet routing and airline crew scheduling all solve Bellman equations at scale — shortest-path algorithms like Dijkstra's are value computation on a graph where reward is negative distance.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 6 Optimality" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 6</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Optimality</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Policies are partially ordered: <span data-tex="\pi \ge \pi'"></span> iff <span data-tex="v_\pi(s) \ge v_{\pi'}(s)"></span> in <em>every</em> state. A classical theorem guarantees that for any finite MDP there exists an optimal policy <span data-tex="\pi_*"></span> at least as good as all others, and all optimal policies share the same value functions:</p>
+      <div data-tex="v_*(s) \doteq \max_\pi v_\pi(s) \qquad\quad q_*(s,a) \doteq \max_\pi q_\pi(s,a)" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">At the optimum, the average over the policy's choice becomes a <strong>max</strong> — the Bellman optimality equations:</p>
+      <div data-tex="v_*(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\bigl[ r + \gamma\, v_*(s') \bigr] \qquad q_*(s,a) = \sum_{s', r} p(s', r \mid s, a)\Bigl[ r + \gamma \max_{a'} q_*(s', a') \Bigr]" data-display style="margin: 26px 0 6px; font-size: 16px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">And here is why the whole book obsesses over <span data-tex="q"></span>: once you know <span data-tex="q_*"></span>, acting optimally is trivial — no model, no lookahead, just <span data-tex="\pi_*(s) = \arg\max_a q_*(s, a)"></span>. Nonlinear because of the max, so no closed form; every algorithm to come is a way of sneaking up on it.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">The perfect commute: the best route from your house starts with the best first turn, followed by the best route from wherever that turn lands you. Optimality is self-similar — that is why a single max over one step suffices.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — solved games</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Checkers was solved (2007) by computing optimal values exactly — 10¹⁴ positions. Go's ~10¹⁷⁰ states make that impossible, so AlphaZero <em>approximates</em> q* with a network plus search. Same equation, two strategies for it.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 7 Meet the code" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 7 · from the repo</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Meet the code</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Everything above already lives in <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">algos/value_based/tabular.py</span>. When states and actions are finite, an action-value function is literally a table — one number per <span data-tex="(s, a)"></span> pair:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">n_states, n_actions = env.observation_space.n, env.action_space.n
+Q = np.zeros((n_states, n_actions), dtype=np.float64)   # our estimate of q*(s, a)</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">And "act greedily, but explore sometimes" — the ε-greedy policy you'll meet properly in Chapter 3 — is six lines:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">def epsilon_greedy(Q, s, eps, n_actions, rng) -&gt; int:
+    if rng.random() &lt; eps:
+        return int(rng.integers(n_actions))   # explore: uniform random action
+    qs = Q[s]
+    best = np.flatnonzero(qs == qs.max())     # tie-break uniformly
+    return int(rng.choice(best))              # exploit: argmax_a Q[s, a]</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">Notice the tie-breaking: at the start <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">Q</code> is all zeros, so <em>every</em> action ties. Choosing uniformly among the maxima keeps early behavior properly random instead of biased toward action 0 — a tiny detail with real consequences.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Picking a restaurant. Most nights you go to your proven favorite (exploit), but sometimes you try the new place (explore) — because your "favorite" is only the best <em>of the ones you've tried</em>.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — recommender systems</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">News feeds and ad systems run ε-greedy-style exploration in production: mostly serve what's known to perform, occasionally serve something untested — otherwise new content could never be discovered as good.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Ch1 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch1" heading="Foundations checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch1 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch1" heading="Key terms — Chapter 1" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch1 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch1" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      deepDives: this.props.deepDives ?? true,
+      quizQs: [
+        {
+          type: 'mcq',
+          q: '<strong>The Markov property</strong> says that…',
+          options: [
+            'the next state and reward depend only on the current state and action',
+            'the agent must remember the full history to act well',
+            'transitions between states are deterministic',
+            'rewards are always bounded between 0 and 1'
+          ],
+          answer: 0,
+          explain: 'The dynamics <span data-tex="p(s\', r \\mid s, a)"></span> condition only on the present <span data-tex="(s, a)"></span> — the current state is a sufficient statistic of the whole history. This is exactly what lets us attach values to states.'
+        },
+        {
+          type: 'mcq',
+          q: 'You set <span data-tex="\\gamma = 0"></span>. What does the agent maximize?',
+          options: [
+            'the sum of all future rewards',
+            'only the immediate next reward',
+            'the average reward per step',
+            'nothing — the return is undefined'
+          ],
+          answer: 1,
+          explain: 'With <span data-tex="\\gamma = 0"></span>, <span data-tex="G_t = R_{t+1}"></span>: every later term carries a factor <span data-tex="0^k = 0"></span>. The agent becomes perfectly myopic. As <span data-tex="\\gamma \\to 1"></span> the effective horizon <span data-tex="\\approx 1/(1-\\gamma)"></span> grows.'
+        },
+        {
+          type: 'fill',
+          q: 'Complete the most-used identity in RL: <span data-tex="G_t = R_{t+1} + \\gamma \\cdot"></span> ____',
+          accept: ['G_{t+1}', 'G_t+1', 'Gt+1', 'G(t+1)'],
+          placeholder: 'e.g.  G_{t+1}',
+          explain: 'The return eats its own tail: <span data-tex="G_t = R_{t+1} + \\gamma G_{t+1}" ></span>. Peel one reward off the sum and what remains is the next step\'s return, discounted once. Every Bellman equation is this identity plus an expectation.'
+        },
+        {
+          type: 'mcq',
+          q: 'Which identity correctly relates <span data-tex="v_\\pi"></span> and <span data-tex="q_\\pi"></span>?',
+          options: [
+            'v_π(s) = max over a of q_π(s, a)',
+            'v_π(s) = Σ over a of π(a|s) · q_π(s, a)',
+            'q_π(s, a) = v_π(s) for every action a',
+            'v_π(s) = Σ over a of q_π(s, a)'
+          ],
+          answer: 1,
+          explain: 'The state\'s value averages the action-values over the policy\'s first choice. The <em>max</em> version is the optimality relation <span data-tex="v_*(s) = \\max_a q_*(s,a)"></span> — true only for optimal value functions.'
+        },
+        {
+          type: 'predict',
+          q: 'Predict the behavior: what does this call return when <code>eps = 1.0</code>?',
+          code: 'def epsilon_greedy(Q, s, eps, n_actions, rng) -> int:\n    if rng.random() < eps:\n        return int(rng.integers(n_actions))\n    qs = Q[s]\n    best = np.flatnonzero(qs == qs.max())\n    return int(rng.choice(best))\n\na = epsilon_greedy(Q, s, eps=1.0, n_actions=4, rng=rng)',
+          options: [
+            'always the greedy action argmax Q[s]',
+            'a uniformly random action, every time',
+            'action 0, because Q starts at zeros',
+            'it raises an error — eps must be < 1'
+          ],
+          answer: 1,
+          explain: '<code>rng.random()</code> is uniform on <span data-tex="[0, 1)"></span>, so it is always <code>&lt; 1.0</code> — the greedy branch is never reached. ε = 1 is pure exploration; the repo\'s training schedule starts there and decays linearly to 0.05.'
+        },
+        {
+          type: 'desc',
+          q: 'In your own words: <strong>why do we discount future rewards?</strong> Give at least two distinct reasons.',
+          model: '(1) <strong>Mathematics:</strong> with bounded rewards and <span data-tex="\\gamma &lt; 1"></span>, the infinite sum converges — <span data-tex="|G_t| \\le R_{\\max}/(1-\\gamma)"></span> — so continuing tasks get a finite, well-defined objective. (2) <strong>Modeling:</strong> it encodes preference for sooner rewards / uncertainty about the future (each step "survives" with probability γ). (3) <strong>Algorithmic:</strong> the geometric structure gives the recursion <span data-tex="G_t = R_{t+1} + \\gamma G_{t+1}"></span> and makes Bellman operators contractions, which is what makes the algorithms of Chapters 2–3 converge.',
+          explain: 'Any two of these earn full marks. The contraction point is the deep one — it resurfaces in Chapter 2.'
+        }
+      ],
+      cards: [
+        { f: 'MDP', b: 'A tuple <span data-tex="(\\mathcal{S}, \\mathcal{A}, p, \\gamma)"></span>: states, actions, dynamics <span data-tex="p(s\',r \\mid s,a)"></span>, and a discount factor. The formal stage for all of RL.' },
+        { f: 'Markov property', b: 'The next state and reward depend only on the current state and action — the present is a sufficient statistic of the whole history.' },
+        { f: 'Return <span data-tex="G_t"></span>', b: '<span data-tex="G_t = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1}"></span> — the discounted sum of all rewards still to come. Satisfies <span data-tex="G_t = R_{t+1} + \\gamma G_{t+1}"></span>.' },
+        { f: 'Discount factor <span data-tex="\\gamma"></span>', b: 'Weighs future rewards; keeps infinite sums finite; sets an effective horizon of about <span data-tex="1/(1-\\gamma)"></span> steps.' },
+        { f: 'Policy <span data-tex="\\pi(a \\mid s)"></span>', b: 'The agent\'s behavior: a probability distribution over actions in each state. Deterministic policies are the special case with all mass on one action.' },
+        { f: '<span data-tex="v_\\pi(s)"></span> vs <span data-tex="q_\\pi(s,a)"></span>', b: 'Expected return from state <span data-tex="s"></span> following π — vs committing to action <span data-tex="a"></span> first. Related by <span data-tex="v_\\pi(s) = \\sum_a \\pi(a \\mid s)\\, q_\\pi(s,a)"></span>.' },
+        { f: 'Bellman expectation equation', b: '<span data-tex="v_\\pi(s) = \\sum_a \\pi(a\\mid s) \\sum_{s\',r} p(s\',r\\mid s,a)[r + \\gamma v_\\pi(s\')]"></span> — a one-step consistency condition; a linear system with unique solution <span data-tex="v_\\pi"></span>.' },
+        { f: 'Greedy policy from <span data-tex="q_*"></span>', b: '<span data-tex="\\pi_*(s) = \\arg\\max_a q_*(s,a)"></span> — once you know optimal action-values, optimal behavior is a lookup. This is why value-based methods learn q, not v.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

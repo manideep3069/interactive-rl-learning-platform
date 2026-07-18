@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    :root { color-scheme: only light; } html { background: #f5ead8; }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch4" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch4 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 4 · Deep Q-Networks</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">When the table doesn't fit</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">CartPole's state is four real numbers — there is no row 3.7218 in a Q-table. This chapter replaces the table with a neural network and discovers, the hard way, that Q-learning plus function approximation wants to explode. DQN's two famous stabilizers tame it, and both live in the repo's <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">dqn.py</span> (lineage: CleanRL).</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~45 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 7 cards</span>
+        <span class="tag tag-accent">124 XP on offer</span>
+        <span class="tag tag-accent-2">needs Chapter 3</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 Function approximation" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">From table to function</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">A Q-table stores one independent number per <span data-tex="(s, a)"></span>. That fails twice: continuous states have no rows at all, and huge discrete spaces have too many (nothing learned about one state transfers to its neighbor). The fix is to make Q a <em>parameterized function</em> <span data-tex="Q(s, a; \theta)"></span> — a neural network — so that similar states share parameters and therefore share knowledge. That sharing is called <strong>generalization</strong>, and it's both the superpower and the danger of everything from here to the end of the book.</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">class QNetwork(nn.Module):
+    def __init__(self, env):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Linear(np.array(env.single_observation_space.shape).prod(), 120),
+            nn.ReLU(),
+            nn.Linear(120, 84),
+            nn.ReLU(),
+            nn.Linear(84, env.single_action_space.n),   # one output PER ACTION
+        )</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">Note the architecture choice: the state goes in, and <em>all</em> action-values come out at once. One forward pass gives you the whole row <span data-tex="Q(s, \cdot)"></span> — so the greedy action and the max in the TD target each cost a single evaluation instead of <span data-tex="|\mathcal{A}|"></span> of them.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Memorizing every phone number in the city versus learning how area codes work. A table can only recall what it has seen; a function generalizes — similar states share structure, so one experience teaches many states at once.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — Atari from pixels</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">An Atari screen has more possible states than atoms in the universe — no table applies. DQN's convnet maps raw pixels to action-values, and the <em>same</em> architecture learned 49 different games. Generalization is the entire point.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 2 The objective" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Q-learning as regression</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The tabular update "move <span data-tex="Q[s,a]"></span> toward the target" becomes a supervised-looking loss — regress the network's prediction onto the one-step bootstrap target:</p>
+      <div data-tex="\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{D}} \Bigl[ \bigl( \underbrace{r + \gamma \max_{a'} Q(s', a'; \theta^{-})}_{\textstyle y \text{, held fixed}} - \; Q(s, a; \theta) \bigr)^2 \Bigr]" data-display style="margin: 30px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Two things hide in that formula, and they are the two ideas of this chapter. The target uses parameters <span data-tex="\theta^{-}"></span> — a <em>separate, frozen copy</em> of the network. And the expectation runs over a dataset <span data-tex="\mathcal{D}"></span> — a <em>replay buffer</em>, not the last transition. Gradients flow only through the prediction, never the target; this is called a <strong>semi-gradient</strong> method, because the target is treated as a constant even though it secretly depends on the parameters too.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Archery at a target that moves every time you adjust your stance — because the target is computed from your own network. Freezing θ⁻ nails the target to the wall long enough to aim properly.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — DQN, Nature 2015</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Mnih et al. framed Q-learning as exactly this regression and put it on the cover of <em>Nature</em>: one network, one loss, 49 games, human-level on 29. The loss on this page is lifted from that paper.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 3 Triad and fixes" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The deadly triad, and DQN's two answers</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Sutton &amp; Barto's warning: combine <strong>function approximation</strong>, <strong>bootstrapping</strong>, and <strong>off-policy</strong> training, and convergence guarantees evaporate — values can spiral to infinity. DQN uses all three anyway, and survives on two stabilizers:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px; margin: 26px 0 0;">
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 22px 26px;">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;">Fix 1 — replay buffer</div>
+          <p style="font-size: 14.5px; line-height: 1.6; margin: 0;">Consecutive transitions are strongly correlated (the pole leans left for thirty frames straight), and SGD hates correlated batches. Store transitions in a FIFO buffer; train on <em>random</em> minibatches from it. Bonus: each transition is reused many times — sample efficiency. This is only legal because Q-learning is <strong>off-policy</strong>: it doesn't care which stale policy produced the data.</p>
+        </div>
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 22px 26px;">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Fix 2 — target network</div>
+          <p style="font-size: 14.5px; line-height: 1.6; margin: 0;">If the target <span data-tex="y"></span> is computed with the same weights you're updating, every gradient step moves the goalposts — a feedback loop that oscillates or diverges. So the target uses a frozen copy <span data-tex="\theta^{-}"></span>, refreshed only every 500 steps. Between refreshes, DQN solves an honest, stationary regression problem.</p>
+        </div>
+      </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Replay is shuffling your flashcards instead of studying the textbook in page order — consecutive experiences are too alike to learn from. The target network is grading against last month's answer key, so the goalposts hold still mid-lesson.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — QT-Opt grasping</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Google's QT-Opt trained real robot grasping from a replay buffer of 580,000 stored grasp attempts — off-policy replay is what made reusing months of robot time possible. Both fixes shipped in the original DQN and never left.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 4 Code walkthrough" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 4 · from the repo</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The update, line by line</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">This is the heart of <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">dqn.py</span> — the math above, transcribed almost symbol for symbol:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">data = rb.sample(args.batch_size)                       # random minibatch from replay
+with torch.no_grad():                                   # target: no gradients, ever
+    target_max, _ = target_network(data.next_observations).max(dim=1)
+    td_target = data.rewards.flatten() + args.gamma * target_max * (1 - data.dones.flatten())
+
+old_val = q_network(data.observations).gather(1, data.actions).squeeze()
+loss = F.mse_loss(td_target, old_val)
+
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()</pre>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px; margin: 24px 0 0;">
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">The math says</div>
+          <div data-tex="y = r + \gamma \max_{a'} Q(s', a'; \theta^{-}) \cdot \mathbb{1}[\text{not terminal}]" data-display style="margin: 8px 0; font-size: 15px; overflow-x: auto;"></div>
+        </div>
+        <div style="background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-neutral-700); margin-bottom: 8px;">The code says</div>
+          <pre data-code style="background: transparent; color: var(--color-text); margin: 8px 0 0; font-size: 13px; line-height: 1.6; overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;">rewards + gamma * target_max
+        * (1 - dones)</pre>
+        </div>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">The <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">(1 - dones)</code> factor is Chapter 3's "zero the bootstrap at terminal states", vectorized. And <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">gather(1, actions)</code> picks, from each row of predicted action-values, the one action that was actually taken — the only entry the loss is allowed to touch. Finally, every 500 steps, the target catches up:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">if global_step % args.target_network_frequency == 0:
+    for target_param, q_param in zip(target_network.parameters(), q_network.parameters()):
+        target_param.data.copy_(args.tau * q_param.data + (1.0 - args.tau) * target_param.data)</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">With <span data-tex="\tau = 1"></span> (the repo's default) this is a hard copy; <span data-tex="\tau &lt; 1"></span> would give a slow exponential blend ("Polyak averaging") — same idea, smoother motion.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Following a recipe card: gather ingredients (sample a batch), taste (compute the loss), adjust seasoning (gradient step), and occasionally rewrite your reference notes (sync the target net). Twenty lines, no step skippable.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — the same twenty lines</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">This update, essentially verbatim, sits inside CleanRL, Stable-Baselines3, and production systems like QT-Opt. Read it here once and you can read any DQN codebase.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Part 5 Implementation details" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 5</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The small print that makes it work</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The file's docstring lists what the paper-version leaves out — read these as a checklist for your own implementations:</p>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>learning_starts = 10,000:</strong> collect experience with no updates first, so the first minibatches are diverse instead of one policy's rut.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>train_frequency = 10:</strong> one gradient step per ten environment steps — cheaper, and the buffer refreshes between updates.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>ε decays linearly</strong> from 1.0 to 0.05 over half of training — the same schedule as tabular.py; explore first, exploit later.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>The buffer is capped</strong> (FIFO, 10k transitions): ancient experience from a terrible early policy eventually ages out.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Adam instead of vanilla SGD</strong> — adaptive step sizes forgive the loss surface's changing scale as targets shift.</p></div>
+      </div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 24px 0 0;">Want to feel why the stabilizers matter? <a href="Home.dc.html#projects">Project 2</a>: train it, then set <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">target_network_frequency=1</code> and watch the loss curve panic.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A pilot's checklist. The plane flies on aerodynamics, but it lands safely on the boring small print — flap settings, fuel checks. Skip one item and the crash report will blame "implementation details."</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — the Rainbow result</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">DeepMind's Rainbow paper stacked six such "details" (double Q, prioritized replay, dueling heads, n-step, distributional values, noisy nets) and roughly doubled DQN's Atari score — the small print was worth as much as the idea.</p>
+        </div>
+      </div>
+      </section>
+
+    <section data-screen-label="Ch4 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch4" heading="DQN checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch4 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch4" heading="Key terms — Chapter 4" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch4 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch4" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'The repo\u2019s QNetwork outputs <strong>one value per action</strong> rather than taking (s, a) as input and outputting one number. Why?',
+          options: [
+            'it is required for backpropagation to work',
+            'one forward pass yields the whole row Q(s, ·) — so argmax and max over actions are cheap',
+            'it reduces the number of parameters',
+            'it makes the network on-policy'
+          ],
+          answer: 1,
+          explain: 'Both action selection (<span data-tex="\\arg\\max_a"></span>) and the TD target (<span data-tex="\\max_{a\'}"></span>) need every action\u2019s value. With actions as outputs, that\u2019s one network evaluation instead of <span data-tex="|\\mathcal{A}|"></span>.'
+        },
+        {
+          type: 'mcq',
+          q: 'The replay buffer exists primarily to…',
+          options: [
+            'decorrelate training batches and reuse experience — exploiting Q-learning\u2019s off-policy nature',
+            'store the target network\u2019s parameters',
+            'make the policy explore more',
+            'reduce memory usage during training'
+          ],
+          answer: 0,
+          explain: 'Consecutive transitions are nearly identical; SGD needs (approximately) i.i.d. samples. Random draws from a big buffer fix that, and let each transition teach the network many times. Only an off-policy method may do this — the data comes from stale policies.'
+        },
+        {
+          type: 'fill',
+          q: 'Complete the repo\u2019s target line: <code>td_target = rewards + gamma * target_max * (1 - </code> ____ <code>)</code>',
+          accept: ['dones', 'done', 'data.dones', 'dones.flatten()', 'data.dones.flatten()'],
+          placeholder: 'e.g.  dones',
+          explain: '<code>(1 - dones)</code> zeroes the bootstrap at terminal states — Chapter 3\u2019s rule, vectorized over the batch. Omit it and the network hallucinates value beyond the end of episodes; this is the single most common DQN bug.'
+        },
+        {
+          type: 'predict',
+          q: 'A transition that <em>ended</em> the episode (done = 1) is sampled. What does this print?',
+          code: 'reward, gamma = 1.0, 0.99\ntarget_max = 5.0        # network thinks s\' is great\ndone = 1.0\ntd_target = reward + gamma * target_max * (1 - done)\nprint(td_target)',
+          options: ['5.95', '1.0', '4.95', '0.0'],
+          answer: 1,
+          explain: 'The (1 − done) factor kills the bootstrap term entirely: the target collapses to the reward alone. The network\u2019s opinion of s\u2032 is irrelevant — there is no future after a terminal state.'
+        },
+        {
+          type: 'mcq',
+          q: 'What goes wrong if you compute targets with the <strong>same network</strong> you are updating (no target network)?',
+          options: [
+            'the loss becomes non-differentiable',
+            'every gradient step also moves the target — a feedback loop that can oscillate or diverge',
+            'the replay buffer overflows',
+            'exploration stops because ε is fixed'
+          ],
+          answer: 1,
+          explain: 'You are regressing toward goalposts you moved yourself last step. Freezing <span data-tex="\\theta^{-}"></span> for 500 steps makes each interval a stationary regression problem. Verify it experimentally — that\u2019s Project 2.'
+        },
+        {
+          type: 'desc',
+          q: 'Name the three members of the <strong>deadly triad</strong>, and explain in a sentence why their combination is dangerous.',
+          model: '(1) <strong>Function approximation</strong> — updating one state\u2019s value moves others\u2019, (2) <strong>bootstrapping</strong> — targets are built from those same (now shifted) estimates, and (3) <strong>off-policy training</strong> — the data distribution doesn\u2019t match the target policy, so errors in some states are never corrected by fresh visits. Together they form a feedback loop where estimation errors amplify themselves instead of averaging out — values can grow without bound. DQN keeps all three but damps the loop with a frozen target network and a decorrelating replay buffer.',
+          explain: 'Any two of the three are provably fine; it\u2019s the trio that bites. DQN is the empirical proof that engineering can beat a missing theorem.'
+        }
+      ],
+      cards: [
+        { f: 'Function approximation', b: '<span data-tex="Q(s, a; \\theta)"></span>: a parameterized function replaces the table. Similar states share parameters — learning transfers, but updates to one state disturb others.' },
+        { f: 'Semi-gradient', b: 'Gradients flow through the prediction <span data-tex="Q(s,a;\\theta)"></span> but the target is treated as a constant (torch.no_grad) — even though it depends on the parameters too.' },
+        { f: 'Replay buffer', b: 'FIFO memory of transitions; train on random minibatches. Decorrelates data and reuses experience. Legal only for off-policy methods.' },
+        { f: 'Target network <span data-tex="\\theta^{-}"></span>', b: 'A frozen copy of the Q-network used to compute targets, refreshed every N steps (or blended with rate τ). Turns a moving-target chase into stationary regression.' },
+        { f: 'Deadly triad', b: 'Function approximation + bootstrapping + off-policy data. Any two are safe; all three together void the convergence warranty.' },
+        { f: 'TD target (DQN)', b: '<span data-tex="y = r + \\gamma \\max_{a\'} Q(s\', a\'; \\theta^{-}) \\cdot (1 - \\text{done})"></span> — Q-learning\u2019s target with frozen weights and the terminal mask.' },
+        { f: 'learning_starts', b: 'Steps collected before any update, so early minibatches are diverse. One of the docstring\u2019s "details not in the book" — the small print that makes DQN train.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

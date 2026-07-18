@@ -1,0 +1,5 @@
+.thumbnail
+.claude/
+.vercel/
+uploads/
+.DS_Store
