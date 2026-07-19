@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch8" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch8 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 8 · Model-Based RL &amp; Planning</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Learn the world, then plan inside it</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Chapter 2 planned with a <em>known</em> model and then we threw the model away for six chapters. This chapter brings it back — first as a search tree over a perfect simulator (MCTS, AlphaZero), then as a <em>learned</em> model (MuZero), then as a learned model an agent dreams inside (Dreamer). This is the sample-efficiency end of RL, and increasingly the robotics end too.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~55 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">plan &gt; react</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 MCTS" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">MCTS — grow the tree where it matters</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Given a simulator you can reset, planning is search. Monte Carlo Tree Search repeats four steps: <strong>select</strong> a path down the tree, <strong>expand</strong> a leaf, <strong>evaluate</strong> it (a rollout, or later a value network), and <strong>back up</strong> the result. The intelligence is all in the selection rule — at every node, pick the child maximizing:</p>
+      <div data-tex="a^* = \arg\max_a \; \underbrace{Q(s,a)}_{\text{exploit}} \; + \; \underbrace{c \, P(s,a) \frac{\sqrt{\sum_b N(s,b)}}{1 + N(s,a)}}_{\text{explore}}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Average result so far, plus a bonus that shrinks as a move gets visited. Rarely-tried moves stay tempting; bad moves get tried enough to be condemned, then ignored. The tree grows <em>asymmetrically</em> — deep where the game is sharp, shallow where it's decided. Hold that formula: it is a bandit rule (Chapter 9's UCB) applied at every node of a search.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Reading ten chess continuations: you don't read each to the same depth. Forcing lines get twenty moves of attention; obviously losing lines get two. MCTS is that instinct, made mechanical and provably calibrated.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">MCTS ran Go engines for a decade before deep learning arrived, and it never left: chip placement, compiler optimization, theorem proving, and molecule design all reuse the same four-step loop wherever a cheap simulator exists. Build one yourself — <a href="Home.dc.html#projects">Project 6</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 AlphaZero MuZero" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">AlphaZero and MuZero — search as teacher</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">AlphaZero closes a beautiful loop. A network gives each position a policy prior <span data-tex="P"></span> and value <span data-tex="V"></span>; MCTS, guided by them, thinks for ~800 simulations and produces <em>better</em> move probabilities than the raw network. Then the network is trained to predict what search concluded:</p>
+      <div data-tex="\ell = \bigl(z - V_\theta(s)\bigr)^2 \; - \; \pi_{\text{MCTS}}^\top \log P_\theta(s) \; + \; c\lVert\theta\rVert^2" data-display style="margin: 26px 0 6px; font-size: 16.5px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Search improves the policy; the policy improves the search. That is <strong>policy iteration</strong> — Chapter 2's engine — with MCTS as the improvement operator and self-play as the environment. From random weights to superhuman chess in hours, no human games needed.</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;"><strong>MuZero</strong> drops the last crutch: the rules. It learns a model to plan with — an encoder <span data-tex="h(o) \to s"></span>, a dynamics network <span data-tex="g(s, a) \to s', r"></span>, a predictor <span data-tex="f(s) \to P, V"></span> — and crucially, the learned state is <em>never</em> asked to reconstruct the board. It only has to predict what planning needs: policy, value, reward. A model of what matters, not of what's there. Same search, same loss, but now it plays Go <em>and</em> Atari — no rulebook anywhere.</p>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">The value-equivalence idea</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Classic model-based RL learned pixel-predictors that wasted capacity on clouds and shadows, then compounded small errors into hallucinations. MuZero's answer: judge the model only by the quality of the plans it supports. If two models yield the same values, they are the same model for RL purposes. This one idea quietly reorganized the field.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 3 Dreamer" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Dreamer — learn inside the dream</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">MCTS plans at decision time; Dreamer plans at <em>training</em> time. It learns a recurrent latent <strong>world model</strong> from replayed experience, then trains an actor-critic — Chapter 5's machinery, unchanged in spirit — entirely on <em>imagined</em> rollouts inside the latent space. Real steps train the dream; dreamed steps train the policy:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># the Dreamer loop, in caricature
+for step in real_world:
+    buffer.add(env.step(actor(obs)))          # act, remember
+    world_model.train(buffer.sample())        # dream better
+    z = world_model.encode(buffer.sample())
+    traj = world_model.imagine(actor, z, horizon=15)   # 15 steps, no env
+    actor_critic.train(traj)                  # learn entirely in latent space</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">Every real step is reused thousands of times as fuel for imagination — which is why DreamerV3 learns Atari tasks from ~200k frames where model-free methods want 50M+, and why it was the first algorithm to mine diamonds in Minecraft from scratch. One fixed set of hyperparameters, 150+ tasks. The catch, as always: the policy is only as good as the dream is honest.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A pilot who flies once a week but rehearses daily in a flight simulator built from their own logbook. Cheap practice, honest only where the logbook was. The better the simulator, the fewer real flights mastery costs.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — 2026</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">World models are the current frontier: DeepMind's Genie line learns <em>interactive</em> worlds from video, robotics labs fine-tune foundation world models per task, and the emerging recipe — pretrain a world model, then train policies inside it — mirrors what LLMs did to NLP. Watch this space on the <a href="ResearchRadar.dc.html">radar</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch8 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch8" heading="Planning checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch8 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch8" heading="Key terms — Chapter 8" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch8 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch8" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'In MCTS selection, the exploration bonus <span data-tex="c\\,P(s,a)\\sqrt{\\sum_b N(s,b)}/(1+N(s,a))"></span> guarantees that…',
+          options: [
+            'every move is tried equally often',
+            'a move’s bonus shrinks as it gets visited, so under-explored moves eventually become attractive — the tree grows deep only where it earns it',
+            'the search never revisits a node twice',
+            'the tree has bounded depth'
+          ],
+          answer: 1,
+          explain: 'N(s,a) in the denominator is the whole story: attention paid decays the urge to pay more. It’s a bandit rule (UCB, next chapter) running at every node.'
+        },
+        {
+          type: 'mcq',
+          q: 'AlphaZero trains its policy head to match the MCTS visit distribution. Why is this a <em>policy improvement</em> step?',
+          options: [
+            'because the network memorizes grandmaster games',
+            'because search-with-priors produces a better move distribution than the raw priors — distilling it back in makes the network stronger, which makes the next search stronger',
+            'because the visit counts are provably optimal',
+            'because it lowers the value loss'
+          ],
+          answer: 1,
+          explain: 'Chapter 2’s policy iteration, reborn: the network is the policy, MCTS is the improvement operator, distillation is the update. The loop spirals upward from random play.'
+        },
+        {
+          type: 'mcq',
+          q: 'MuZero’s learned model is never trained to reconstruct observations. What is it trained to predict?',
+          options: [
+            'the next frame, pixel by pixel',
+            'exactly what planning consumes: policy, value, and reward along imagined action sequences',
+            'the environment’s full transition matrix',
+            'the opponent’s strategy'
+          ],
+          answer: 1,
+          explain: 'Value equivalence: a model is good if plans made inside it are good. Modeling clouds and shadows is wasted capacity; MuZero’s latents can be “wrong” about the world and right about what to do.'
+        },
+        {
+          type: 'predict',
+          q: 'A back-of-envelope for why Dreamer is sample-efficient: 200k real steps, each latent state reused in 4 imagined trajectories of horizon 15. How many training steps does the actor-critic see?',
+          code: 'real = 200_000\nreuse, horizon = 4, 15\nprint(real * reuse * horizon)',
+          options: ['200000', '3000000', '12000000', '800000'],
+          answer: 2,
+          explain: '200k × 4 × 15 = <strong>12M</strong> imagined steps from 200k real ones — a 60× multiplier here, and real systems push it far higher. Imagination is leverage on experience.'
+        },
+        {
+          type: 'fill',
+          q: 'Dreamer trains its actor-critic on rollouts generated entirely by the world model, without touching the environment. These are called ____ rollouts.',
+          accept: ['imagined', 'imagination', 'dreamed', 'dream', 'latent'],
+          placeholder: 'adjective',
+          explain: 'Imagined (latent) rollouts: start from an encoded real state, unroll the dynamics network 15 steps, train on the result. Real data’s job is to keep the imagination honest.'
+        },
+        {
+          type: 'desc',
+          q: 'Model-based methods compound model errors over the planning horizon. Explain the failure mode, and name one defense used by MuZero and one used by Dreamer.',
+          model: 'Each imagined step feeds the model its own (slightly wrong) output; errors multiply, and beyond some horizon the trajectory is fantasy — the policy then optimizes against hallucinated reward. <strong>MuZero’s defense:</strong> plan in a value-equivalent latent space trained only on plan-relevant targets, and search only tens of steps deep with values bootstrapping the rest. <strong>Dreamer’s defense:</strong> short imagination horizons (~15) from <em>real</em> re-encoded starting states, with a critic bootstrapping beyond the dream’s edge — so no imagined trajectory drifts far from data.',
+          explain: 'Both answers are the same instinct: never trust the model further than a short leash, and let learned values carry the long horizon.'
+        }
+      ],
+      cards: [
+        { f: 'MCTS four steps', b: 'Select (UCB down the tree) → Expand (new leaf) → Evaluate (rollout or value net) → Backup (update Q, N up the path). Repeat; act on visit counts.' },
+        { f: 'PUCT rule', b: '<span data-tex="Q + c P \\sqrt{\\Sigma N}/(1+N)"></span> — exploit + prior-guided exploration bonus that decays with visits. A bandit at every node.' },
+        { f: 'AlphaZero loop', b: 'Network guides search; search out-plays network; network distills search (match visit counts, regress game outcome). Policy iteration with MCTS as improver.' },
+        { f: 'Self-play curriculum', b: 'The opponent is always exactly as strong as you — an automatic curriculum from random play to superhuman, no human data.' },
+        { f: 'MuZero', b: 'AlphaZero without the rules: learned encoder h, dynamics g, predictor f, trained end-to-end to predict policy/value/reward — not observations.' },
+        { f: 'Value equivalence', b: 'Judge a model by the plans it supports, not by reconstruction error. Two models with the same values are interchangeable for control.' },
+        { f: 'World model (Dreamer)', b: 'Recurrent latent dynamics learned from replay; actor-critic trains on imagined latent rollouts (~15 steps). Real steps teach the dream, dreamed steps teach the policy.' },
+        { f: 'Sample-efficiency multiplier', b: 'DreamerV3: Atari from ~200k frames vs 50M+ model-free — imagination reuses every real step thousands of times. First to mine a Minecraft diamond from scratch.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

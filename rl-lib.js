@@ -10,13 +10,21 @@
     { id: 'ch3', n: 3, file: 'Ch3-Tabular-Learning.dc.html', title: 'Tabular Learning', blurb: 'Learning from experience: MC, TD, SARSA, Q-learning, n-step and eligibility traces.', topics: ['MC', 'TD', 'SARSA', 'Q-learning', 'Traces'], mins: 50, code: 'tabular.py' },
     { id: 'ch4', n: 4, file: 'Ch4-DQN.dc.html', title: 'Deep Q-Networks', blurb: 'Value learning with neural nets: the deadly triad, replay buffers and target networks.', topics: ['Function approx.', 'Replay buffer', 'Target network'], mins: 45, code: 'dqn.py' },
     { id: 'ch5', n: 5, file: 'Ch5-Policy-Gradients.dc.html', title: 'Policy Gradients', blurb: 'The policy gradient theorem, derived — then SPG, REINFORCE, baselines and GAE.', topics: ['PG theorem', 'REINFORCE', 'Baselines', 'GAE'], mins: 55, code: 'spg.py · reinforce.py · vpg.py' },
-    { id: 'ch6', n: 6, file: 'Ch6-PPO.dc.html', title: 'PPO', blurb: 'Importance sampling, the clipped surrogate objective, and every implementation trick.', topics: ['Importance sampling', 'Clipping', 'Implementation'], mins: 50, code: 'ppo.py' }
+    { id: 'ch6', n: 6, file: 'Ch6-PPO.dc.html', title: 'PPO', blurb: 'Importance sampling, the clipped surrogate objective, and every implementation trick.', topics: ['Importance sampling', 'Clipping', 'Implementation'], mins: 50, code: 'ppo.py' },
+    { id: 'ch7', n: 7, file: 'Ch7-Continuous-Control.dc.html', title: 'Continuous Control', blurb: 'When actions are torques, not buttons: DDPG, TD3 and maximum-entropy SAC.', topics: ['DDPG', 'TD3', 'SAC', 'Max-entropy'], mins: 50, code: 'CleanRL: sac_continuous_action.py' },
+    { id: 'ch8', n: 8, file: 'Ch8-Model-Based-RL.dc.html', title: 'Model-Based RL & Planning', blurb: 'Learn the world, then plan inside it: MCTS, AlphaZero, MuZero and Dreamer.', topics: ['MCTS', 'AlphaZero', 'MuZero', 'World models'], mins: 55 },
+    { id: 'ch9', n: 9, file: 'Ch9-Exploration.dc.html', title: 'Exploration & Bandits', blurb: 'Beyond ε-greedy: regret, UCB, Thompson sampling, and curiosity as intrinsic reward.', topics: ['Bandits', 'Regret', 'UCB', 'Curiosity'], mins: 45 },
+    { id: 'ch10', n: 10, file: 'Ch10-Offline-RL.dc.html', title: 'Offline RL & Imitation', blurb: 'Learning from a fixed dataset: behavior cloning, distribution shift, CQL, IQL and decision transformers.', topics: ['BC', 'Distribution shift', 'CQL / IQL', 'DT'], mins: 50 },
+    { id: 'ch11', n: 11, file: 'Ch11-RLHF-to-RLVR.dc.html', title: 'RL for Language Models', blurb: 'The modern pipeline: RLHF with reward models, DPO’s shortcut, GRPO, and verifiable rewards.', topics: ['RLHF', 'DPO', 'GRPO', 'RLVR'], mins: 60 },
+    { id: 'ch12', n: 12, file: 'Ch12-Agentic-RL.dc.html', title: 'Agentic RL', blurb: 'The capstone: trajectories as episodes, tool calls as actions, credit assignment over long horizons, and reward hacking.', topics: ['Agent loop', 'Credit assignment', 'Process rewards', 'Reward hacking'], mins: 55 }
   ];
 
   var LEVELS = [
     [0, 'Random Policy'], [60, 'ε-Greedy Explorer'], [150, 'Value Estimator'],
     [300, 'TD Learner'], [500, 'Policy Improver'], [800, 'Advantage Seeker'],
-    [1200, 'Trust-Region Tactician'], [1700, 'Optimal Policy π*']
+    [1200, 'Trust-Region Tactician'], [1700, 'Optimal Policy π*'],
+    [2400, 'Soft Actor-Critic'], [3200, 'World Modeler'],
+    [4000, 'Preference Alchemist'], [4800, 'Agentic Architect']
   ];
 
   var GOALS = {
@@ -41,7 +49,11 @@
     { id: 'p1', title: 'Melt FrozenLake', file: 'algos/value_based/tabular.py', xp: 100, desc: 'Run tabular Q-learning on FrozenLake-v1 until greedy eval return ≥ 0.70. Then switch --algo sarsa with the same seed and explain the gap you see.' },
     { id: 'p2', title: 'Balance CartPole with DQN', file: 'algos/value_based/dqn.py', xp: 100, desc: 'Train DQN to an episodic return of 475+. Then remove the target network (target_network_frequency=1) and plot what happens to the loss.' },
     { id: 'p3', title: 'Variance safari', file: 'algos/policy_based/spg.py + reinforce.py', xp: 100, desc: 'Train SPG and REINFORCE on CartPole with identical seeds. Compare the return curves and explain, in writing, why reward-to-go wins.' },
-    { id: 'p4', title: 'PPO, tuned by hand', file: 'algos/policy_based/ppo.py', xp: 100, desc: 'Run PPO on CartPole. Set clip_coef to 0.05, then 0.5 — predict what happens to clipfrac and approx_kl before you look.' }
+    { id: 'p4', title: 'PPO, tuned by hand', file: 'algos/policy_based/ppo.py', xp: 100, desc: 'Run PPO on CartPole. Set clip_coef to 0.05, then 0.5 — predict what happens to clipfrac and approx_kl before you look.' },
+    { id: 'p5', title: 'Swing up the pendulum', file: 'CleanRL: sac_continuous_action.py', xp: 100, desc: 'Train SAC on Pendulum-v1 to a return above −200. Then freeze alpha (autotune=False, alpha=0) and watch the policy collapse to a timid local optimum.' },
+    { id: 'p6', title: 'MCTS from scratch', file: 'your own mcts.py', xp: 100, desc: 'Write pure-Python MCTS (UCT) for tic-tac-toe — no neural nets, ~120 lines. It should never lose going first. Count simulations per move needed before it stops blundering.' },
+    { id: 'p7', title: 'Align a tiny LM', file: 'TRL: dpo.py', xp: 100, desc: 'Run DPO on a small model (e.g. Qwen-0.5B) with a public preference set. Plot the implicit reward margin between chosen and rejected — then explain why no reward model was needed.' },
+    { id: 'p8', title: 'Build the agent loop', file: 'your own agent.py', xp: 100, desc: 'Write the bare agent loop — an LLM API, two tools (calculator, file search), and a while-loop until done. Then add a 10-task eval harness and measure your success rate. This is the whole secret; everything else is scaffolding.' }
   ];
 
   function get() {

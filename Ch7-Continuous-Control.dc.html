@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch7" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch7 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 7 · Continuous Control</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">When actions are torques, not buttons</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">The book ends at PPO, and PPO does handle continuous actions — but the algorithms that <em>own</em> robotics are off-policy actor-critics. This chapter walks the lineage DQN started: DDPG bolts an actor onto Q-learning, TD3 fixes its lies, and SAC rebuilds the objective itself around entropy. Beyond the book now — implementation lineage: <span class="tag tag-accent-2" style="font-family: ui-monospace, monospace; font-size: 12px;">CleanRL</span>.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~50 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">first step past the book</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 DDPG" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">DDPG — an actor to replace the argmax</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Q-learning's whole engine is <span data-tex="\max_a Q(s,a)"></span>. With four buttons that's a lookup; with a 7-joint arm the action is a vector in <span data-tex="\mathbb{R}^7"></span> and the max is an optimization problem <em>per training step</em>. DDPG's move: train a second network, a deterministic actor <span data-tex="\mu_\theta(s)"></span>, whose only job is to <em>be</em> the argmax. The critic learns exactly like DQN; the actor climbs the critic's gradient:</p>
+      <div data-tex="\nabla_\theta J \approx \mathbb{E}_{s \sim \mathcal{D}} \Bigl[ \nabla_a Q_\phi(s, a) \big|_{a = \mu_\theta(s)} \; \nabla_\theta \mu_\theta(s) \Bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Chain rule, nothing more: how the score changes with the action, times how the action changes with the weights. Because the policy is deterministic, exploration must be bolted on — Gaussian noise added to actions at collection time — and because learning is off-policy, DQN's whole toolkit carries over: replay buffer, target networks, but with a gentler update. Instead of hard-copying weights every 10k steps, DDPG <strong>polyak-averages</strong> them a little every step:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">for param, target_param in zip(actor.parameters(), target_actor.parameters()):
+    target_param.data.copy_(tau * param.data + (1 - tau) * target_param.data)  # tau = 0.005</pre>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">The critic is a terrain map of action-quality; the actor is a hiker standing on it. Rather than surveying the whole map for the summit (argmax), the hiker just walks uphill from where they stand — fast, but they'll happily climb a hill that the map drew wrong.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">DDPG (2015) was the first deep-RL algorithm to make simulated locomotion and manipulation work from raw states — the proof that DQN's ideas survived the jump to <span data-tex="\mathbb{R}^n"></span>. It's rarely deployed today, but its skeleton lives inside everything in this chapter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 TD3" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">TD3 — the critic is a flatterer</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">DDPG is famously brittle, and the root cause is <strong>overestimation bias</strong>: the actor is explicitly trained to find actions where Q is large — including where Q is large <em>by error</em>. The actor exploits the critic's noise, the target values inherit the inflation, and the run collapses. TD3 (Twin Delayed DDPG) is three surgical fixes:</p>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Clipped double-Q:</strong> train two critics; targets use the <em>pessimist</em> — <span data-tex="y = r + \gamma \min(Q_{\phi_1'}, Q_{\phi_2'})(s', a')"></span>. Two independent errors rarely inflate the same action.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Delayed policy updates:</strong> update the actor once per two critic updates — let the map settle before the hiker moves.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Target policy smoothing:</strong> add clipped noise to the target action, so the target value is an average over a small neighborhood — Q can't hide a narrow phantom spike where the actor would find it.</p></div>
+      </div>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Rhyme check</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">You met this disease in Chapter 4: the max in Q-learning's target chases noise upward, and Double DQN decoupled <em>selection</em> from <em>evaluation</em> to fight it. TD3's twin critics are the same instinct wearing continuous-control clothes. Overestimation is not a DQN quirk — it is what maximization does to noise, anywhere.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 3 SAC" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">SAC — put exploration in the objective</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">TD3 patched DDPG's symptoms; SAC (Soft Actor-Critic) rewrites the goal. Maximize reward <em>and</em> stay as random as you can afford to be:</p>
+      <div data-tex="J(\pi) = \sum_t \mathbb{E}_{(s_t,a_t) \sim \pi} \Bigl[ r(s_t, a_t) + \alpha \, \mathcal{H}\bigl(\pi(\cdot \mid s_t)\bigr) \Bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The entropy term <span data-tex="\mathcal{H}"></span> is Chapter 6's entropy bonus promoted from regularizer to first-class citizen of the objective. The actor is stochastic again — a squashed Gaussian, <span data-tex="a = \tanh(\mu_\theta(s) + \sigma_\theta(s) \odot \varepsilon)"></span> with <span data-tex="\varepsilon \sim \mathcal{N}(0, I)"></span> — and that <strong>reparameterization</strong> is what lets gradients flow through sampling: the randomness enters as an external input, so the sample is a differentiable function of θ. The temperature α is even tuned automatically, by gradient descent against a target entropy. Off-policy replay from TD3, twin critics from TD3, but the exploration problem dissolves: the policy explores because the objective pays it to.</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># CleanRL sac_continuous_action.py — the soft target and the actor loss
+next_q = torch.min(qf1_target(s2, a2), qf2_target(s2, a2)) - alpha * next_logprob
+y = r + gamma * (1 - d) * next_q                      # entropy inside the backup
+actor_loss = (alpha * logprob - torch.min(qf1(s, a), qf2(s, a))).mean()</pre>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A chef paid for good dishes <em>and</em> for keeping the menu varied. Early on, variety pays for itself in discoveries; as the kitchen masters the classics, α shrinks and the menu narrows toward the hits — but never to a single dish.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — real robots</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">SAC's sample efficiency (replay!) and stability made it the default for learning on physical hardware — quadruped locomotion learned in ~20 minutes of real-world experience, dexterous manipulation, chip-floorplanning variants. Where every trial costs real time and real wear, off-policy wins.</p>
+        </div>
+      </div>
+      <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;">Choosing your fighter</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">PPO when rollouts are cheap and parallel (simulators, games, RLHF); SAC when samples are precious (hardware, slow sims). PPO squeezes a fresh batch; SAC remembers every batch it ever saw. Run <a href="Home.dc.html#projects">Project 5</a> to feel the difference — then break SAC's α on purpose.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch7 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch7" heading="Continuous control checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch7 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch7" heading="Key terms — Chapter 7" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch7 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch7" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'Why can’t DQN be applied directly to a robot arm with 7 continuous joint torques?',
+          options: [
+            'neural networks cannot take continuous inputs',
+            'its target and its action choice both need <span data-tex="\\max_a Q(s,a)"></span>, which over a continuous action space is an optimization problem per step, not a lookup',
+            'replay buffers only store discrete actions',
+            'the discount factor must be 1 in robotics'
+          ],
+          answer: 1,
+          explain: 'With k buttons the max is a table scan over k outputs. Over ℝ⁷ it has no closed form. DDPG’s actor μ(s) is a learned, amortized answer to that argmax.'
+        },
+        {
+          type: 'mcq',
+          q: 'The DDPG actor update <span data-tex="\\nabla_a Q(s,a)\\,\\nabla_\\theta \\mu_\\theta(s)"></span> is best described as…',
+          options: [
+            'REINFORCE with a deterministic policy',
+            'the chain rule: differentiate the critic’s score with respect to the action, then the action with respect to the actor’s weights',
+            'a KL-constrained trust-region step',
+            'supervised regression toward the greedy action'
+          ],
+          answer: 1,
+          explain: 'The actor climbs the critic’s landscape directly — no likelihood ratios, no sampling. The price: it will climb errors in that landscape just as eagerly as truths.'
+        },
+        {
+          type: 'mcq',
+          q: 'TD3 trains <strong>two</strong> critics and uses <span data-tex="\\min(Q_1, Q_2)"></span> in the target because…',
+          options: [
+            'two critics halve the wall-clock training time',
+            'maximization turns critic noise into systematic overestimation; taking the min of two independent estimates counteracts the inflation',
+            'one critic handles positive rewards, the other negative',
+            'it makes the algorithm on-policy'
+          ],
+          answer: 1,
+          explain: 'The actor hunts wherever Q is large — including where it is large by error — and targets then bake the inflation in. Same disease Double DQN treats in Chapter 4; the min of twins is the continuous-control cure.'
+        },
+        {
+          type: 'predict',
+          q: 'Polyak averaging with tau = 0.005. The online critic thinks a state is worth 100; the target critic still says 0. After ONE soft update, what does the target say?',
+          code: 'tau, online, target = 0.005, 100.0, 0.0\ntarget = tau * online + (1 - tau) * target\nprint(target)',
+          options: ['100.0', '50.0', '0.5', '0.0'],
+          answer: 2,
+          explain: '0.005 × 100 = <strong>0.5</strong>. The target network is a heavy anchor — it absorbs the online network’s opinion at half a percent per step, which is exactly what keeps bootstrapped targets from chasing their own tail.'
+        },
+        {
+          type: 'fill',
+          q: 'SAC samples actions as <span data-tex="a = \\tanh(\\mu + \\sigma \\odot \\varepsilon)"></span> with external noise ε, so gradients can flow through the sampling step. This is called the ____ trick.',
+          accept: ['reparameterization', 'reparametrization', 'reparameterisation', 'reparametrisation', 'reparam'],
+          placeholder: 'one word',
+          explain: 'Move the randomness out of the function and in through the arguments: the sample becomes a deterministic, differentiable function of θ given ε. The same trick powers variational autoencoders.'
+        },
+        {
+          type: 'desc',
+          q: 'You must pick between PPO and SAC for (a) a physical quadruped learning to walk, and (b) a simulator farm running 4,096 parallel environments. Choose, and justify with the on-policy/off-policy distinction.',
+          model: '<strong>(a) SAC.</strong> Real-robot samples are expensive and slow; SAC is off-policy, so every transition ever collected keeps teaching from the replay buffer, and entropy-driven exploration is gentler than injected noise. <strong>(b) PPO.</strong> With thousands of cheap parallel rollouts, fresh on-policy data is nearly free; PPO’s stable clipped updates and simple pipeline win, and its main weakness — discarding data after a few epochs — stops mattering. Rule of thumb: pay for sample efficiency (SAC) only when samples cost something; otherwise buy stability (PPO).',
+          explain: 'The on-policy/off-policy axis is an economics question about your data before it is an algorithms question.'
+        }
+      ],
+      cards: [
+        { f: 'Deterministic policy gradient', b: '<span data-tex="\\nabla_\\theta J = \\mathbb{E}[\\nabla_a Q(s,a)|_{a=\\mu(s)} \\nabla_\\theta \\mu_\\theta(s)]"></span> — the actor climbs the critic’s action-gradient. No sampling, no likelihood ratios.' },
+        { f: 'Polyak averaging', b: 'Soft target update: θ′ ← τθ + (1−τ)θ′ with τ ≈ 0.005 every step — replaces DQN’s periodic hard copy with a slow continuous blend.' },
+        { f: 'Overestimation bias', b: 'Maximizing over noisy Q-estimates selects positive errors; targets then inherit them. The actor in DDPG is an overestimation-seeking machine by construction.' },
+        { f: 'Clipped double-Q', b: 'TD3/SAC: two critics, target uses min(Q₁, Q₂). Independent errors rarely agree, so the pessimist is closer to the truth.' },
+        { f: 'Target policy smoothing', b: 'Add clipped noise to the target action so targets average over a neighborhood — the critic can’t reward narrow phantom spikes.' },
+        { f: 'Maximum-entropy objective', b: '<span data-tex="\\mathbb{E}[\\sum r + \\alpha \\mathcal{H}(\\pi(\\cdot|s))]"></span> — reward plus randomness. Exploration becomes part of what the agent is paid for, not an add-on.' },
+        { f: 'Reparameterization trick', b: 'a = tanh(μ + σ⊙ε), ε ~ N(0, I): sampling as a differentiable function of the parameters. Lets the actor loss backprop through the action.' },
+        { f: 'Temperature α auto-tuning', b: 'SAC adjusts α by gradient descent to hold a target entropy — the explore/exploit dial turns itself as competence grows.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

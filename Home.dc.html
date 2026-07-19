@@ -27,6 +27,7 @@
     <a href="#goals" style="text-decoration: none;">Goals</a>
     <a href="#projects" style="text-decoration: none;">Projects</a>
     <a href="#library" style="text-decoration: none;">Library</a>
+    <a href="ResearchRadar.dc.html" style="text-decoration: none;">Radar</a>
     <a class="btn btn-primary" href="{{ continueHref }}" style="text-decoration: none;">{{ continueLabel }}</a>
   </nav>
   <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 72px);">
@@ -38,7 +39,7 @@
           <span style="display: block;">Reinforcement learning,</span>
           <span style="display: block;">learned by doing.</span>
         </h1>
-        <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 28px 0 0;">An interactive companion to <em>The Little Book of Reinforcement Learning</em> — six chapters from MDPs to PPO, grounded in the book's real PyTorch code, backed by Sutton &amp; Barto for the proofs. Quizzes, flashcards, a live gridworld, and XP for every step. No hurry; the value function converges either way.</p>
+        <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 28px 0 0;">An interactive companion to <em>The Little Book of Reinforcement Learning</em> — and then past its final page. Twelve chapters from MDPs to agentic RL: the book's six, grounded in its real PyTorch code, then continuous control, world models, exploration, offline RL, RLHF-to-RLVR and agents. Quizzes, flashcards, a live gridworld, a research radar that watches arXiv, and XP for every step.</p>
         <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: 28px; align-items: center;">
           <a class="btn btn-primary" href="{{ continueHref }}" style="text-decoration: none;">{{ continueCta }}</a>
           <a class="btn btn-ghost" href="#path" style="text-decoration: none;">See the path</a>
@@ -64,8 +65,8 @@
 
     <section id="path" style="padding: 48px 0 24px;">
       <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">The learning path</span>
-      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px;">Six chapters, one book</h2>
-      <p style="font-size: 15.5px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 58ch; margin: 0 0 32px;">Wander freely — nothing is locked. Each chapter ends with a quiz and a deck of flashcards; the map below remembers how far you've grown.</p>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px;">Twelve chapters, book to frontier</h2>
+      <p style="font-size: 15.5px; line-height: 28px; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 58ch; margin: 0 0 32px;">Wander freely — nothing is locked. Chapters 1–6 follow the book; 7–12 continue where it ends, up to the algorithms training today's reasoning models and agents. Each chapter ends with a quiz and a deck of flashcards; the map below remembers how far you've grown.</p>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 24px;">
         <sc-for list="{{ chapters }}" as="chap" hint-placeholder-count="6">
           <a href="{{ chap.href }}" data-screen-label="{{ chap.title }}" style="text-decoration: none; color: var(--color-text); background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 28px; display: flex; gap: 20px; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s;" style-hover="box-shadow: var(--shadow-md); transform: translateY(-2px);">
@@ -91,6 +92,14 @@
           </a>
         </sc-for>
       </div>
+      <a href="ResearchRadar.dc.html" style="text-decoration: none; color: var(--color-text); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; background: var(--color-accent-2-100); border-radius: calc(2 * var(--radius-lg)); padding: 26px 30px; margin-top: 24px; box-shadow: var(--shadow-sm);" style-hover="box-shadow: var(--shadow-md);">
+        <div style="flex: none; width: 54px; height: 54px; border-radius: 50%; background: var(--color-accent-2); color: #fff; display: grid; place-content: center;"><i data-lucide="radar" style="width: 26px; height: 26px;"></i></div>
+        <div style="flex: 1; min-width: 240px;">
+          <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 21px; margin: 0;">This curriculum is alive — the Research Radar</h3>
+          <p style="font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 6px 0 0; max-width: 72ch;">A weekly sweep of arXiv maps new deep-RL papers onto these chapters, and a changelog records every update made to the syllabus. See what the field published this week and what changed here because of it.</p>
+        </div>
+        <span style="font-size: 14px; font-weight: 700; color: var(--color-accent-2-800); white-space: nowrap;">Open the radar →</span>
+      </a>
     </section>
 
     <section id="goals" style="padding: 64px 0 24px;">
@@ -254,7 +263,7 @@ class Component extends DCLogic {
     const seedDefs = [
       { num: String(lvl.xp), label: 'XP collected', bg: 'var(--color-accent-100)', ink: 'var(--color-accent-700)', size: 190, dy: 0 },
       { num: String(RL.streak()), label: 'day streak', bg: 'var(--color-accent-2-100)', ink: 'var(--color-accent-2-700)', size: 160, dy: 24 },
-      { num: doneCount + '/6', label: 'chapters done', bg: 'var(--color-accent-200)', ink: 'var(--color-accent-700)', size: 175, dy: 8 },
+      { num: doneCount + '/' + chapters.length, label: 'chapters done', bg: 'var(--color-accent-200)', ink: 'var(--color-accent-700)', size: 175, dy: 8 },
       { num: earned + '/' + badges.length, label: 'badges earned', bg: 'var(--color-accent-2-300)', ink: 'var(--color-accent-2-800)', size: 150, dy: 30 }
     ];
 

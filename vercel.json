@@ -1,5 +1,8 @@
 {
   "redirects": [
     { "source": "/", "destination": "/Home.dc.html", "statusCode": 308 }
+  ],
+  "rewrites": [
+    { "source": "/api/arxiv", "destination": "https://export.arxiv.org/api/query" }
   ]
 }

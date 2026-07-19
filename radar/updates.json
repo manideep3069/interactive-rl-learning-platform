@@ -1,0 +1,28 @@
+[
+ {
+  "date": "2026-07-19",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 29, Agentic RL: 27, Continuous Control: 10, Offline RL: 9, Exploration: 6, Model-Based RL: 3, general: 3, PPO & Policy Gradients: 1, Value Learning: 1)",
+   "\u201cMeanFlowNFT: Bringing Forward-Process RL to Average-Velocity Generators\u201d \u2014 RL for LLMs",
+   "\u201cMask-Aware Policy Gradients for Diffusion Language Models\u201d \u2014 RL for LLMs, PPO & Policy Gradients",
+   "\u201cOn-Policy Delta Distillation\u201d \u2014 RL for LLMs",
+   "\u201cConcept-Guided Spatial Regularization for World Models in Atari Pong\u201d \u2014 Agentic RL, Model-Based RL",
+   "\u201cLearning in Infinitesimal Non-Compositional Sketches\u201d \u2014 RL for LLMs"
+  ]
+ },
+ {
+  "date": "2026-07-19",
+  "title": "Curriculum expanded: six new chapters, book to frontier",
+  "items": [
+   "Added Ch7 \u00b7 Continuous Control \u2014 DDPG, TD3, and maximum-entropy SAC",
+   "Added Ch8 \u00b7 Model-Based RL & Planning \u2014 MCTS, AlphaZero, MuZero, Dreamer world models",
+   "Added Ch9 \u00b7 Exploration & Bandits \u2014 regret, UCB, Thompson sampling, curiosity/RND",
+   "Added Ch10 \u00b7 Offline RL & Imitation \u2014 behavior cloning, distribution shift, CQL, IQL, decision transformers",
+   "Added Ch11 \u00b7 RL for Language Models \u2014 RLHF, DPO, GRPO, and verifiable rewards (RLVR)",
+   "Added Ch12 \u00b7 Agentic RL (capstone) \u2014 the agent loop, long-horizon credit assignment, process rewards, reward hacking",
+   "Four new projects: SAC on Pendulum, MCTS from scratch, DPO on a small LM, build-your-own agent loop",
+   "New levels past \u03c0* (Soft Actor-Critic \u2192 Agentic Architect) and this Research Radar page with a weekly arXiv sweep"
+  ]
+ }
+]

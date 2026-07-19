@@ -1,0 +1,45 @@
+name: Research Radar sweep
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sweep arXiv and update the radar
+        env:
+          # Optional: add this repo secret to get a Claude-written weekly digest
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 radar/update_radar.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "actions@github.com"
+          git add radar/feed.json radar/updates.json
+          if git diff --cached --quiet; then
+            echo "No changes this week."
+          else
+            git commit -m "Radar sweep: $(date -u +%F)"
+            git push
+          fi
+
+      - name: Deploy to Vercel
+        # Optional: add VERCEL_TOKEN as a repo secret to auto-deploy after each sweep.
+        # (Or connect the repo to Vercel's Git integration and delete this step.)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "No VERCEL_TOKEN secret set — skipping deploy (connect Vercel Git integration or add the secret)."
+            exit 0
+          fi
+          npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"

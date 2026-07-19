@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch11" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch11 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 11 · RL for Language Models</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">The chapter the field moved into</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Recast a language model as a policy — states are token prefixes, actions are next tokens, an answer is an episode — and everything you've learned snaps into place. This chapter follows the modern pipeline: RLHF turns human preference into reward and optimizes it with Chapter 6's PPO; DPO shortcuts the whole apparatus; GRPO streamlines it for reasoning; RLVR swaps learned reward for ground truth. This is where RL and the frontier of AI are currently the same subject.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~60 min</span>
+        <span class="tag tag-neutral">7 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">136 XP on offer</span>
+        <span class="tag tag-accent-2">the field's center of gravity</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 RLHF" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">RLHF — reward from preference</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">"Helpful and honest" has no reward function, but humans can <em>compare</em> two answers. The Bradley–Terry model turns comparisons into a trainable scalar reward <span data-tex="r_\phi"></span>: the probability that answer A beats answer B is <span data-tex="\sigma(r_\phi(A) - r_\phi(B))"></span>, so fitting the comparisons fits the reward. The classic three-step pipeline:</p>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>SFT:</strong> behavior-clone good demonstrations (Chapter 10, verbatim — with the same drift risks).</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Reward model:</strong> train <span data-tex="r_\phi"></span> on human pairwise preferences via Bradley–Terry.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>PPO:</strong> optimize the policy against <span data-tex="r_\phi"></span>, minus a KL penalty tethering it to the SFT model:</p></div>
+      </div>
+      <div data-tex="\max_\theta \; \mathbb{E}_{y \sim \pi_\theta} \Bigl[ r_\phi(x, y) \Bigr] - \beta \, \mathrm{KL}\bigl(\pi_\theta(\cdot \mid x) \,\|\, \pi_{\text{ref}}(\cdot \mid x)\bigr)" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The KL term matters because <span data-tex="r_\phi"></span> is a <em>learned</em> reward — a lossy proxy. Push hard enough and the policy finds text the reward model loves and humans don't: sycophancy, padding, confident nonsense. That is <strong>reward hacking</strong> (Goodhart's law with gradients), and the β-weighted leash is the first defense. You know the optimizer already — the clip from Chapter 6 is what keeps each step small; the KL is what keeps the destination close.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A student graded by a teaching assistant who only skims. Optimize gently and you write clearer essays; optimize ruthlessly and you learn what the TA skims <em>for</em> — bold topic sentences, confident tone — and the essays get worse while the grades get better.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">InstructGPT (2022) proved a 1.3B RLHF'd model could be preferred over a 175B raw one — alignment as capability. Every major assistant since has shipped through some version of this pipeline. PPO earned its "most-run algorithm in production" title here.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 DPO" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">DPO — your language model is secretly a reward model</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The KL-constrained objective above has a closed-form optimal policy. Run the algebra backwards and the reward can be written <em>in terms of the policy itself</em>: <span data-tex="r(x,y) = \beta \log \tfrac{\pi_\theta(y|x)}{\pi_{\text{ref}}(y|x)} + \text{const}"></span>. Substitute that into Bradley–Terry and the reward model cancels out of the pipeline entirely:</p>
+      <div data-tex="\mathcal{L}_{\text{DPO}} = -\mathbb{E} \Bigl[ \log \sigma \Bigl( \beta \log \tfrac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \tfrac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)} \Bigr) \Bigr]" data-display style="margin: 26px 0 6px; font-size: 16.5px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">One supervised-looking loss on preference pairs — no reward model, no rollouts, no PPO machinery. Raise the chosen answer's likelihood margin over the rejected one, measured against the reference. It is offline RL's philosophy (Chapter 10) applied to alignment: extract the better policy from fixed data. The trade: no fresh samples means the policy is only shaped where the preference data has support — which is why frontier reasoning training moved back online. Try it yourself: <a href="Home.dc.html#projects">Project 7</a>.</p>
+    </section>
+
+    <section data-screen-label="Part 3 GRPO RLVR" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">GRPO and RLVR — the reasoning recipe</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">For math and code, you don't need a learned reward at all — run the unit tests, check the boxed answer. That is <strong>RLVR</strong>: reinforcement learning with verifiable rewards, the idea behind DeepSeek-R1 and the reasoning-model wave. And with rewards this clean, PPO's critic — a second full-size network estimating baselines — starts to look like overhead. <strong>GRPO</strong> deletes it: sample a <em>group</em> of G answers per prompt, and let the group grade itself:</p>
+      <div data-tex="A_i = \frac{r_i - \text{mean}(r_1, \ldots, r_G)}{\text{std}(r_1, \ldots, r_G)}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Each answer's advantage is how it did <em>relative to its siblings</em> — Chapter 5's baseline, computed from the batch instead of learned by a critic. Everything else is PPO's clipped surrogate. Half the memory, no critic to train, and a curriculum for free: prompts the model always solves (or never solves) yield zero advantage spread and teach nothing; learning concentrates exactly at the frontier of ability.</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># GRPO on one prompt, in caricature
+answers = [model.sample(prompt) for _ in range(8)]      # the group
+rewards = [1.0 if verify(a) else 0.0 for a in answers]  # RLVR: run the checker
+adv = (rewards - rewards.mean()) / (rewards.std() + 1e-4)
+loss = ppo_clip_loss(model, answers, adv)               # Chapter 6, unchanged</pre>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">The open problems, honestly</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Verifiers get gamed (formatting tricks, test-case memorization); entropy collapses as the policy sharpens onto known solution paths — pass@1 rises while pass@128 stalls, the exploration debt of Chapter 9 coming due; and outcome-only reward gives one bit for a thousand-token derivation — the credit-assignment problem at its cruelest. The GRPO successors streaming past on the <a href="ResearchRadar.dc.html">radar</a> — DAPO, GSPO, and friends — are largely patches to these three wounds.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Grading on a curve, per problem: eight students attempt it, and each is scored against the group's spread. Problems everyone aces — or everyone flunks — grade to zero and teach nothing. All signal concentrates where the class is split.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — 2025–26</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">DeepSeek-R1 showed pure RLVR could <em>elicit</em> reasoning — self-checking, backtracking, longer chains — without being taught them. GRPO-family training now sits behind essentially every frontier reasoning model, and "what's verifiable?" has become the question that decides what AI gets better at next.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch11 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch11" heading="Alignment checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch11 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch11" heading="Key terms — Chapter 11" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch11 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch11" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'Recast as an MDP, a language model generating an answer has states = ____ and actions = ____:',
+          options: [
+            'documents; gradients',
+            'token prefixes; next tokens — an answer is one episode, usually rewarded only at the end',
+            'prompts; full answers',
+            'embeddings; attention heads'
+          ],
+          answer: 1,
+          explain: 'The mapping that makes the whole chapter possible. Note what it implies: enormous action space (~100k tokens), long episodes, and terminal-only reward — credit assignment at its hardest.'
+        },
+        {
+          type: 'mcq',
+          q: 'The Bradley–Terry model lets RLHF train a reward model from…',
+          options: [
+            'absolute 1–10 quality scores',
+            'pairwise comparisons: fitting σ(r(A) − r(B)) to observed human choices recovers a scalar reward up to a constant',
+            'the SFT loss on demonstrations',
+            'the policy’s own log-probabilities'
+          ],
+          answer: 1,
+          explain: 'Humans are unreliable at absolute scoring but decent at picking the better of two. Bradley–Terry converts that weaker signal into exactly what RL needs.'
+        },
+        {
+          type: 'mcq',
+          q: 'Why does the RLHF objective include −β·KL(π‖π_ref)?',
+          options: [
+            'to speed up convergence of PPO',
+            'because the reward model is a lossy proxy — unconstrained optimization finds its blind spots (reward hacking), and the KL leash keeps the policy where the proxy is trustworthy',
+            'to keep the vocabulary distribution uniform',
+            'because PPO requires bounded rewards'
+          ],
+          answer: 1,
+          explain: 'Goodhart’s law: optimize a proxy hard enough and it stops measuring what you meant. The KL term prices deviation from the reference; the clip (Ch6) limits the step, the KL limits the destination.'
+        },
+        {
+          type: 'fill',
+          q: 'DPO’s key algebraic move: the KL-constrained objective’s optimal policy can be inverted so the reward is expressed as β log π(y|x)/π_ref(y|x) — letting the ____ model cancel out of the pipeline.',
+          accept: ['reward', 'reward model'],
+          placeholder: 'which model?',
+          explain: 'Substituting the policy-implied reward into Bradley–Terry yields a loss purely in policy log-probs. “Your language model is secretly a reward model” — the paper’s actual subtitle.'
+        },
+        {
+          type: 'predict',
+          q: 'GRPO on one prompt: 8 samples, 2 verify correct (r = 1), 6 fail (r = 0). Roughly what advantage does each <em>correct</em> answer get? (mean 0.25, std ≈ 0.43)',
+          code: 'rs = [1, 1, 0, 0, 0, 0, 0, 0]\nmean, std = 0.25, 0.43\nprint(round((1 - mean) / std, 2), round((0 - mean) / std, 2))',
+          options: ['1.0 and 0.0', '+1.74 for correct, −0.58 for wrong', '+0.75 for correct, −0.25 for wrong', 'zero for all — the group cancels'],
+          answer: 1,
+          explain: '(1 − 0.25)/0.43 ≈ <strong>+1.74</strong>; (0 − 0.25)/0.43 ≈ <strong>−0.58</strong>. Rare successes get large positive advantage — and if all 8 had agreed, std → 0 spread and the prompt teaches nothing. The difficulty curriculum is built in.'
+        },
+        {
+          type: 'mcq',
+          q: 'GRPO deletes PPO’s critic network. What replaces its job (the baseline)?',
+          options: [
+            'a smaller distilled critic',
+            'the group mean: each answer’s reward is compared to the average of its sibling samples for the same prompt',
+            'the reward model doubles as critic',
+            'nothing — GRPO uses raw returns'
+          ],
+          answer: 1,
+          explain: 'Chapter 5 taught that any action-independent baseline is legal and variance-reducing. The group mean is exactly such a baseline, estimated from samples instead of learned — freeing the critic’s memory for more rollouts.'
+        },
+        {
+          type: 'desc',
+          q: 'RLVR is described as trading the reward-hacking problem for a verification problem. Explain both halves, with one failure mode of each.',
+          model: '<strong>What’s gained:</strong> a verifiable reward (unit tests pass, boxed answer matches) is ground truth, not a learned proxy — there is no reward <em>model</em> to sycophantically flatter, so the classic RLHF failure (fluent confident nonsense that the RM loves) largely disappears in verifiable domains. <strong>What’s inherited:</strong> the verifier is now the spec, and specs have holes — models learn to game weak test suites, exploit formatting checks, or memorize benchmark answers; reward hacking returns as <em>verifier</em> hacking. Second cost: verifiability limits scope — math and code have checkers, “write a kind email” doesn’t — so capabilities improve unevenly, following where verification is cheap. The frontier’s response: stronger verifiers, process reward models, and LLM judges — each of which reopens a proxy gap of its own.',
+          explain: 'The conservation law of alignment: optimization pressure always flows to the weakest point of whatever signal defines success.'
+        }
+      ],
+      cards: [
+        { f: 'LLM as MDP', b: 'State = token prefix, action = next token, episode = one answer, reward usually terminal. RL vocabulary for language generation.' },
+        { f: 'Bradley–Terry', b: 'P(A ≻ B) = σ(r(A) − r(B)): fit pairwise human choices to recover a scalar reward model. The bridge from preference to reward.' },
+        { f: 'RLHF pipeline', b: 'SFT (clone demos) → reward model (from preferences) → PPO with KL leash to the reference. InstructGPT’s recipe; still the backbone.' },
+        { f: 'Reward hacking', b: 'Optimizing a learned proxy finds its blind spots: sycophancy, padding, confident nonsense. Goodhart’s law with gradients. Defenses: KL penalty, better RMs, verifiable rewards.' },
+        { f: 'DPO', b: 'Invert the KL-constrained optimum → reward = β log π/π_ref → substitute into Bradley–Terry → one offline loss on preference pairs. No RM, no rollouts.' },
+        { f: 'GRPO', b: 'Sample G answers per prompt; advantage = (r − group mean)/group std; PPO clip otherwise. Critic-free, memory-light, difficulty-adaptive.' },
+        { f: 'RLVR', b: 'Reward = automated verification (tests, answer checkers). Ground truth instead of proxy; powered DeepSeek-R1 and the reasoning wave. Limits: gameable verifiers, verifiable domains only.' },
+        { f: 'Entropy collapse', b: 'RLVR sharpens known solution modes: pass@1 up, pass@k flat — diversity spent, not grown. Chapter 9’s exploration problem, reborn at the frontier.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

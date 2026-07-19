@@ -54,7 +54,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 320}, &quot;chapter&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;ch1&quot;, &quot;options&quot;: [&quot;ch1&quot;, &quot;ch2&quot;, &quot;ch3&quot;, &quot;ch4&quot;, &quot;ch5&quot;, &quot;ch6&quot;], &quot;tsType&quot;: &quot;string&quot;}, &quot;pos&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;top&quot;, &quot;options&quot;: [&quot;top&quot;, &quot;bottom&quot;], &quot;tsType&quot;: &quot;'top'|'bottom'&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 320}, &quot;chapter&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;ch1&quot;, &quot;options&quot;: [&quot;ch1&quot;, &quot;ch2&quot;, &quot;ch3&quot;, &quot;ch4&quot;, &quot;ch5&quot;, &quot;ch6&quot;, &quot;ch7&quot;, &quot;ch8&quot;, &quot;ch9&quot;, &quot;ch10&quot;, &quot;ch11&quot;, &quot;ch12&quot;], &quot;tsType&quot;: &quot;string&quot;}, &quot;pos&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;top&quot;, &quot;options&quot;: [&quot;top&quot;, &quot;bottom&quot;], &quot;tsType&quot;: &quot;'top'|'bottom'&quot;}}">
 class Component extends DCLogic {
   componentDidMount() {
     this.onChange = () => this.forceUpdate();
@@ -80,7 +80,7 @@ class Component extends DCLogic {
     return {
       isTop: pos === 'top', isBottom: pos === 'bottom',
       n: ch.n, xp: lvl.xp, levelName: lvl.name,
-      chapterLabel: 'Chapter ' + ch.n + ' of 6',
+      chapterLabel: 'Chapter ' + ch.n + ' of ' + RL.CHAPTERS.length,
       xpLabel: lvl.xp + ' XP \u00b7 ' + lvl.name,
       doneTitle: done ? 'Chapter read — nicely done.' : 'Done with this chapter?',
       doneSub: done ? 'The lesson is marked complete. Retake the quiz any time to raise your best score.' : 'Mark the lesson complete for +50 XP once you have been through the sections, the quiz and the cards.',

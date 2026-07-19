@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch10" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch10 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 10 · Offline RL &amp; Imitation</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Learning when you can't touch the world</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Hospitals won't let an ε-greedy policy dose patients; factories won't let one drive robots into walls. Often all you get is a <em>logged dataset</em> — and the moment the environment goes away, a quiet assumption underneath everything since Chapter 3 breaks. This chapter is about what breaks, why copying the data is the honest baseline, and how offline RL cautiously does better.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~50 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">no do-overs</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 BC" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Behavior cloning — and why it drifts</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">The simplest use of a demonstration dataset ignores rewards entirely: treat it as supervised learning, <span data-tex="\max_\theta \sum \log \pi_\theta(a_i \mid s_i)"></span>. This is <strong>behavior cloning</strong>, and when data is plentiful and expert, it is embarrassingly effective — it is also, not coincidentally, exactly what SFT does to a language model. Its failure mode is structural: the clone is trained on the <em>expert's</em> states, but at test time it visits <em>its own</em>. One small mistake leads somewhere the data never covered, where the next mistake is bigger — <strong>compounding error</strong>. Errors grow roughly quadratically in horizon, versus linear for ordinary supervised learning.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Learning to drive by watching a parent who never leaves the lane. The first time you drift six inches, you're in a state you've never seen handled — and your correction is a guess that drifts you further. The expert's competence hid exactly the data you needed most.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">DAgger's fix — roll out the learner, ask the expert to label the states it actually reaches — is standard in robot imitation. And every LLM lab relearned the lesson: SFT-only models drift in long generations; post-training (Chapter 11) exists partly to patch cloning's compounding errors.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 Distribution shift" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Why off-policy ≠ offline</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Q-learning is off-policy — so can't we just run DQN on the logged data? No, and the reason is precise. The Bellman target contains <span data-tex="\max_{a'} Q(s', a')"></span>: a max over <strong>all</strong> actions, including ones the dataset never shows. On those, Q is unconstrained fantasy; the max seeks out its most inflated fantasy; and — here is the killer — <em>online</em> RL would self-correct (the agent tries the action, reality disappoints, the value comes down), but offline there is no reality left to disappoint. Errors don't just persist, they <em>propagate</em> through bootstrapping:</p>
+      <div data-tex="Q(s,a) \leftarrow r + \gamma \max_{a'} Q(s', a') \quad \text{— and } a' \text{ may be an action nobody ever took}" data-display style="margin: 26px 0 6px; font-size: 16.5px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">This is the same maximization-of-noise disease from Chapters 4 and 7, with the immune system removed. Every serious offline algorithm is some form of <strong>pessimism toward the unknown</strong> — the mirror image of exploration's optimism, and correctly so: online, trying the uncertain thing teaches you; offline, trusting the uncertain thing can only mislead you.</p>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">The arc of the course, in one line</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Online exploration: <em>optimism</em> under uncertainty (Chapter 9). Offline learning: <em>pessimism</em> under uncertainty (this chapter). Same quantity — uncertainty — opposite signs, depending on whether reality gets a vote.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 3 CQL IQL DT" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Three shapes of caution</h2>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 20px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>CQL — push the fantasy down.</strong> Add a term that lowers Q on actions the policy likes but the data lacks, and raises it on actions in the dataset: <span data-tex="\min_Q \; \mathbb{E}_{\pi}[Q] - \mathbb{E}_{\mathcal{D}}[Q] + \text{Bellman error}"></span>. The learned Q becomes a conservative lower bound — out-of-distribution actions stop looking like free money.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>IQL — never ask about unseen actions.</strong> Replace the max with expectile regression on values of actions <em>in the data</em>: an upper-expectile V(s) behaves like "the best the dataset does from here," no OOD query ever issued. Then extract the policy by advantage-weighted cloning — copy the data, but copy the good parts harder.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Decision Transformer — stop bootstrapping entirely.</strong> Treat trajectories as sequences <span data-tex="(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \ldots)"></span> with return-to-go tokens, and train a transformer to predict actions. At test time, prompt it with a high desired return and let it act the part. RL as conditional sequence modeling — no Q, no Bellman, no pessimism term, just a language model of behavior.</p></div>
+      </div>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 24px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># Decision Transformer, the whole idea in one line of prompting
+action = model(returns_to_go=900, states=history_s, actions=history_a)  # "play like a 900-return agent"</pre>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Three chefs with only a recipe archive: one marks unlisted ingredient combos as risky (CQL), one only ever remixes recipes on file, favoring the five-star ones (IQL), one reads the archive as literature and writes in the style of the best reviews (DT). None may taste anything.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Sepsis treatment policies from ICU records, recommender updates from interaction logs, robot skills from teleoperation archives — and DPO (next chapter) is offline RL's philosophy applied to LLM alignment: extract a better policy from fixed preference data, no environment in sight.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch10 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch10" heading="Offline RL checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch10 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch10" heading="Key terms — Chapter 10" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch10 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch10" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'Behavior cloning’s compounding-error problem exists because…',
+          options: [
+            'neural networks underfit expert data',
+            'the clone trains on the expert’s state distribution but acts on its own — one error leads off-distribution, where the next error is worse',
+            'demonstrations contain no reward signal',
+            'the expert is usually suboptimal'
+          ],
+          answer: 1,
+          explain: 'Train/test state distributions differ by construction: supervised learning assumes i.i.d. states, but a policy generates its own future inputs. Errors compound ~quadratically in horizon. DAgger fixes it by labeling the learner’s own states.'
+        },
+        {
+          type: 'mcq',
+          q: 'DQN is off-policy. Why does it still fail when run purely offline?',
+          options: [
+            'the replay buffer becomes too small',
+            'its target max over all actions queries Q on actions absent from the data — fantasy values that online interaction would correct, but offline nothing ever corrects',
+            'offline data cannot be shuffled i.i.d.',
+            'the learning rate must be annealed online'
+          ],
+          answer: 1,
+          explain: 'Off-policy means learning about one policy from another’s data — but online, mistakes still get tested against reality. Offline removes the feedback loop; maximization bias runs unchecked and propagates through bootstrapping.'
+        },
+        {
+          type: 'mcq',
+          q: 'CQL adds <span data-tex="\\mathbb{E}_{\\pi}[Q] - \\mathbb{E}_{\\mathcal{D}}[Q]"></span> to the loss. In words, this term…',
+          options: [
+            'increases exploration of rare actions',
+            'depresses Q on actions the current policy favors but the dataset doesn’t contain, while supporting Q on in-data actions — making the estimate a conservative lower bound',
+            'clips the Bellman targets like PPO clips ratios',
+            'normalizes advantages per minibatch'
+          ],
+          answer: 1,
+          explain: 'Pessimism, implemented: the policy’s favorite fantasy actions get taxed, dataset actions get supported. The policy can then only prefer what the data can vouch for.'
+        },
+        {
+          type: 'fill',
+          q: 'Online exploration says be optimistic under uncertainty; offline RL says be ____ under uncertainty.',
+          accept: ['pessimistic', 'pessimist', 'conservative', 'cautious'],
+          placeholder: 'one word',
+          explain: 'The sign flips with the feedback loop. Online, testing uncertain options teaches you (optimism pays). Offline, trusting uncertain values can only mislead (pessimism protects).'
+        },
+        {
+          type: 'predict',
+          q: 'A Decision Transformer is prompted with returns-to-go. After a step earning reward 10, what conditioning token does it use next?',
+          code: 'target_return = 900\nreward_received = 10\nprint(target_return - reward_received)',
+          options: ['900 — the target never changes', '890 — return-to-go decreases by rewards received', '910 — rewards accumulate', '0 — it resets each step'],
+          answer: 1,
+          explain: '<strong>890.</strong> Return-to-go is “how much return is still wanted from here,” so each earned reward is subtracted. The model continually re-asks: what would an agent still owed 890 do now?'
+        },
+        {
+          type: 'desc',
+          q: 'IQL claims to avoid the out-of-distribution problem “by construction.” Explain its two-part mechanism.',
+          model: '<strong>Part 1 — value learning without a max:</strong> IQL fits V(s) to Q-values of dataset actions by expectile regression at a high expectile (e.g. 0.9), which approximates “the best available in-data action from s” — the Bellman backup then uses this V, so no Q(s′, a′) is ever evaluated on an action outside the dataset. <strong>Part 2 — policy extraction:</strong> the policy is trained by advantage-weighted behavior cloning — imitate dataset actions with weight exp(A/β) — so it can only ever output actions the data contains, tilted toward the good ones. Caution appears not as a penalty term but as a restriction of the whole computation to the data’s support.',
+          explain: 'CQL punishes OOD queries; IQL never issues them. Two philosophies of the same pessimism.'
+        }
+      ],
+      cards: [
+        { f: 'Behavior cloning', b: 'Supervised learning on (s, a) pairs: max Σ log π(aᵢ|sᵢ). Ignores rewards. SFT on demonstrations — literally what LLM fine-tuning does.' },
+        { f: 'Compounding error', b: 'BC’s curse: small mistakes lead off the expert’s state distribution, where bigger mistakes follow. Error grows ~O(H²) in horizon vs O(H) for i.i.d. supervision.' },
+        { f: 'DAgger', b: 'Roll out the learner, have the expert label the visited states, retrain, repeat — fixes distribution shift by collecting data where the learner actually goes.' },
+        { f: 'Off-policy vs offline', b: 'Off-policy: learn from another policy’s data, environment still available for correction. Offline: fixed dataset, no correction loop — maximization bias runs free.' },
+        { f: 'OOD action problem', b: 'Bellman’s max ranges over actions the data never shows; Q there is unconstrained fantasy, and bootstrapping spreads it. The central pathology of offline RL.' },
+        { f: 'CQL', b: 'Conservative Q-Learning: penalize E_π[Q] − E_D[Q] alongside Bellman error → Q lower-bounds truth, OOD actions stop looking like free money.' },
+        { f: 'IQL', b: 'Expectile-regressed V from in-data actions only (no OOD queries), then advantage-weighted BC to extract the policy. Caution by construction.' },
+        { f: 'Decision Transformer', b: 'Trajectories as token sequences (R̂, s, a, …); predict actions conditioned on return-to-go. RL as sequence modeling — prompt for the return you want.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

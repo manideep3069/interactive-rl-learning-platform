@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch9" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch9 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 9 · Exploration &amp; Bandits</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">The cost of not knowing</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">Every algorithm so far explored by coin flip — ε-greedy here, entropy bonuses there. This chapter takes exploration seriously: bandits, where the dilemma lives in its purest form; regret, which prices it; UCB and Thompson sampling, which solve it near-optimally; and curiosity, which scales it to worlds where rewards are almost never seen.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~45 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">the oldest dilemma</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 Bandits and regret" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Bandits — RL with the hard part isolated</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">A <strong>multi-armed bandit</strong> is an MDP with one state: k arms, each with an unknown reward distribution, pull one per round. No credit assignment, no dynamics — nothing left <em>but</em> explore-versus-exploit. The scorecard is <strong>regret</strong>: how much you lost to the best arm you didn't know:</p>
+      <div data-tex="R(T) = T\,\mu^* - \mathbb{E}\Bigl[\textstyle\sum_{t=1}^{T} \mu_{a_t}\Bigr]" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Two facts anchor the whole field. ε-greedy with fixed ε keeps exploring forever at a constant rate, so its regret grows <em>linearly</em> — a permanent tax. And the Lai–Robbins bound says nothing can beat <span data-tex="\Omega(\log T)"></span>: some logarithmic tuition is unavoidable. The gap between linear and logarithmic is the price of exploring <em>stupidly</em> versus <em>deliberately</em>.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">New in town, choosing a lunch spot daily. Always-your-favorite means never finding the better place two blocks away; a random spot every day means eating badly forever. Good exploration is neither — it is doubt, budgeted.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Bandits quietly run the internet: A/B platforms that shift traffic toward winners mid-test, ad and headline selection, clinical trial designs that treat more patients with the arm that seems to work. Anywhere feedback is instant and choices repeat, it's a bandit.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 UCB Thompson" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Two ways to be smart about doubt</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;"><strong>UCB — optimism in the face of uncertainty.</strong> Give every arm the benefit of the doubt, sized to the doubt:</p>
+      <div data-tex="a_t = \arg\max_a \; \hat{\mu}_a + \sqrt{\frac{2 \ln t}{N_a}}" data-display style="margin: 26px 0 6px; font-size: 17px; overflow-x: auto;"></div>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Act greedily on the <em>upper confidence bound</em>. Either the optimism was justified (you found a good arm) or it wasn't (you learned so, and the bonus shrinks). Both outcomes pay. Regret: <span data-tex="O(\log T)"></span> — matching the lower bound. You met this formula inside MCTS last chapter; now you know its name.</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;"><strong>Thompson sampling — act on a sampled belief.</strong> Keep a posterior over each arm's mean; each round, <em>sample</em> one plausible world from the posterior and act optimally in it:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;"># Bernoulli bandit, Beta posterior — Thompson in four lines
+theta = [beta.rvs(wins[a] + 1, losses[a] + 1) for a in range(k)]  # sample a world
+a = int(np.argmax(theta))                                         # act in it
+r = pull(a)
+wins[a] += r; losses[a] += 1 - r                                  # update belief</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">Uncertain arms produce spread-out samples that sometimes win the argmax — exploration emerges from doubt itself, with no bonus term anywhere. Empirically often the best simple bandit algorithm; philosophically the cleanest: <em>explore exactly as much as you believe you might be wrong.</em></p>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Same instinct, three costumes</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Optimistic initialization in tabular Q-learning (Chapter 3), UCB's confidence bonus, MCTS's selection rule — all one idea: <em>uncertainty should raise an option's priority, and attention should lower it.</em> When you see a new exploration paper on the <a href="ResearchRadar.dc.html">radar</a>, look for this shape first.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 3 Curiosity" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">Curiosity — exploration at deep-RL scale</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Confidence intervals need counts, and in a continuous state space every state is visited once or never. The deep-RL answer: <strong>intrinsic reward</strong> — pay the agent for novelty itself, <span data-tex="r = r^{\text{ext}} + \beta\, r^{\text{int}}"></span>. The neatest trick for measuring novelty without counts is <strong>Random Network Distillation</strong>: fix a random network <span data-tex="f"></span>, train a predictor <span data-tex="\hat{f}"></span> to match it on visited states, and pay <span data-tex="r^{\text{int}} = \lVert \hat{f}(s) - f(s) \rVert^2"></span>. Familiar states are well-predicted → no bonus; novel states aren't → bonus. Prediction error as a proxy for "have I been here?"</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">RND cracked <em>Montezuma's Revenge</em> — the Atari game where DQN scored zero for years because the first reward is dozens of correct decisions deep. But intrinsic rewards have their own pathologies: the <strong>noisy-TV problem</strong> (a source of randomness is eternally "novel" — the agent stares at static forever), and <strong>detachment</strong> (curiosity consumed, the agent forgets the way back to the frontier). Exploration remains genuinely unsolved — which is exactly why it's resurfacing in LLM training, where RLVR's exploit-heavy updates are accused of collapsing the very diversity that finds new solutions.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">A child in a new house, drawn to whatever they can't yet predict — until the TV static teaches them that some surprises never resolve. Healthy curiosity needs both the pull of the unknown and the wisdom to abandon the unknowable.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — 2026</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Today's frontier restates the dilemma at LLM scale: reasoning models trained with verifiable rewards sharpen known solution paths but may under-sample novel ones — entropy collapse, measured in pass@k. The bandit chapter of RL is having a second youth inside post-training.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch9 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch9" heading="Exploration checkpoint" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch9 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch9" heading="Key terms — Chapter 9" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch9 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch9" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'Why does ε-greedy with a <em>fixed</em> ε suffer linear regret?',
+          options: [
+            'because it never finds the best arm',
+            'because it keeps exploring at a constant rate forever — a fixed fraction of pulls goes to known-worse arms no matter how much it has learned',
+            'because ties are broken randomly',
+            'because its estimates are biased'
+          ],
+          answer: 1,
+          explain: 'Every round pays an ε-sized tax that never decreases: regret ≈ ε·Δ·T, linear in T. Deliberate methods (UCB, Thompson) shrink exploration as certainty grows, reaching O(log T).'
+        },
+        {
+          type: 'mcq',
+          q: 'The philosophy behind UCB — “optimism in the face of uncertainty” — works because…',
+          options: [
+            'overestimating rewards always increases returns',
+            'acting on the upper bound wins either way: the optimism is right (good arm found) or it’s wrong (you learn so, and the bonus shrinks) — both outcomes pay down regret',
+            'the bounds are exact for Gaussian rewards',
+            'it avoids ever pulling a bad arm'
+          ],
+          answer: 1,
+          explain: 'The bonus √(2 ln t / Nₐ) is calibrated doubt. Every pull of an over-hyped arm deflates its bound; every neglected arm’s bound slowly rises via ln t. The system self-corrects to logarithmic regret.'
+        },
+        {
+          type: 'predict',
+          q: 'UCB, round 100 (ln 100 ≈ 4.6). Arm A: mean 0.60, pulled 50×. Arm B: mean 0.50, pulled 5×. Who gets pulled?',
+          code: 'import math\nucb_a = 0.60 + math.sqrt(2 * math.log(100) / 50)\nucb_b = 0.50 + math.sqrt(2 * math.log(100) / 5)\nprint(round(ucb_a, 2), round(ucb_b, 2))',
+          options: ['A — 1.03 vs 0.90', 'B — 0.90 vs 1.46', 'A — exploitation always wins', 'B — 0.73 vs 1.86'],
+          answer: 1,
+          explain: 'A: 0.60 + √(9.2/50) ≈ 0.90. B: 0.50 + √(9.2/5) ≈ 1.46. <strong>B wins</strong> despite the worse mean — five pulls of evidence is not enough to condemn it. That is optimism doing its job.'
+        },
+        {
+          type: 'mcq',
+          q: 'Thompson sampling explores without any explicit bonus term. Where does its exploration come from?',
+          options: [
+            'a hidden ε it maintains internally',
+            'posterior sampling: uncertain arms yield widely-spread samples that sometimes win the argmax, so an arm is pulled with exactly the probability it is currently believed best',
+            'it cycles through arms round-robin',
+            'annealed noise on the reward estimates'
+          ],
+          answer: 1,
+          explain: 'Doubt itself is the exploration mechanism. As the posterior sharpens, the samples concentrate and exploration fades — automatically, arm by arm.'
+        },
+        {
+          type: 'fill',
+          q: 'Random Network Distillation pays intrinsic reward equal to a predictor’s error at matching a fixed random network — using prediction error as a stand-in for ____ counts.',
+          accept: ['visit', 'visitation', 'state visit', 'state', 'novelty'],
+          placeholder: 'a kind of count',
+          explain: 'Where a table would count visits, RND measures how well the predictor has fit a state — often-seen states are well-fit (no bonus), new ones aren’t (bonus). Pseudo-counts from function approximation.'
+        },
+        {
+          type: 'desc',
+          q: 'Explain the noisy-TV problem for curiosity-driven agents, and why RND is only a partial fix.',
+          model: 'A curiosity agent paid for prediction error will be captivated by any source of <em>irreducible</em> randomness — a noisy TV screen is never predictable, so it pays out novelty bonus forever, and the agent stares instead of exploring. The flaw: surprise conflates “new and learnable” with “random and unlearnable.” RND helps because its target is a <em>fixed deterministic</em> random network — given the same state twice, the target is identical, so pure stochastic noise in transitions doesn’t directly inflate the bonus. But states that merely <em>look</em> different each time (static patterns, timers, other agents) still register as perpetually novel — aleatoric novelty in observation space still fools it. Distinguishing epistemic from aleatoric uncertainty at scale remains open.',
+          explain: 'The deep lesson: exploration bonuses must reward reducible ignorance, not randomness. Getting that distinction cheap and scalable is still an open problem.'
+        }
+      ],
+      cards: [
+        { f: 'Multi-armed bandit', b: 'One-state MDP: k unknown reward distributions, pull one arm per round. Explore/exploit with everything else stripped away.' },
+        { f: 'Regret', b: '<span data-tex="R(T) = T\\mu^* - \\mathbb{E}[\\sum \\mu_{a_t}]"></span> — cumulative loss to the unknown best arm. The field’s scorecard: linear = bad, logarithmic = optimal (Lai–Robbins).' },
+        { f: 'UCB', b: 'Pull argmax of mean + √(2 ln t / Nₐ). Optimism sized to doubt; O(log T) regret. The same rule steers MCTS selection.' },
+        { f: 'Thompson sampling', b: 'Sample one plausible world from the posterior, act optimally in it, update. Explores exactly in proportion to current doubt; no bonus term.' },
+        { f: 'Optimism under uncertainty', b: 'The unifying principle: uncertainty should raise priority, attention should lower it. Appears as optimistic init, UCB, PUCT, exploration bonuses.' },
+        { f: 'Intrinsic reward', b: 'r = r_ext + β·r_int: pay for novelty/surprise itself, so learning proceeds even when external reward is almost never seen (sparse-reward tasks).' },
+        { f: 'RND', b: 'Fixed random net f, trained predictor f̂; bonus = ‖f̂(s) − f(s)‖². Familiar → well-fit → no bonus. Cracked Montezuma’s Revenge.' },
+        { f: 'Noisy-TV problem', b: 'Irreducible randomness looks eternally novel; the agent stares at static. Curiosity must target reducible (epistemic) ignorance — still open at scale, now also in LLM post-training.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

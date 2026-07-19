@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <nav class="nav">
+    <a href="Home.dc.html" style="text-decoration: none; color: var(--color-text); font-family: var(--font-heading); font-size: 19px;">The Little Book of RL</a>
+    <span style="flex: 1;"></span>
+    <span class="tag tag-accent-2" style="white-space: nowrap;">Research Radar</span>
+    <a class="btn btn-ghost" href="Home.dc.html" style="text-decoration: none; white-space: nowrap;">← Home</a>
+  </nav>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Radar hero" style="padding: 56px 0 12px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">The living part of the curriculum</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Research Radar</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 64ch; margin: 24px 0 0;">RL moves too fast for a finished syllabus. This page watches the field for you: a live pull of the newest reinforcement-learning papers from arXiv, each mapped onto the chapter it extends — plus a changelog of every update made to this site's curriculum, so you always know what changed and when.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+        <span class="tag tag-neutral">{{ liveStatus }}</span>
+        <span class="tag tag-neutral">weekly sweep: Mondays</span>
+        <span class="tag tag-accent-2">{{ feedStatus }}</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Changelog" style="padding: 40px 0 8px;">
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0 0 6px;">What changed on this site</h2>
+      <p style="font-size: 15.5px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 64ch; margin: 0 0 24px;">Every curriculum edit and every weekly sweep lands here.</p>
+      <div style="display: grid; gap: 16px; max-width: 860px;">
+        <sc-for list="{{ updates }}" as="u" hint-placeholder-count="2">
+          <div style="background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 24px 28px; box-shadow: var(--shadow-sm);">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <span class="tag tag-accent" style="font-family: ui-monospace, monospace; font-size: 11.5px;">{{ u.date }}</span>
+              <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 19px; margin: 0;">{{ u.title }}</h3>
+            </div>
+            <div style="display: grid; gap: 7px; margin-top: 14px;">
+              <sc-for list="{{ u.items }}" as="it" hint-placeholder-count="3">
+                <div style="display: flex; gap: 12px; align-items: baseline;">
+                  <span style="flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent-2); transform: translateY(-2px);"></span>
+                  <span style="font-size: 14.5px; line-height: 1.55;">{{ it.text }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ noUpdates }}" hint-placeholder-val="{{ false }}">
+        <p style="font-size: 14.5px; color: var(--color-neutral-600);">No changelog entries yet — the first weekly sweep will write one.</p>
+      </sc-if>
+    </section>
+
+    <section data-screen-label="Papers" style="padding: 48px 0 8px;">
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0 0 6px;">Fresh from the field</h2>
+      <p style="font-size: 15.5px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 78%, transparent); max-width: 64ch; margin: 0 0 20px;">Newest RL papers, tagged with the chapter they build on. A tag means: <em>you already have the prerequisites — this paper is that chapter, continued.</em></p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 24px;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="8">
+          <button onClick="{{ f.pick }}" class="tag" style="cursor: pointer; border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: {{ f.ink }}; font-size: 12.5px; padding: 5px 14px;">{{ f.label }}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+        <p style="font-size: 15px; color: var(--color-neutral-600);">Contacting arXiv…</p>
+      </sc-if>
+      <sc-if value="{{ failed }}" hint-placeholder-val="{{ false }}">
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 18px 24px; max-width: 70ch;">
+          <p style="font-size: 14.5px; line-height: 1.6; margin: 0;">Couldn't reach arXiv live from your browser — showing the last committed weekly snapshot instead. (The Monday sweep keeps it at most a week old.)</p>
+        </div>
+      </sc-if>
+      <div style="display: grid; gap: 16px; max-width: 960px; margin-top: 8px;">
+        <sc-for list="{{ papers }}" as="p" hint-placeholder-count="8">
+          <a href="{{ p.url }}" target="_blank" rel="noopener" style="text-decoration: none; color: var(--color-text); background: var(--color-neutral-100); border-radius: calc(2 * var(--radius-lg)); padding: 22px 28px; box-shadow: var(--shadow-sm); display: block;" style-hover="box-shadow: var(--shadow-md);">
+            <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+              <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 17.5px; line-height: 1.3; margin: 0; flex: 1; min-width: 260px;">{{ p.title }}</h3>
+              <span style="font-size: 12.5px; color: var(--color-neutral-600); white-space: nowrap;">{{ p.date }}</span>
+            </div>
+            <p style="font-size: 14px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 75%, transparent); margin: 10px 0 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ p.summary }}</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="2">
+                <span class="tag tag-accent-2" style="font-size: 11.5px;">{{ t.label }}</span>
+              </sc-for>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section data-screen-label="How it works" style="padding: 48px 0 72px;">
+      <div style="background: var(--color-accent-2-100); border-radius: calc(2 * var(--radius-lg)); padding: 28px 32px; max-width: 860px;">
+        <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; margin: 0 0 10px;">How this stays honest</h3>
+        <p style="font-size: 14.5px; line-height: 1.7; margin: 0;">Two mechanisms. <strong>Live:</strong> your browser queries arXiv's public API on every visit, so the paper list is minutes old. <strong>Weekly:</strong> a GitHub Action sweeps arXiv every Monday, curates the highest-signal RL papers into a committed snapshot, and appends a changelog entry — that's the trail above. Chapter tags come from a transparent keyword heuristic (imperfect on purpose — better a visible rule than an invisible guess). Lesson <em>text</em> is never rewritten by a robot: the sweep proposes, the changelog discloses, and a human merges. Sources beyond arXiv (ICLR/NeurIPS via OpenReview, journal feeds) plug into the same pipeline.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { live: null, feed: null, updates: null, failed: false, filter: 'all' };
+
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+    this.loadFeed(); this.loadUpdates(); this.loadLive();
+  }
+  componentDidUpdate() { if (window.RL) window.RL.icons(); }
+
+  tagRules() {
+    return [
+      [/rlhf|dpo\b|grpo|rlvr|verifiable reward|preference|reward model|alignment|reasoning (model|llm)|language model|llm/i, 'ch11', 'Ch11 · RL for LLMs'],
+      [/agent|tool[- ]use|multi[- ]agent|swe[- ]?bench|computer[- ]use|web navigation|gui/i, 'ch12', 'Ch12 · Agentic RL'],
+      [/offline|batch rl|behavior clon|imitation|inverse rl|decision transformer|\bcql\b|\biql\b/i, 'ch10', 'Ch10 · Offline RL'],
+      [/explorat|bandit|curiosity|intrinsic|count[- ]based|regret|thompson|\bucb\b/i, 'ch9', 'Ch9 · Exploration'],
+      [/world model|model[- ]based|monte carlo tree|\bmcts\b|muzero|alphazero|dreamer|latent dynamics|planning/i, 'ch8', 'Ch8 · Model-Based RL'],
+      [/soft actor|\bsac\b|\btd3\b|ddpg|continuous control|locomotion|manipulation|robot/i, 'ch7', 'Ch7 · Continuous Control'],
+      [/\bppo\b|proximal policy|trust region|policy gradient|actor[- ]critic|\bgae\b/i, 'ch6', 'Ch6 · PPO & Policy Gradients'],
+      [/\bdqn\b|q[- ]learning|value[- ]based|distributional rl|rainbow/i, 'ch4', 'Ch4 · Value Learning'],
+      [/temporal difference|sarsa|eligibility trace|monte carlo method/i, 'ch3', 'Ch3 · Tabular Learning']
+    ];
+  }
+  tagsFor(text) {
+    const out = [];
+    for (const [re, id, label] of this.tagRules()) {
+      if (re.test(text)) out.push({ id, label });
+      if (out.length >= 2) break;
+    }
+    if (!out.length) out.push({ id: 'general', label: 'General RL' });
+    return out;
+  }
+
+  loadLive() {
+    const q = '(cat:cs.LG OR cat:cs.AI OR cat:cs.RO OR cat:cs.CL) AND (abs:"reinforcement learning" OR ti:"reinforcement learning" OR abs:RLHF OR abs:RLVR)';
+    // arXiv's API sends no CORS headers, so in production we go through the
+    // same-origin /api/arxiv rewrite (vercel.json); the direct URL is a
+    // fallback for environments where that proxy doesn't exist.
+    const params = 'search_query=' + encodeURIComponent(q) + '&sortBy=submittedDate&sortOrder=descending&max_results=30';
+    const attempt = (url) => fetch(url).then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.text().then((t) => { if (t.indexOf('<entry') === -1) throw new Error('no entries'); return t; });
+    });
+    attempt('/api/arxiv?' + params)
+      .catch(() => attempt('https://export.arxiv.org/api/query?' + params))
+      .then((xml) => {
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      const entries = [...doc.getElementsByTagName('entry')].map((e) => {
+        const g = (tag) => { const n = e.getElementsByTagName(tag)[0]; return n ? n.textContent.trim() : ''; };
+        const title = g('title').replace(/\s+/g, ' ');
+        const summary = g('summary').replace(/\s+/g, ' ');
+        return { title, url: g('id'), published: g('published'), summary, tags: this.tagsFor(title + ' ' + summary) };
+      });
+      this.setState({ live: entries, failed: false });
+    }).catch(() => this.setState({ failed: true }));
+  }
+  loadFeed() {
+    fetch('radar/feed.json').then((r) => (r.ok ? r.json() : null)).then((f) => this.setState({ feed: f })).catch(() => {});
+  }
+  loadUpdates() {
+    fetch('radar/updates.json').then((r) => (r.ok ? r.json() : null)).then((u) => this.setState({ updates: u })).catch(() => {});
+  }
+
+  fmtDate(iso) {
+    try { return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) { return iso; }
+  }
+
+  renderVals() {
+    const st = this.state;
+    const source = st.live || (st.feed && st.feed.papers ? st.feed.papers.map((p) => ({
+      title: p.title, url: p.url, published: p.published, summary: p.summary,
+      tags: (p.chapters && p.chapters.length ? p.chapters : ['general']).map((id) => {
+        const rule = this.tagRules().find((r) => r[1] === id);
+        return { id, label: rule ? rule[2] : 'General RL' };
+      })
+    })) : null);
+
+    const all = source || [];
+    const filtered = st.filter === 'all' ? all : all.filter((p) => p.tags.some((t) => t.id === st.filter));
+
+    const present = new Set();
+    all.forEach((p) => p.tags.forEach((t) => present.add(t.id)));
+    const filterDefs = [['all', 'All papers']].concat(
+      this.tagRules().filter((r) => present.has(r[1])).map((r) => [r[1], r[2]]),
+      present.has('general') ? [['general', 'General RL']] : []
+    );
+
+    const updates = (st.updates || []).slice(0, 8).map((u) => ({
+      date: u.date, title: u.title, items: (u.items || []).map((t) => ({ text: t }))
+    }));
+
+    return {
+      liveStatus: st.live ? 'live from arXiv · ' + all.length + ' papers' : st.failed ? 'live fetch unavailable' : 'contacting arXiv…',
+      feedStatus: st.feed && st.feed.generated ? 'last sweep: ' + st.feed.generated.slice(0, 10) : 'first sweep pending',
+      loading: !st.live && !st.failed,
+      failed: st.failed && !(st.feed && st.feed.papers && st.feed.papers.length),
+      updates,
+      noUpdates: updates.length === 0,
+      filters: filterDefs.map(([id, label]) => ({
+        label,
+        pick: () => this.setState({ filter: id }),
+        bg: st.filter === id ? 'var(--color-accent)' : 'transparent',
+        ink: st.filter === id ? 'var(--color-bg)' : 'var(--color-text)',
+        border: st.filter === id ? 'var(--color-accent)' : 'var(--color-divider)'
+      })),
+      papers: filtered.slice(0, 30).map((p) => ({
+        title: p.title, url: p.url, date: this.fmtDate(p.published),
+        summary: p.summary, tags: p.tags
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

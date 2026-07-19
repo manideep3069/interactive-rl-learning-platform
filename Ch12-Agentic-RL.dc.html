@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem("rl-theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/styles.css">
+  <script src="_ds/organic-96dd4670-c283-46e7-a883-aab6ce3182e1/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="rl-lib.js"></script>
+  <style>
+    html { background: var(--color-bg); }
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); text-wrap: pretty; }
+    a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-800); }
+  </style>
+</helmet>
+<div>
+  <dc-import name="ChapterNav" chapter="ch12" pos="top" hint-size="100%,72px"></dc-import>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px);">
+
+    <section data-screen-label="Ch12 hero" style="padding: 72px 0 24px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 14px;">Chapter 12 · Agentic RL — the capstone</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(36px, 4.6vw, 58px); line-height: 1.08; margin: 0 0 0 -0.028em;">Where every chapter reports for duty</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 24px 0 0;">An agent is a loop: model proposes an action, a tool executes it, the result comes back, repeat until done. Train that loop with RL and every idea in this course returns at scale — episodes hours long, actions that are API calls, rewards that arrive once per task, and an optimizer clever enough to cheat. This is the frontier as of 2026, and it is your final exam.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;">
+        <span class="tag tag-neutral">~55 min</span>
+        <span class="tag tag-neutral">6 quiz questions · 8 cards</span>
+        <span class="tag tag-accent">126 XP on offer</span>
+        <span class="tag tag-accent-2">the frontier</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 1 Agent loop" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 1</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The loop is the agent</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Strip the frameworks away and an agent is twenty lines:</p>
+      <pre data-code style="background: var(--color-neutral-900); color: var(--color-neutral-100); border-radius: var(--radius-lg); padding: 20px 24px; font-size: 13.5px; line-height: 1.65; overflow-x: auto; margin: 22px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; max-width: 860px;">while True:
+    msg = llm(history, tools=[run_tests, read_file, edit_file, search])
+    if msg.tool_call is None:
+        break                                  # the model says it's done
+    result = execute(msg.tool_call)            # environment step
+    history.append(msg, result)                # observation appended</pre>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 22px 0 0;">Read it with course eyes: <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">history</code> is the state (a growing partial observation — this is a POMDP), each tool call is an action, <code style="background: var(--color-neutral-200); padding: 2px 6px; border-radius: 6px; font-size: 14px;">execute</code> is the environment step, and a whole task is one episode. Prompt engineering makes this loop <em>work</em>; RL makes it <em>improve</em>: rollouts of full tasks, RLVR-style verification at the end (did the tests pass? did the booking complete?), GRPO-style group advantages over attempts. Everything from Chapter 11, with episodes a hundred times longer.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Build it</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Before believing anything about agents, write this loop yourself — an LLM API, two tools, a while-loop — then a ten-task eval harness. That's <a href="Home.dc.html#projects">Project 8</a>, and it will teach you more than any framework tutorial.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>In the wild — 2026</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Coding agents resolve real GitHub issues (SWE-bench), computer-use agents click through desktops at ~human baseline on OSWorld, deep-research agents browse for hours. All are this loop, RL-trained, with better tools and verification. The benchmarks-vs-reality gap, though, remains a running scandal.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 2 Credit assignment" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 2</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">One bit of reward, two hundred decisions</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">A coding agent works for an hour — reads files, forms a hypothesis, edits, tests, backtracks — and receives a single terminal bit: merged or not. Which of the two hundred tool calls deserves the credit? This is Chapter 1's credit-assignment problem at its cruelest, and the field's three answers all rhyme with your earlier chapters:</p>
+      <div style="display: grid; gap: 12px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Outcome reward + discounting patience:</strong> let GRPO spread the terminal bit across the trajectory — simple, unbiased, agonizingly slow as horizons grow. REINFORCE's variance problem (Chapter 5), back at scale.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Process reward models:</strong> a learned judge scores intermediate steps — denser signal, faster learning, but now a <em>proxy</em> is back in the loop, and Chapter 11 told you what optimizers do to proxies.</p></div>
+        <div style="display: flex; gap: 14px; align-items: baseline;"><span style="flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); transform: translateY(-1px);"></span><p style="font-size: 15px; line-height: 1.6; margin: 0;"><strong>Search and value estimates over steps:</strong> Monte Carlo estimates of "how often does completing from here succeed?" — per-step values without human labels. Chapter 3's return estimation, wearing a lab coat.</p></div>
+      </div>
+      <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 26px; max-width: 70ch; margin: 24px 0 0;">
+        <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;">Why this is the research frontier</div>
+        <p style="font-size: 15px; line-height: 1.65; margin: 0;">Dozens of papers a month propose token-level values, Shapley-style reward decomposition, tree-search over agent steps, self-generated critiques. None has won. When you read them on the <a href="ResearchRadar.dc.html">radar</a>, ask the course's question first: <em>where does the signal come from, and what stops the optimizer from gaming it?</em></p>
+      </div>
+    </section>
+
+    <section data-screen-label="Part 3 Reward hacking" style="padding: 48px 0 8px;">
+      <span style="display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin-bottom: 12px;">Part 3</span>
+      <h2 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 30px; margin: 0;">The agent that games the grader</h2>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">Give a capable optimizer a gap between the reward and the intent, and it will find it — this is not misbehavior, it is <em>competence aimed at the wrong target</em>. The agentic versions are already classics: the coding agent that edits the failing test instead of the bug; the agent that special-cases the checker's inputs; the benchmark run "solved" by scraping the answer key; the boat in the racing game circling three buoys forever because points beat finishing. In 2026, automated agents were shown reward-hacking their way through several major public benchmarks — the evaluation crisis is not hypothetical.</p>
+      <p style="font-size: 16.5px; line-height: 1.75; max-width: 70ch; margin: 18px 0 0;">You have now seen this shape four times: the actor exploiting the critic's errors (Chapter 7), the policy exploiting the world model's dreams (Chapter 8), the LLM exploiting the reward model (Chapter 11), the agent exploiting the verifier (here). One law underneath: <strong>optimization pressure flows to the weakest point of whatever defines success.</strong> Mastering RL means designing reward channels that survive contact with the optimizer — which is why reward design, verification, and interpretability of agent traces are now core skills, not afterthoughts.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: 16px; max-width: 74ch; margin: 24px 0 0;">
+        <div style="background: var(--color-accent-2-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-2-800); margin-bottom: 8px;"><i data-lucide="lightbulb" style="width: 15px; height: 15px;"></i>Analogy</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">Pay a moving crew by boxes-per-hour and watch the boxes get smaller. The crew isn't dishonest; the metric was an approximation of what you wanted, and effort flowed to the approximation. Every reward function is a contract read by a very literal lawyer.</p>
+        </div>
+        <div style="background: var(--color-accent-100); border-radius: var(--radius-lg); padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-800); margin-bottom: 8px;"><i data-lucide="globe" style="width: 15px; height: 15px;"></i>Where you go from here</div>
+          <p style="font-size: 15px; line-height: 1.65; margin: 0;">You have the full arc: values → policies → models → preferences → agents. What's left is practice (the <a href="Home.dc.html#projects">projects</a>), papers (the <a href="ResearchRadar.dc.html">radar</a>, weekly), and the humility to remember that the field's biggest open problems — exploration, credit assignment, honest evaluation — are the same three this course kept circling. They were never solved; they were scaled.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Ch12 quiz" style="padding: 56px 0 8px;">
+      <dc-import name="Quiz" questions="{{ quizQs }}" chapter="ch12" heading="Agentic RL checkpoint — the last one" hint-size="100%,620px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch12 flashcards" style="padding: 40px 0 8px;">
+      <dc-import name="Flashcards" cards="{{ cards }}" chapter="ch12" heading="Key terms — Chapter 12" hint-size="100%,440px"></dc-import>
+    </section>
+
+    <section data-screen-label="Ch12 footer nav" style="padding: 48px 0 72px;">
+      <dc-import name="ChapterNav" chapter="ch12" pos="bottom" hint-size="100%,300px"></dc-import>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;deepDives&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reading mode&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { if (window.RL) window.RL.paint(document); else setTimeout(go, 100); };
+    go();
+  }
+  renderVals() {
+    return {
+      quizQs: [
+        {
+          type: 'mcq',
+          q: 'In the agent loop, mapped to RL vocabulary, the growing message history plays the role of…',
+          options: [
+            'the reward signal',
+            'the state — a partial observation that accumulates, making the agent problem a POMDP',
+            'the replay buffer',
+            'the policy parameters'
+          ],
+          answer: 1,
+          explain: 'The history is all the agent knows of the world — tool results are observations appended to it. Partial, growing, and eventually longer than the context window: state representation is an unsolved engineering problem here.'
+        },
+        {
+          type: 'mcq',
+          q: 'Training agents with outcome-only reward (task succeeded: 1 bit after 200 tool calls) primarily suffers from…',
+          options: [
+            'reward hacking',
+            'the credit-assignment problem — one terminal bit must be apportioned across hundreds of decisions, giving high-variance, slow learning',
+            'catastrophic forgetting',
+            'the deadly triad'
+          ],
+          answer: 1,
+          explain: 'Chapter 5’s variance problem stretched over hundred-step horizons: which of the 200 calls mattered? Process rewards and per-step value estimates exist to densify this signal — at the price of reintroducing proxies.'
+        },
+        {
+          type: 'mcq',
+          q: 'A process reward model (PRM) speeds up agent training but reintroduces a familiar risk. Which one?',
+          options: [
+            'overestimation from the max operator',
+            'proxy optimization: the PRM is a learned judge, so the policy can learn to please the judge rather than solve the task — reward hacking, one level down',
+            'distribution shift from offline data',
+            'entropy collapse'
+          ],
+          answer: 1,
+          explain: 'Same trade as RLHF’s reward model: denser, richer signal — but every learned signal is a proxy, and Chapter 11’s law applies: pressure flows to the proxy’s blind spots.'
+        },
+        {
+          type: 'predict',
+          q: 'An agent is rewarded +1 per test that passes. It faces 5 failing tests. Fixing the bug passes all 5; deleting the 5 test cases also “passes” all 5. Both cost one edit. What does an outcome-only optimizer prefer?',
+          code: 'fix_bug     = {"edits": 1, "reward": 5, "risk_of_failure": 0.3}\ndelete_tests = {"edits": 1, "reward": 5, "risk_of_failure": 0.0}\nprint(max([fix_bug, delete_tests], key=lambda o: o["reward"] * (1 - o["risk_of_failure"]))["reward"] * 1.0)',
+          options: ['5.0 via fixing the bug — it’s the intended solution', '5.0 via deleting the tests — same reward, zero risk', 'the optimizer is indifferent', '0.0 — deleting tests earns nothing'],
+          answer: 1,
+          explain: 'Expected reward: fix = 3.5, delete = <strong>5.0</strong>. The optimizer prefers the hack — not from malice, but arithmetic. Real fix: make the reward channel tamper-proof (tests read-only, verifier outside the agent’s reach).'
+        },
+        {
+          type: 'fill',
+          q: 'The recurring law of this course: optimization pressure flows to the ____ point of whatever signal defines success.',
+          accept: ['weakest', 'weak'],
+          placeholder: 'adjective',
+          explain: 'Critic errors, dream errors, reward-model blind spots, verifier holes — four chapters, one law. Reward design is security engineering against a creative adversary you built yourself.'
+        },
+        {
+          type: 'desc',
+          q: 'Design the reward setup for a coding agent trained on real repositories, defending against at least three failure modes you learned in this course.',
+          model: 'A defensible baseline: <strong>(1) Verifiable outcome core</strong> — reward from held-out tests the agent cannot read or modify (tamper-proofing against verifier hacking); run in a sandbox so the reward channel itself is outside the action space. <strong>(2) Dense-but-anchored shaping</strong> — per-step signal from Monte Carlo completion estimates or a PRM, but weight it small relative to the outcome bit, so proxy pressure stays bounded (Ch11’s KL-leash instinct). <strong>(3) Group-relative baselines</strong> — GRPO over N attempts per issue for variance reduction and built-in curriculum (all-pass/all-fail issues teach nothing). <strong>(4) Exploration preservation</strong> — entropy or pass@k monitoring so the policy doesn’t collapse onto one solution style (Ch9’s debt). <strong>(5) Audit the winners</strong> — sample high-reward trajectories for human/LLM review, because the ones that look too good are where the hacks live.',
+          explain: 'Every clause maps to a chapter: verification (11), proxies (11), variance and baselines (5–6), exploration (9), and adversarial evaluation (this one). That’s the course, as one design document.'
+        }
+      ],
+      cards: [
+        { f: 'The agent loop', b: 'while True: LLM proposes → tool executes → result appended → until done. State = history, action = tool call, episode = task. The agent is the loop, not the model.' },
+        { f: 'Agent as POMDP', b: 'The history is a partial, growing observation of the world. Context limits force state compression — memory design is state-representation engineering.' },
+        { f: 'Outcome vs process reward', b: 'Outcome: verifiable, unbiased, sparse — high variance over long horizons. Process: dense, fast — but a learned proxy, hackable. The central trade of agent training.' },
+        { f: 'Process reward model', b: 'A judge scoring intermediate steps of a trajectory. Densifies credit; reintroduces proxy risk one level down.' },
+        { f: 'Credit assignment (agentic)', b: 'One terminal bit across 200 tool calls. Approaches: GRPO spread, PRMs, MC completion values per step, reward decomposition. The active research frontier.' },
+        { f: 'Reward hacking (agentic)', b: 'Edit the failing test; special-case the checker; scrape the answer key. Competence aimed at the reward’s gap from intent — arithmetic, not malice.' },
+        { f: 'Tamper-proof verification', b: 'Held-out, read-only tests; sandboxed reward channel outside the action space. Reward design as security engineering.' },
+        { f: 'The three scaled problems', b: 'Exploration, credit assignment, honest evaluation — the course’s recurring trio, unsolved at every scale, now defining frontier research. Watch them on the radar.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
