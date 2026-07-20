@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-07-20",
+  "title": "Radar sweep: 25 new papers mapped to the curriculum",
+  "items": [
+   "25 new papers since the last sweep (Agentic RL: 13, RL for LLMs: 11, Continuous Control: 7, Model-Based RL: 3, PPO & Policy Gradients: 2, Offline RL: 2, Exploration: 1, Tabular Learning: 1, general: 1)",
+   "\u201cHandroid: Bridging Dexterous Hand and Humanoid\u201d \u2014 Continuous Control",
+   "\u201cPhysics-enhanced reinforcement learning for real-time optimal control of dynamical systems\u201d \u2014 Agentic RL, Exploration",
+   "\u201cWhen Does Muon Help Agentic Reinforcement Learning?\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cToolSciVer: Multimodal Scientific Claim Verification with Visual Tool Augmented Reinforcement Learning\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cUnderstanding Reasoning from Pretraining to Post-Training\u201d \u2014 RL for LLMs"
+  ]
+ },
+ {
   "date": "2026-07-19",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
