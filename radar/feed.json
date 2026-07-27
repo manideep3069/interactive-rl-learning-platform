@@ -1,421 +1,426 @@
 {
- "generated": "2026-07-20T08:45:38+00:00",
+ "generated": "2026-07-27T09:36:57+00:00",
  "papers": [
   {
-   "id": "http://arxiv.org/abs/2607.16187v1",
-   "url": "http://arxiv.org/abs/2607.16187v1",
-   "title": "Handroid: Bridging Dexterous Hand and Humanoid",
-   "published": "2026-07-17T17:59:05Z",
-   "summary": "Dexterous hands and humanoid robots are typically developed as distinct embodiments: the former enable contact-rich manipulation at the object scale, whereas the latter provide mobility and whole-body interaction in human-centered environments. We introduce \\textbf{Handroid}, a desktop-scale dual-embodiment robot that integrates both capabilities within a single reconfigurable platform. Handroid reuses one 27-DoF electromechanical body as either a dexterous hand or a desktop humanoid, measuring ",
-   "chapters": [
-    "ch7"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16177v1",
-   "url": "http://arxiv.org/abs/2607.16177v1",
-   "title": "Physics-enhanced reinforcement learning for real-time optimal control of dynamical systems",
-   "published": "2026-07-17T17:56:05Z",
-   "summary": "Reinforcement learning (RL) has recently emerged as a promising feedback control strategy for nonlinear and complex dynamical systems. However, RL algorithms are sample inefficient and require a large number of interaction with the environment to synthesize optimal control strategies. Consequently, applications of RL are typically limited to sparse sensors and actuators due to the curse of dimensionality entailed by the exploration-exploitation dilemma in high-dimensional spaces. In this work, w",
-   "chapters": [
-    "ch12",
-    "ch9"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16169v1",
-   "url": "http://arxiv.org/abs/2607.16169v1",
-   "title": "When Does Muon Help Agentic Reinforcement Learning?",
-   "published": "2026-07-17T17:49:05Z",
-   "summary": "Muon is competitive with AdamW in large-scale pre-training, but its value for reinforcement-learning (RL) post-training remains unclear. We study vanilla Muon in sparse-reward agentic RL through matched single-seed comparisons with AdamW on ALFWorld using Qwen2.5-0.5B-Instruct. Under Group-in-Group Policy Optimization (GiGPO), applying Muon only to hidden weight matrices raises final-window validation success from 0.290 to 0.546 (+88%); high-rate AdamW controls retain no post-update success. The",
+   "id": "http://arxiv.org/abs/2607.22529v1",
+   "url": "http://arxiv.org/abs/2607.22529v1",
+   "title": "Skill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills",
+   "published": "2026-07-24T17:59:22Z",
+   "summary": "LLM training is shifting from manual design and annotation to interaction-driven self-evolution. However, existing self-evolutionary methods face a fundamental dilemma between task diversity and verification reliability: environment-bound methods obtain precise feedback but confine learning to narrow domains, while open-ended self-generation broadens the task space but lacks reliable verification, allowing misleading rewards to pollute the training loop. We identify agent skills as a powerful mi",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.16131v1",
-   "url": "http://arxiv.org/abs/2607.16131v1",
-   "title": "ToolSciVer: Multimodal Scientific Claim Verification with Visual Tool Augmented Reinforcement Learning",
-   "published": "2026-07-17T17:11:50Z",
-   "summary": "Multimodal Scientific Claim Verification (MSCV) requires models to verify scientific claims using visually grounded evidence from papers, including figures, tables, charts, and textual context. However, existing methods often fail because they struggle to locate decisive visual evidence, accurately read structured scientific visuals, and integrate multimodal observations into reliable reasoning. We introduce ToolSciVer, the first tool-augmented framework for MSCV to our knowledge. ToolSciVer equ",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16097v1",
-   "url": "http://arxiv.org/abs/2607.16097v1",
-   "title": "Understanding Reasoning from Pretraining to Post-Training",
-   "published": "2026-07-17T16:31:58Z",
-   "summary": "Reinforcement learning (RL) has become central to improving large language models (LLMs) on complex reasoning tasks, yet RL post-training is largely studied in isolation from the pretraining that precedes it. As a result, two basic questions remain open: (1) how do pretraining choices (model size, data) shape the returns to RL compute, and (2) what does RL actually do to the model? These questions are difficult to study in the standard LLM setting: pretraining corpora are vast and uncontrolled, ",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16090v1",
-   "url": "http://arxiv.org/abs/2607.16090v1",
-   "title": "DADiff: Diffusion-Driven Cross-Domain Policy Adaptation for Reinforcement Learning",
-   "published": "2026-07-17T16:20:08Z",
-   "summary": "Transferring policies across domains poses a vital challenge in reinforcement learning, due to the dynamics mismatch between the source and target domains. In this paper, we consider the setting of online dynamics adaptation, where policies are trained in the source domain with sufficient data, while only limited interactions with the target domain are allowed. There are a few existing works that address the dynamics mismatch by employing domain classifiers, value-guided data filtering, or repre",
+   "id": "http://arxiv.org/abs/2607.22525v1",
+   "url": "http://arxiv.org/abs/2607.22525v1",
+   "title": "Explainable Reinforcement Learning for assisting Air Traffic Controllers",
+   "published": "2026-07-24T17:56:38Z",
+   "summary": "To effectively integrate AI into high-stakes, critical environments such as healthcare, autonomous driving, and aviation--and to advance toward higher levels of automation and seamless human-AI collaboration--building trust in AI-driven solutions is essential. Trust, in turn, is closely linked to the explainability of AI systems. The rapid advancements in AI across various domains have underscored the challenges of establishing trust, raising increasing interest in AI explainability even more wh",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.16074v1",
-   "url": "http://arxiv.org/abs/2607.16074v1",
-   "title": "JoyNexus: Service-Oriented Multi-Tenant Post-Training for VLA Models",
-   "published": "2026-07-17T15:58:20Z",
-   "summary": "The post-training of Vision-Language-Action (VLA) models is essential due to the diversity of simulators, robot embodiments, and task objectives. Existing compute services, whether offered as direct accelerator rental or batch-workload submission, typically allocate an exclusive set of GPU and CPU resources to a single tenant. While this paradigm maximizes client flexibility, it burdens users with infrastructure adaptation, and the fixed card-hour accounting model renders short or bursty workloa",
-   "chapters": [
-    "ch7"
-   ]
+   "id": "http://arxiv.org/abs/2607.22468v1",
+   "url": "http://arxiv.org/abs/2607.22468v1",
+   "title": "Learning to Prepare Molecular Ground States with Transformer Models",
+   "published": "2026-07-24T16:32:40Z",
+   "summary": "Quantum state preparation is a key component of many quantum algorithms. Performing this step efficiently is essential for realizing practical quantum advantage in quantum chemistry applications. Iterative algorithms like ADAPT-VQE can produce shallow ground-state preparation circuits, but become computationally prohibitive for the larger molecules relevant to materials science and pharmaceutical development. Here, we introduce ADAPT-GQE, a generative AI framework that learns to synthesize groun",
+   "chapters": []
   },
   {
-   "id": "http://arxiv.org/abs/2607.16062v1",
-   "url": "http://arxiv.org/abs/2607.16062v1",
-   "title": "When Model Merging Rivals Joint Multi-Task Reinforcement Learning: A Task-Vector Geometry Analysis",
-   "published": "2026-07-17T15:41:09Z",
-   "summary": "Model merging is promoted as a substitute for joint multi-task training, yet in the reinforcement-learning setting this substitution is essentially never tested against the baseline it claims to replace: methods merge independently released agents precisely because a joint model is unavailable. We build the missing comparison. Training difficulty-1 and difficulty-2 Qwen3-8B specialists on the AppWorld agent benchmark with LOOP, we merge them (TIES, RAM+) and pit the result against a jointly trai",
-   "chapters": [
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16028v1",
-   "url": "http://arxiv.org/abs/2607.16028v1",
-   "title": "CLaC@FinMMEval 2026 Task 3: Sentiment-Augmented Deep Reinforcement Learning for Active Trading -- An Alpha-Reward Approach",
-   "published": "2026-07-17T15:01:35Z",
-   "summary": "This paper presents our system for Task 3 of the CLEF 2026 FinMMEval Lab, which requires daily long, flat, or short trading decisions for Bitcoin (BTC) and Tesla (TSLA) using news and historical market data. We formulate the problem as a discrete-action Markov Decision Process and compare four deep reinforcement learning algorithms: Policy Gradient (PG), Proximal Policy Optimization (PPO), Deep Q-Learning (DQL), and Deep Deterministic Policy Gradient (DDPG). The agents use technical indicators, ",
-   "chapters": [
-    "ch12",
-    "ch7"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.16004v1",
-   "url": "http://arxiv.org/abs/2607.16004v1",
-   "title": "Robustness of Reinforcement Learning-Based Congestion Management in Low-Voltage Grids",
-   "published": "2026-07-17T14:39:48Z",
-   "summary": "Increases in photovoltaic generation, charging of electric vehicles and heat-pump demand challenge operating limits in low-voltage distribution grids. This requires curative curtailment methods that can operate under sparse observability, noisy measurements, and imperfect grid models. Unlike prior end-to-end reinforcement-learning approaches for partially observable curtailment, this work decouples congestion detection and control by combining a random-forest violation pre-classifier with an act",
-   "chapters": [
-    "ch6"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15982v1",
-   "url": "http://arxiv.org/abs/2607.15982v1",
-   "title": "Data and Learning Where it Matters for Contact-Rich Manipulation",
-   "published": "2026-07-17T14:18:20Z",
-   "summary": "Learned policies trained end-to-end on large datasets often remain brittle in high-precision tasks and struggle with generalization. We find that these limitations largely stem from a lack of structure and focus in data collection. Our key insight is to leverage dense data collection only for the critical segment of contact-rich tasks and to rely on traditional planning during simple free-space motion. We propose an automated data-collection scheme in combination with offline deep reinforcement ",
+   "id": "http://arxiv.org/abs/2607.22409v1",
+   "url": "http://arxiv.org/abs/2607.22409v1",
+   "title": "Conformal Constraint Tightening for Chance-Constrained Motion Planning with Unknown Dynamics",
+   "published": "2026-07-24T15:27:07Z",
+   "summary": "Motion planning algorithms compute control sequences that drive autonomous robots to goal regions while avoiding unsafe states. Existing methods, from sampling-based planning to deep reinforcement learning, typically provide task-completion guarantees only with respect to a nominal model or simulator, which may be invalidated when the true dynamics are unknown or difficult to model accurately. This letter addresses this limitation for systems with unknown dynamics and an available approximate no",
    "chapters": [
     "ch10",
     "ch8"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15942v1",
-   "url": "http://arxiv.org/abs/2607.15942v1",
-   "title": "More with Less: a Large Scale Remote Sensing VLM with a Simple Recipe",
-   "published": "2026-07-17T13:25:44Z",
-   "summary": "Remote sensing vision-language models are increasingly expected to support open-ended reasoning over Earth Observation data and a variety of tasks. Most recent progress in this area has been driven by remote-sensing-specific architectural designs, often introducing new encoders, alignment modules, or task-specific fusion mechanisms. In this work, we challenge the necessity of such architectural specialization. We show that a generally capable vision-language model can achieve competitive or stat",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15935v1",
-   "url": "http://arxiv.org/abs/2607.15935v1",
-   "title": "Learning Reach-Avoid Task with Reinforcement Learning: Vectorized Simulation and Benchmark",
-   "published": "2026-07-17T13:18:32Z",
-   "summary": "Deep reinforcement learning (DRL) has a longstanding tradition in addressing the reach-avoid task problem, especially for controlling robotic arms. While this task serves as a baseline environment within the research community, the ability of DRL to effectively learn the each-avoid task in complex and realistic scenarios beyond simplified and restricted tabletop settings remains uncertain. In this paper, we present, for the first time, a comprehensive benchmark for the reachavoid task that accur",
+   "id": "http://arxiv.org/abs/2607.22356v1",
+   "url": "http://arxiv.org/abs/2607.22356v1",
+   "title": "Integrated Order Dispatching and Routing for Last-Mile Pickup via Deep Reinforcement Learning",
+   "published": "2026-07-24T14:37:02Z",
+   "summary": "In recent years, the growing complexity of last-mile pickup operations has increased the need for fast and accurate decision-making on logistics platforms. This challenge is fundamentally driven by two key and tightly coupled decision-making processes: order dispatching and routing. Solving them separately overlooks their interdependence, while fully end-to-end learning can be unstable and costly on large, variable-scale instances due to sparse rewards. To solve this problem, we propose an integ",
    "chapters": [
     "ch12",
-    "ch7"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15901v1",
-   "url": "http://arxiv.org/abs/2607.15901v1",
-   "title": "DSWorld: A Data Science World Model for Efficient Autonomous Agents",
-   "published": "2026-07-17T12:14:55Z",
-   "summary": "Despite strong capabilities in data understanding and decision-making, autonomous data science agents still heavily rely on trial-and-error workflows that involve expensive computation. This bottleneck motivates models that can anticipate the effects of data science operations before real execution. In this paper, we introduce the concept of Data Science World Model, which model the data science execution environment by predicting environment state transitions conditioned on current workflow sta",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15810v1",
-   "url": "http://arxiv.org/abs/2607.15810v1",
-   "title": "QUADS: Stabilizing NVFP4 Reinforcement Learning for MoE via QUantization-error Alignment across Dual Sides",
-   "published": "2026-07-17T10:21:27Z",
-   "summary": "Rollout generation is a major bottleneck in Reinforcement Learning (RL) for Mixture-of-Experts (MoE) Large Language Models, motivating low-precision rollout acceleration such as FP8. As an emerging low-precision format, NVFP4 combines fine-grained scaling for accuracy preservation with native W4A4 FP4 GEMMs for higher throughput than FP8. However, we find that directly applying NVFP4 to MoE RL rollout is impractical. NVFP4 rollout with BF16 training collapses after roughly 150 steps, accompanied",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15778v1",
-   "url": "http://arxiv.org/abs/2607.15778v1",
-   "title": "Modularized Dynamic-Granularity Video LLM for Multi-Event Long Video Understanding",
-   "published": "2026-07-17T09:21:52Z",
-   "summary": "Video Large Language Models (Video LLMs) have made significant advancements in various video understanding tasks. However, long-video scenarios remain challenging due to the tension between limited visual token budgets and the need to capture multiple key events. Existing approaches typically process long videos in two stages, i.e., i) select keyframes and ii) perform detailed perception, which exhibit limitations: they lack a modular mechanism for adaptive capacity allocation and self-correctio",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15740v1",
-   "url": "http://arxiv.org/abs/2607.15740v1",
-   "title": "Debiasing Text-to-Image Evaluation via Implicit Cultural Alignment Reward Modeling",
-   "published": "2026-07-17T08:23:03Z",
-   "summary": "As Text-to-Image (T2I) systems rapidly advance, evaluating the cultural authenticity of synthesized content has become increasingly important for fair and trustworthy generative AI. Existing T2I evaluation metrics and multimodal judges often rely on visual-semantic representations that underrepresent implicit cultural norms, leading to biased preference judgments and the omission of fine-grained cultural cues. In addition, visual question answering (VQA)-based evaluators typically depend on auto",
-   "chapters": [
-    "ch11",
     "ch10"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15701v1",
-   "url": "http://arxiv.org/abs/2607.15701v1",
-   "title": "RAVEN: Reinforcement-Adaptive Visibility-Graph Planning for Robust Humanoid Navigation with Collision-Free MPC",
-   "published": "2026-07-17T07:23:54Z",
-   "summary": "Humanoid navigation in dynamic environments requires long-horizon planning while respecting short-horizon dynamic and safety constraints. Classical visibility-graph planners combined with model predictive control (MPC) can efficiently generate collision-free trajectories, but their performance depends on manually tuned parameters and accurate system modeling. In real robotic systems, control delays, state-estimation noise, and locomotion uncertainties can cause overshoot and constraint violation",
+   "id": "http://arxiv.org/abs/2607.22186v1",
+   "url": "http://arxiv.org/abs/2607.22186v1",
+   "title": "Deconstructing Off-Policy Ratios: Entropy-Scaled Trust Regions for Asynchronous Reinforcement Learning",
+   "published": "2026-07-24T10:55:42Z",
+   "summary": "Asynchronous reinforcement learning (RL) accelerates large language model (LLM) post-training by overlapping rollout generation with policy optimization, but the resulting stale, off-policy data can destabilize optimization and ultimately cause policy collapse. Existing methods typically retain or discard tokens based solely on the magnitude of their importance ratios, applying the same threshold uniformly across token positions. In this work, we reveal that the natural scale of the importance r",
    "chapters": [
-    "ch8",
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.22083v1",
+   "url": "http://arxiv.org/abs/2607.22083v1",
+   "title": "Nanbeige4.2-3B: Unlocking Agentic Capabilities in a Compact Mode",
+   "published": "2026-07-24T08:33:26Z",
+   "summary": "We present Nanbeige4.2-3B, a compact general agentic model with 3B non-embedding parameters. It delivers strong performance across code-agent, office-agent, and complex tool-use tasks while maintaining highly competitive reasoning capabilities in mathematics, coding, and science. Nanbeige4.2-3B is pretrained from scratch on 28T tokens with a Looped Transformer that reuses the layer stack to increase capacity without adding parameters. For SFT data and trajectory construction, we expand the diver",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.22039v1",
+   "url": "http://arxiv.org/abs/2607.22039v1",
+   "title": "Enough is as good as a feast: A Comprehensive Analysis of How Reinforcement Learning Mitigates Task Conflicts in LLMs",
+   "published": "2026-07-24T07:08:57Z",
+   "summary": "Model merging plays a crucial role in consolidating multiple specialized models into a single, unified model, especially in the era of large language models (LLMs). Recent research has primarily focused on developing strategies to enhance merging performance with the trained models, while the impact of training paradigms, such as supervised fine-tuning (SFT) and reinforcement learning (RL), on the effectiveness of model merging remains underexplored. In this study, we systematically explore the ",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.22002v1",
+   "url": "http://arxiv.org/abs/2607.22002v1",
+   "title": "Learning as Reasoning Unfolds: Progressive Rollout Allocation for Efficient Reinforcement Learning",
+   "published": "2026-07-24T06:04:04Z",
+   "summary": "Reinforcement learning with verifiable rewards (RLVR) has emerged as a highly effective framework for improving LLM reasoning, with methods such as GRPO among its most successful instantiations. However, GRPO relies on repeated generation of long chain-of-thought rollouts. Training time scales with the number of rollouts, a large fraction of which are uninformative. Thus, GRPO is computationally expensive and unstable. To mitigate this, existing approaches either generate a larger pool of rollou",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21971v1",
+   "url": "http://arxiv.org/abs/2607.21971v1",
+   "title": "Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning",
+   "published": "2026-07-24T04:35:29Z",
+   "summary": "Test-time scaling through iterative self-evolution with environment feedback, as demonstrated by AlphaEvolve, shows remarkable performance gains. We hypothesize that the success of such evolution frameworks hinges on meta-skills, such as self-reflection with environment feedback, that enable effective multi-round refinement, yet are largely neglected by traditional post-training. To bridge this gap, we present MetaEvolve, a framework designed to develop these meta-skills via a data synthesis pip",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21960v1",
+   "url": "http://arxiv.org/abs/2607.21960v1",
+   "title": "Adaptive Undulatory Locomotion of Snake-like Robots in Dynamic Viscous Environments via Deep Reinforcement Learning",
+   "published": "2026-07-24T04:14:36Z",
+   "summary": "This paper demonstrates how deep reinforcement learning (DRL) enables adaptive locomotion of snake-like robots in dynamically changing viscous environments, overcoming the inherent performance limitations of classical predefined control methods. The lack of direct onboard sensors for fluid properties necessitates formulating this task as a partially observable Markov decision process. By employing an asymmetric actor-critic framework, a teacher policy trained using privileged information availab",
+   "chapters": [
+    "ch12",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21876v1",
+   "url": "http://arxiv.org/abs/2607.21876v1",
+   "title": "Variance-Reduced Q-Learning over Static and Time-Varying Networks",
+   "published": "2026-07-24T00:24:09Z",
+   "summary": "We investigate a decentralized reinforcement learning problem involving multiple agents that interact with the same Markov Decision Process (MDP). The agents can exchange information over a network to collectively learn the optimal state-action value function. For this setting, we introduce a novel epoch-based distributed $Q$-learning algorithm called VRDQ, where within each epoch, agents locally estimate the Bellman optimality operator and diffuse information using a consensus-based protocol. F",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21793v1",
+   "url": "http://arxiv.org/abs/2607.21793v1",
+   "title": "QLPO: Quadrant-weighted Sampling for Length-aware Policy Optimization",
+   "published": "2026-07-23T20:20:56Z",
+   "summary": "Recent large reasoning models often develop long chain-of-thought responses during reinforcement learning (RL), resulting in high inference latency and deployment cost. Existing methods for response length control typically rely on explicit length penalties or additional control modules, which require careful tuning and may compromise reasoning quality. We propose Quadrant-weighted Sampling for Length-aware Policy Optimization (QLPO), a simple resampling-based variant of GRPO that introduces imp",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21552v1",
+   "url": "http://arxiv.org/abs/2607.21552v1",
+   "title": "MIRROR: Learning from the Other View for Multi-Modal Reasoning",
+   "published": "2026-07-23T17:35:56Z",
+   "summary": "Unlike large language models (LLMs) that exhibit strong reasoning capabilities, vision-language models (VLMs) struggle with visual reasoning, even on geometry problems that admit equivalent text, diagram, and combined diagram+text views. We show that these views often elicit different behaviors: a model may solve a problem from text but fail on the corresponding diagram, or succeed visually while failing textually. This inconsistency suggests that different views expose complementary reasoning p",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21498v1",
+   "url": "http://arxiv.org/abs/2607.21498v1",
+   "title": "Artificial Epanorthosis: Why large language models overuse a classical rhetorical figure, and how to mitigate it",
+   "published": "2026-07-23T16:47:39Z",
+   "summary": "A rhetorical figure that Cicero and Quintilian catalogued two thousand years ago reappears, systematically, in the text of large language models: epanorthosis, the self-correction of the specimen \u00abThis is not a course. It is a journey of transformation\u00bb. This essay argues that the overuse is a trained disposition, driven mainly by a training distribution rich in promotional prose and by preference tuning (RLHF) that rewards confident, emphatic phrasing; the left-to-right nature of generation is ",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21488v1",
+   "url": "http://arxiv.org/abs/2607.21488v1",
+   "title": "Compact Latent Coordination for Autonomous Vehicles at Unsignalized Intersections",
+   "published": "2026-07-23T16:28:35Z",
+   "summary": "Coordinating autonomous vehicles at unsignalized intersections remains a critical challenge for multi-agent reinforcement learning (MARL) systems, which typically struggle with combinatorial action spaces, reliance on privileged information, or rigid agent designs. We propose Master-Agent Proto-plan System (MAPS), a hierarchical deep reinforcement learning (DRL) architecture in which a centralized Master agent generates a compact, continuous embedding, denoted as proto-plan, that encodes a globa",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21461v2",
+   "url": "http://arxiv.org/abs/2607.21461v2",
+   "title": "AREX: Towards a Recursively Self-Improving Agent for Deep Research",
+   "published": "2026-07-23T16:05:46Z",
+   "summary": "Deep research requires agents to find answers that jointly satisfy multiple constraints. Discovering such answers is costly, whereas verifying a candidate can often be decomposed into tractable constraint-wise checks. This discovery--verification asymmetry suggests that a research agent should do more than simply search longer: it should recursively improve its current answer by verifying intermediate results and using the partially verified state to guide subsequent refinement. We introduce ARE",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21419v1",
+   "url": "http://arxiv.org/abs/2607.21419v1",
+   "title": "PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning",
+   "published": "2026-07-23T15:24:35Z",
+   "summary": "In long-horizon LLM agent reinforcement learning, weak policies often repeat similar failures, producing uninformative rollout trajectories and limiting effective policy optimization. Existing skill-centric methods improve exploration by optimizing, filtering, or internalizing reusable skills. However, they remain centered on the skills themselves rather than being designed as adaptive training-time support for the evolving policy. To address this, we propose a policy-centric training paradigm t",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21351v1",
+   "url": "http://arxiv.org/abs/2607.21351v1",
+   "title": "How Many Bits Can an Adapter Write? Measuring the Capacity and Memorization of Parameter-Efficient Fine-Tuning",
+   "published": "2026-07-23T14:16:43Z",
+   "summary": "A LoRA adapter is a few megabytes that almost everyone treats as a skill rather than a record of the data behind it. We put that assumption on a scale. Extending compression-based memorization analysis to the frozen-base setting, we measure directly, in bits, how much a low-rank adapter writes into a model it never changes. The answer is both smaller than full fine-tuning and less lawful than parameter counting would predict. Adapters store a couple of bits per trainable parameter, well short of",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21302v1",
+   "url": "http://arxiv.org/abs/2607.21302v1",
+   "title": "Expert Behavior Prior Reinforcement Learning",
+   "published": "2026-07-23T13:26:57Z",
+   "summary": "Behavior prior reinforcement learning (BPRL) has emerged as a promising paradigm to improve sample efficiency in online reinforcement learning (RL) by leveraging policy priors derived from offline demonstrations. However, most existing BPRL methods rely on static offline datasets, which often suffer from low data diversity and suboptimal trajectory quality. This reliance restricts the effectiveness of policy priors, hindering both policy exploitation and stability during online training. Consequ",
+   "chapters": [
+    "ch12",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21227v1",
+   "url": "http://arxiv.org/abs/2607.21227v1",
+   "title": "FORGE-plus: Force-Budgeted Recovery for Contact-Rich Assembly with a Frozen LLM Supervisor",
+   "published": "2026-07-23T11:43:31Z",
+   "summary": "Force-conditioned reinforcement learning (RL) enables tight-clearance assembly under a commanded force ceiling, but practical deployment requires determining an appropriate force limit for each object and recovering from insertion failures without exceeding it. We present a two-layer framework in which a frozen, text-only large language model (LLM) assigns a per-object force ceiling before execution and selects recovery maneuvers from a fixed action menu using compact textual force signatures. T",
+   "chapters": [
+    "ch11",
     "ch7"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15660v1",
-   "url": "http://arxiv.org/abs/2607.15660v1",
-   "title": "ToolVerse: Unlocking Massive Environments and Long-Horizon Tasks for Agentic Reinforcement Learning",
-   "published": "2026-07-17T06:12:04Z",
-   "summary": "While LLM agents demonstrate strong reasoning abilities in compact and well-defined scenarios, they struggle to maintain robustness and effectiveness when faced with large-scale, diverse, and dynamic real-world environments that demand seamless tool integration. To address this gap, we introduce ToolVerse, a comprehensive framework that scales up agentic RL environments and enables agents to perform complex long-horizon reasoning in Tool-Integrated Reasoning (TIR) tasks. First, ToolVerse automat",
+   "id": "http://arxiv.org/abs/2607.21121v1",
+   "url": "http://arxiv.org/abs/2607.21121v1",
+   "title": "Approximate Quantum State Preparation Through Proximal Policy Optimization",
+   "published": "2026-07-23T09:55:58Z",
+   "summary": "In this work, a quantum architecture search framework for approximate quantum state preparation (QSP) is proposed. QSP is a challenging task, since the search space grows exponentially with the number of qubits, making the identification of the optimal circuit non-trivial. To address this problem, deep reinforcement learning is employed through an agent based on proximal policy optimization. The objective of the agent is to identify the best possible approximation of the target state while simul",
    "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15642v1",
-   "url": "http://arxiv.org/abs/2607.15642v1",
-   "title": "Difference-Based Relational Learning for Zero-Shot Object-Goal Visual Navigation With Direct Sim-to-Real Transfer",
-   "published": "2026-07-17T05:35:40Z",
-   "summary": "End-to-end deep reinforcement learning (DRL) for zero-shot object-goal visual navigation remains challenged by the sim-to-real gap, particularly variations in object appearance and restricted camera field-of-view (FoV). This letter proposes a Temporal Difference-Relational Network (T-DRN) for robust zero-shot sim-to-real transfer. T-DRN combines a Siamese difference-based feature extractor, which computes relational difference between the target and observed objects to produce domain-independent",
-   "chapters": [
-    "ch7",
-    "ch3"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15610v1",
-   "url": "http://arxiv.org/abs/2607.15610v1",
-   "title": "Process Reward Informed Tree Rollout for Effective Multi-Turn RL",
-   "published": "2026-07-17T04:16:58Z",
-   "summary": "Reinforcement learning (RL) has become a key approach for training LLM agents, yet popular methods such as GRPO/RLOO rely on multiple independently sampled complete trajectories for advantage estimation. In long-horizon agentic tasks, such a uniform rollout strategy can waste budget on uninformative dead-end attempts, while promising intermediate states do not receive sufficient exploration. The multi-turn structure of agentic trajectories, with interleaved actions and observations, naturally su",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15459v1",
-   "url": "http://arxiv.org/abs/2607.15459v1",
-   "title": "From Black Box to Executable Logic: Explainable Reinforcement Learning through Prolog Expert Systems",
-   "published": "2026-07-16T21:10:27Z",
-   "summary": "A trained deep reinforcement learning policy is a black box, and we ask whether it can be made explainable by rewriting it as an executable logic program that reproduces its behaviour and that a person can read, a logic engine can run, and an optimizer can edit. We present a three-stage post-hoc transformation that extracts a frozen proximal policy optimization teacher, induces an ordered rule list from its decisions in the manner of classical relational learning, and emits the result as a Prolo",
-   "chapters": [
-    "ch7",
+    "ch12",
     "ch6"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15457v1",
-   "url": "http://arxiv.org/abs/2607.15457v1",
-   "title": "Robust Peak-cost Constrained Reinforcement Learning",
-   "published": "2026-07-16T21:00:50Z",
-   "summary": "We study robust peak-cost constrained reinforcement learning (RP-CRL), where the objective is to maximize expected reward while controlling the maximum cost encountered along a trajectory. This setting is motivated by safety-critical applications in which a single large violation can be catastrophic and therefore cannot be adequately captured by the standard CMDP framework based on expected cumulative cost. Existing reachability-constrained RL methods adopt Lagrangian-based approaches, yet the u",
-   "chapters": []
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15432v1",
-   "url": "http://arxiv.org/abs/2607.15432v1",
-   "title": "Proactive Inpatient Bed Requests for Emergency Department Admissions",
-   "published": "2026-07-16T20:06:05Z",
-   "summary": "Emergency department (ED) boarding occurs when admitted patients remain in the ED while awaiting inpatient beds. Boarding is a major driver of ED crowding and has been associated with poor patient outcomes. We propose a framework to help EDs reduce boarding time and length of stay by using information about current patients and bed availability to proactively request inpatient beds before admission decisions are finalized. We formulate the problem as a Markov decision process in which prediction",
-   "chapters": [
-    "ch12",
-    "ch8"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15273v1",
-   "url": "http://arxiv.org/abs/2607.15273v1",
-   "title": "MeanFlowNFT: Bringing Forward-Process RL to Average-Velocity Generators",
-   "published": "2026-07-16T17:59:02Z",
-   "summary": "MeanFlow generators achieve fast few-step sampling by predicting average velocities over time intervals, making them attractive for efficient generation. Reinforcement learning (RL) has become a powerful way to align diffusion and flow models with human preferences and task-specific objectives. In particular, DiffusionNFT offers an efficient forward-process RL framework that does not require reverse-process trajectories or likelihood estimation. However, applying such RL methods to MeanFlow rema",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15200v1",
-   "url": "http://arxiv.org/abs/2607.15200v1",
-   "title": "Mask-Aware Policy Gradients for Diffusion Language Models",
-   "published": "2026-07-16T16:57:34Z",
-   "summary": "Reinforcement learning has proven effective for improving reasoning in large language models, but extending it to Masked Diffusion Language Models (MDLMs) remains challenging due to the intractability of the log-likelihood estimation. Existing approaches approximate this log-likelihood by modeling only the token predictions, ignoring the order in which positions are unmasked during generation. We observe that MDLM generation involves two decisions at each step: what tokens to place at each maske",
+   "id": "http://arxiv.org/abs/2607.21120v1",
+   "url": "http://arxiv.org/abs/2607.21120v1",
+   "title": "Relative Value Learning",
+   "published": "2026-07-23T09:55:45Z",
+   "summary": "In reinforcement learning, critics typically estimate absolute state values $V(s)$, estimating how good a particular situation is in isolation. However, it turns out that only differences in value are relevant for control. Motivated by this, we propose Relative Value Learning (RV), a framework that learns value differences directly via an antisymmetric function $\u0394(s_i, s_j) = V(s_i) - V(s_j)$. We introduce a pairwise Bellman operator and prove it is a $\u03b3$-contraction with a unique fixed point eq",
    "chapters": [
     "ch11",
     "ch6"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15161v1",
-   "url": "http://arxiv.org/abs/2607.15161v1",
-   "title": "On-Policy Delta Distillation",
-   "published": "2026-07-16T16:07:19Z",
-   "summary": "On-policy distillation is an alternative post-training method in reinforcement learning that alleviates the constraints imposed by reward models by providing token-level supervision from a teacher model. Although on-policy distillation has been studied and applied across various settings, its fundamental design remains underexplored. In this paper, we introduce a new distillation reward, termed the delta signal, instead of directly imitating the teacher's output distribution. The delta signal is",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15142v1",
-   "url": "http://arxiv.org/abs/2607.15142v1",
-   "title": "Concept-Guided Spatial Regularization for World Models in Atari Pong",
-   "published": "2026-07-16T15:46:44Z",
-   "summary": "World models are usually evaluated as components of model-based reinforcement learning (MBRL) systems, while the world models themselves are rarely studied in isolation. We examine five representative visual world-model agents in Atari Pong: DreamerV3, DIAMOND, TWISTER, Simulus, and STORM. After reproducing their training pipelines and matching the reported agent performance, we freeze the learned world models and evaluate them with a closed-loop rollout diagnostic: a policy trained separately f",
+   "id": "http://arxiv.org/abs/2607.21111v1",
+   "url": "http://arxiv.org/abs/2607.21111v1",
+   "title": "TOUR: A Trajectory-Level Unlearning Benchmark for Offline Reinforcement Learning",
+   "published": "2026-07-23T09:40:40Z",
+   "summary": "Offline Reinforcement Learning (RL) agents are trained on fixed behavioral trajectories, which makes trajectory-level deletion important when selected data must be removed after training. Evaluating such deletion is difficult because a lower membership score can reflect trajectory removal, residual memorization visible to another attack, or policy collapse that destroys useful behavior. We introduce Trajectory-level memOrization and Unlearning in offline RL (TOUR), a benchmark that combines traj",
    "chapters": [
     "ch12",
-    "ch8"
+    "ch10"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15107v1",
-   "url": "http://arxiv.org/abs/2607.15107v1",
-   "title": "Learning in Infinitesimal Non-Compositional Sketches",
-   "published": "2026-07-16T15:18:58Z",
-   "summary": "This paper develops a categorical framework -- Learning in Infinitesimal Non-Compositional Sketches (LINCS) -- as the repair of non-compositionality: failures of diagrams to factor through quotient sketches lifted to the tangent category setting. Machine learning problems are specified as sketches: graphs with commutativity conditions $\\mathcal D$, limit cones $\\mathcal L$, and colimit cocones $\\mathcal K$, generalizing the usual scalarization of loss functions or vector space assumptions. Non-c",
+   "id": "http://arxiv.org/abs/2607.21090v1",
+   "url": "http://arxiv.org/abs/2607.21090v1",
+   "title": "Training Large Language Models for Self-Explanation Faithfulness",
+   "published": "2026-07-23T09:20:38Z",
+   "summary": "We propose a Reinforcement Learning (RL) method to directly optimize the faithfulness of self-explanations - the extent to which a model's generated reasoning accurately reflects its internal decision-making process. While existing work focuses on evaluating faithfulness or using inference-time prompting frameworks to improve an LLM's self-explanation's tractability, these approaches do not provide a mechanism to directly optimize a model's parameters to generate faithful self-explanations. We b",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15095v2",
-   "url": "http://arxiv.org/abs/2607.15095v2",
-   "title": "Digital Pantheon: Simulating and Auditing Coalition Formation with LLM Agents",
-   "published": "2026-07-16T15:08:29Z",
-   "summary": "The formation of political coalitions is a complex negotiation driven by both concrete policy objectives and deep-seated ideological convictions. While Large Language Models (LLMs) open new avenues for computational political science, the neutrality and helpfulness biases instilled by Reinforcement Learning from Human Feedback (RLHF) prevent them from sustaining steadfast partisan behaviour. We present a multi-agent framework that reconciles factual grounding with ideological alignment by combin",
+   "id": "http://arxiv.org/abs/2607.21069v1",
+   "url": "http://arxiv.org/abs/2607.21069v1",
+   "title": "From Evaluation to Optimisation: Hierarchy-Aware Training Signals for CWE Prediction in Python",
+   "published": "2026-07-23T09:02:46Z",
+   "summary": "The original ALPHA benchmark introduced a taxonomy-aware penalty for evaluating CWE-level vulnerability prediction in Python and proposed that the penalty could theoretically also serve as a training signal. This paper provides that validation. We compare three delivery mechanisms: supervised fine-tuning, a dual-head classification loss, and reinforcement learning with a dense reward derived from the normalised penalty. We find that supervised approaches consistently regress below the zero-shot ",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21051v1",
+   "url": "http://arxiv.org/abs/2607.21051v1",
+   "title": "Sample-Efficient Learning from Agent Experience",
+   "published": "2026-07-23T08:34:31Z",
+   "summary": "Real-world agent learning is often constrained by costly environment interactions, such as running time-consuming experiments or obtaining human feedback. In-context learning offers a highly sample-efficient way for agents to learn from their own interaction histories, but its gains disappear once that experience is removed from the context. Separately, context distillation provides a mechanism for internalizing contextual information into model weights. However, applying it to agents' interacti",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.21013v1",
+   "url": "http://arxiv.org/abs/2607.21013v1",
+   "title": "EmoAgent-R1: Towards Multimodal Emotion Understanding with Reinforcement Learning-based Dynamic Agent Specialization",
+   "published": "2026-07-23T07:52:40Z",
+   "summary": "Multimodal large language models (MLLMs) have achieved impressive performance in multimodal emotion recognition (MER) tasks and lifted MER to a new level that is complex emotion understanding with advanced video understanding abilities and natural language description. However, existing MLLM-based methods often use a fixed prompt to perceive the emotions, ignoring the dynamicity and complexity of the emotion source in the multimodal inputs. To address these issues, we propose a novel Reinforceme",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.15080v1",
-   "url": "http://arxiv.org/abs/2607.15080v1",
-   "title": "Evaluating covariate balance for long time horizon Markov decision processes",
-   "published": "2026-07-16T14:49:38Z",
-   "summary": "This article explores the application of covariate balance diagnostics for detecting the presence of hidden confounding/model miss-specification in studies applying offline reinforcement learning (RL) to deriving optimal treatment recommendations. The results demonstrate that, either there is a high risk of bias within existing offline RL studies for treatment recommendations or, existing covariate balance metrics are not sufficient to assess such studies. Regardless, existing offline RL studies",
+   "id": "http://arxiv.org/abs/2607.20973v1",
+   "url": "http://arxiv.org/abs/2607.20973v1",
+   "title": "Deep Reinforcement-Learning-Guided Model Predictive Control for Preventing Overtakes in Autonomous Racing",
+   "published": "2026-07-23T06:50:59Z",
+   "summary": "This paper addresses defensive blocking in autonomous racing, where a vehicle must prevent a faster opponent from overtaking while operating near its dynamic limits. Different from lap-time minimization, we formulate defense as a spatial occupancy regulation problem via a hierarchical reinforcement-learning guided model predictive control framework. A Soft Actor-Critic strategic layer operates in the Frenet domain to generate geometry-aware defensive references, which are embedded into the nonli",
    "chapters": [
-    "ch10"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15004v1",
-   "url": "http://arxiv.org/abs/2607.15004v1",
-   "title": "CosFly-VLA: A Spatially Aware Vision-Language-Action Model for UAV Tracking",
-   "published": "2026-07-16T13:52:08Z",
-   "summary": "Dynamic target tracking is essential for Unmanned Aerial Vehicles (UAVs) operating in complex urban environments, where both the target and the camera viewpoint change continuously. Existing Vision-Language-Action (VLA) policies can track visible targets effectively, but their performance often degrades when buildings, vegetation, or roadside objects block the line of sight. During sustained occlusion, a policy may lose the target state, execute actions toward an incorrect region, and amplify th",
-   "chapters": [
-    "ch10"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2607.15003v1",
-   "url": "http://arxiv.org/abs/2607.15003v1",
-   "title": "SMC-ES: Automated synthesis of formally verified control policies",
-   "published": "2026-07-16T13:51:59Z",
-   "summary": "The deployment of autonomous cyber-physical systems in safety-critical environments requires closed-loop control strategies (i.e., policies) that are not only performant but also provably safe and robust. While learning-based methodologies such as Reinforcement Learning offer flexible and scalable approaches to automatically synthesize such controllers, they typically lack the formal guarantees necessary for safe deployment. To bridge this gap, we propose a novel simulation-based methodology to ",
-   "chapters": [
+    "ch12",
     "ch7"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14962v1",
-   "url": "http://arxiv.org/abs/2607.14962v1",
-   "title": "Multi-Axis Max@K Reinforcement Learning for Representative Diversity in Text-to-Image Generation",
-   "published": "2026-07-16T13:14:21Z",
-   "summary": "Text-to-image (T2I) models can synthesize realistic, prompt-aligned images, yet samples generated for the same prompt often cover only a small subset of visually distinct modes. This limits the diversity of images, and for person-centric prompts, can reflect or amplify demographic skew. We formalize this problem as coverage of a predefined set of semantically specified modes, which we call target-mode coverage. We then propose multi-axis max@K, a group-based reinforcement learning objective for ",
+   "id": "http://arxiv.org/abs/2607.20952v1",
+   "url": "http://arxiv.org/abs/2607.20952v1",
+   "title": "The Weight of Silence: A Causal Case for Weights Over the Scratchpad in Latent Chess Reasoning",
+   "published": "2026-07-23T06:18:43Z",
+   "summary": "Latent, or silent, reasoning lets language models carry out intermediate computation in continuous vector space instead of words, and is widely assumed to function as an internal scratchpad the model actively consults during inference. Whether that assumption survives reinforcement learning has not been tested directly: existing causal analyses of latent reasoning are confined to math and logic tasks, and compare a model's reliance on its thoughts within a single checkpoint, never before and aft",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14895v1",
-   "url": "http://arxiv.org/abs/2607.14895v1",
-   "title": "Leveraging Instruction Tuning and Merging for Reasoning Model Adaptation",
-   "published": "2026-07-16T12:11:25Z",
-   "summary": "Reasoning language models (RLMs) have demonstrated impressive performance in domains such as mathematics and coding. These domains permit reliable verification of model outputs, which is important for enabling the reinforcement learning that drives RLM performance gains. However, training RLMs on domains that lack reliable verifiers remains challenging. Meanwhile, for both verifiable and unverifiable domains, large amounts of unused supervised fine-tuning data with human-written solutions exist.",
+   "id": "http://arxiv.org/abs/2607.20908v1",
+   "url": "http://arxiv.org/abs/2607.20908v1",
+   "title": "Multi-turn RL with Structural and Performance Aware Rewards for CUDA Kernel Generation",
+   "published": "2026-07-23T04:06:41Z",
+   "summary": "Reinforcement Learning with Verifiable Rewards (RLVR) has emerged as a powerful technique to enhance the reasoning capacity of LLMs for optimized code generation. However, existing RLVR approaches primarily rely on outcome-based signals such as correctness and speedup, overlooking performance-critical structural properties of programs that are essential for generating optimized code. In this work, we propose CudaPerf, a reflective RL framework that incorporates both verifiable execution rewards ",
    "chapters": [
-    "ch11"
+    "ch11",
+    "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14886v1",
-   "url": "http://arxiv.org/abs/2607.14886v1",
-   "title": "Reachability-Aware Pretraining for Efficient Target-Oriented Path Exploration in Temporal Knowledge Graph Reasoning",
-   "published": "2026-07-16T11:59:01Z",
-   "summary": "Temporal Knowledge Graph (TKG) reasoning under the extrapolation setting focuses on forecasting future time-stamped events (facts) from historical data in a temporal knowledge graph. Existing approaches, reinforcement learning (RL)-based multi-hop reasoning methods are prominent for TKG reasoning because they produce human-interpretable predictions via explicit multi-hop path tracing. However, during RL training, rewards are typically sparse, and exploration is highly inefficient due to the vast",
+   "id": "http://arxiv.org/abs/2607.20834v1",
+   "url": "http://arxiv.org/abs/2607.20834v1",
+   "title": "Offline RL with Hierarchical Action Chunking",
+   "published": "2026-07-23T01:48:46Z",
+   "summary": "Offline goal-conditioned reinforcement learning (RL) holds the promise of learning general-purpose policies from static datasets. However, scaling these methods to long-horizon tasks remains a challenge due to the curse of horizon, where value estimation errors can compound through long chains of bootstrapped Bellman backups. Existing hierarchical approaches mitigate this by decomposing tasks into subgoals, yet they often rely on low-level controllers that suffer from myopic execution and biased",
    "chapters": [
-    "ch12",
+    "ch11",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.20822v2",
+   "url": "http://arxiv.org/abs/2607.20822v2",
+   "title": "Robust Asynchronous Q-Learning under Reward and State Corruption via Batching",
+   "published": "2026-07-23T01:21:05Z",
+   "summary": "Motivated by reinforcement learning in harsh environments, we consider the problem of learning an optimal policy subject to adversarially corrupted feedback. Specifically, at each time-step, an adversary can perturb both the reward and state observations of the learner following the Huber contamination model. To defend against such data corruption, we propose BR-Async-Q: a novel, epoch-based, robust Q-learning algorithm built upon two key ideas: (i) partitioning the online data stream into batch",
+   "chapters": [
+    "ch11",
+    "ch4"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.20785v1",
+   "url": "http://arxiv.org/abs/2607.20785v1",
+   "title": "Robostral Navigate",
+   "published": "2026-07-22T23:13:05Z",
+   "summary": "Deploying navigation systems at scale requires a recipe that minimizes sensor assumptions, generalizes across robot embodiments, and trains efficiently. Yet, today's best systems depend on depth sensors, multi-camera rigs, or pre-built maps, limiting the hardware they support and increasing deployment cost. We introduce Robostral Navigate, an 8B vision-language model built around this scalability objective. The model consumes only a stream of monocular RGB images - the most ubiquitous sensor acr",
+   "chapters": [
+    "ch11",
     "ch9"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14877v1",
-   "url": "http://arxiv.org/abs/2607.14877v1",
-   "title": "PAC Learning in Turn-Based Stochastic Games with Reachability Objectives: A Decentralized Private Approach via Expected Conditional Distance",
-   "published": "2026-07-16T11:48:58Z",
-   "summary": "Reachability is the most fundamental logical objective, yet it is notoriously difficult to learn in reinforcement learning settings: even for Markov decision processes, PAC learning of reachability is impossible without additional assumptions. This difficulty also holds in turn-based stochastic games (TBSGs), where two adversarial players interact on a finite state space. In this work, we consider turn-based stochastic games with reachability objectives. For such settings, adversarial learning, ",
-   "chapters": []
+   "id": "http://arxiv.org/abs/2607.20767v1",
+   "url": "http://arxiv.org/abs/2607.20767v1",
+   "title": "Rushes: A Human Preference Dataset for Pluralistic Alignment",
+   "published": "2026-07-22T22:32:34Z",
+   "summary": "We introduce Rushes, a dataset and benchmark for studying revealed human engagement preferences in interactive narrative environments. Rushes is collected through a game interface where users interact with AI-generated branching narratives and select one choice from a small, explicit candidate set at each decision point. Each interaction logs the full candidate set, the user's choice, and the evolving narrative context, yielding time-ordered trajectories with persistent user-level identifiers. R",
+   "chapters": [
+    "ch11"
+   ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14777v1",
-   "url": "http://arxiv.org/abs/2607.14777v1",
-   "title": "SEED: Self-Evolving On-Policy Distillation for Agentic Reinforcement Learning",
-   "published": "2026-07-16T09:57:18Z",
-   "summary": "Large language models are increasingly trained as interactive agents for long-horizon tasks involving multi-turn interaction, tool use, and environment feedback. Outcome-based reinforcement learning (RL) provides a practical optimization paradigm, but its sparse trajectory-level rewards offer limited guidance on intermediate decisions, leaving a supervision gap between episode-level outcomes and token-level policy learning. We propose SEED (SElf-Evolving On-Policy Distillation), a self-evolving ",
+   "id": "http://arxiv.org/abs/2607.20708v1",
+   "url": "http://arxiv.org/abs/2607.20708v1",
+   "title": "Perspective Latents as an Architectural Condition for Causal Emergence in Active Inference Agents",
+   "published": "2026-07-22T20:25:29Z",
+   "summary": "A recent line of work measures causal emergence in reinforcement learning agents through Integrated Information Decomposition, reporting that $\u03a6_r$ grows with training and tracks reward improvement. For active inference, this raises the question of how reward-free predictive organization relates to such information-theoretic signatures. I test this within an active inference agent whose architecture separates a fast perception latent $z$ from a slow global latent $g$, where $g$ is driven by pred",
+   "chapters": [
+    "ch12",
+    "ch6"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.20690v1",
+   "url": "http://arxiv.org/abs/2607.20690v1",
+   "title": "Learning to Detect UI Principle Violations via Reinforcement Learning",
+   "published": "2026-07-22T19:42:59Z",
+   "summary": "Small language models and coding agents increasingly generate web front-end code, yet their outputs are typically evaluated primarily for functional correctness. A generated interface may compile, render, and pass unit tests while still violating established interface quality principles, including accessibility barriers, deceptive design patterns, poor visual hierarchy, and excessive decision complexity. Existing auditing approaches face a trade-off between cost, coverage, and scalability: exper",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14753v1",
-   "url": "http://arxiv.org/abs/2607.14753v1",
-   "title": "Large Audio Language Models for Spoofing-Aware Speaker Verification",
-   "published": "2026-07-16T09:38:45Z",
-   "summary": "Recent advances in text-to-speech and voice cloning make high-quality spoofing inexpensive and scalable, threatening voice authentication systems, especially automatic speaker verification (ASV). Existing defenses mainly address this threat through binary countermeasures (CMs) for deepfake detection or spoofing-aware speaker verification (SASV), where current systems are dominated by modular ASV-CM fusion and cascaded pipelines. Although large audio language models (LALMs) have shown promise on ",
+   "id": "http://arxiv.org/abs/2607.20665v1",
+   "url": "http://arxiv.org/abs/2607.20665v1",
+   "title": "Safe and Scalable Multi-Drone Payload Transport via CBF-based Reinforcement Learning with Zero-Shot Sim-to-Real Transfer",
+   "published": "2026-07-22T19:01:57Z",
+   "summary": "Multi-drone payload transportation has emerged as a promising research paradigm with potential applications in construction, logistics, and disaster response. However, the complex coupled dynamics among drones, cables, and payloads pose significant challenges, and existing approaches remain limited in safety and scalability, particularly in dynamic and unstructured environments. In this work, we propose a learning-based framework for safe and scalable multi-drone cooperative payload transport. W",
    "chapters": [
-    "ch11"
+    "ch6"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2607.14708v1",
-   "url": "http://arxiv.org/abs/2607.14708v1",
-   "title": "Reinforcement Learning for the Full Strawberry Harvesting Process: Obstacle Separation, Detachment, and Placement",
-   "published": "2026-07-16T08:16:30Z",
-   "summary": "Severe occlusions and deformable plant structures introduce complex contact dynamics that challenge robotic strawberry harvesting. A policy-driven reinforcement learning (RL) framework with heuristic phase coordination was developed, in which obstacle separation, fruit detachment, and placement were formulated as a sequential decision-making task. A shared interaction-aware policy generated Cartesian motions across all task phases, while lightweight heuristic logic coordinated task progression a",
+   "id": "http://arxiv.org/abs/2607.20656v1",
+   "url": "http://arxiv.org/abs/2607.20656v1",
+   "title": "Adaptive Multi-Horizon Reinforcement Learning",
+   "published": "2026-07-22T18:28:38Z",
+   "summary": "Effective decision-making in complex and changing environments requires balancing short-term and long-term consequences. In reinforcement learning (RL), this trade-off is typically controlled through a fixed discount factor, which imposes a single exponentially discounted temporal horizon. However, biological agents exhibit flexible and adaptive temporal discounting, suggesting that effective planning requires multiple timescales. Here, we propose a multi-horizon approach that adaptively selects",
+   "chapters": [
+    "ch12",
+    "ch8"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2607.20655v1",
+   "url": "http://arxiv.org/abs/2607.20655v1",
+   "title": "SalesLoop: Reinforcement Learning from Performance Feedback for Sales Lead Ranking",
+   "published": "2026-07-22T18:26:57Z",
+   "summary": "Lead ranking in Customer Relationship Management (CRM) systems faces a persistent challenge: models achieving high offline accuracy often underperform in production. We identify three fundamental gaps responsible for this disconnect: offline-online metric mismatch, pointwise-listwise objective misalignment, and temporal distribution drift. To address these gaps, we propose SalesLoop, a reinforcement learning framework that establishes a closed feedback loop between model predictions and real-wor",
    "chapters": [
     "ch11",
-    "ch7"
+    "ch10"
    ]
   }
  ]

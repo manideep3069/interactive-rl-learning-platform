@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-07-27",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 32, Agentic RL: 31, Offline RL: 11, PPO & Policy Gradients: 5, Model-Based RL: 4, Continuous Control: 3, Exploration: 3, general: 2, Value Learning: 1, Tabular Learning: 1)",
+   "\u201cSkill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cExplainable Reinforcement Learning for assisting Air Traffic Controllers\u201d \u2014 Agentic RL",
+   "\u201cLearning to Prepare Molecular Ground States with Transformer Models\u201d \u2014 general RL",
+   "\u201cConformal Constraint Tightening for Chance-Constrained Motion Planning with Unknown Dynamics\u201d \u2014 Offline RL, Model-Based RL",
+   "\u201cIntegrated Order Dispatching and Routing for Last-Mile Pickup via Deep Reinforcement Learning\u201d \u2014 Agentic RL, Offline RL"
+  ]
+ },
+ {
   "date": "2026-07-20",
   "title": "Radar sweep: 25 new papers mapped to the curriculum",
   "items": [
