@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-08-03",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 35, Agentic RL: 33, Exploration: 8, Offline RL: 7, Continuous Control: 5, Model-Based RL: 3, PPO & Policy Gradients: 2, Value Learning: 1, general: 1)",
+   "\u201cWCM: A World Critic Model for Vision-Language-Action Reinforcement Learning\u201d \u2014 Model-Based RL, Continuous Control",
+   "\u201cConvergence and Regret of the Policy Gradient for Multi-Armed Bandits in Diffusion Environment\u201d \u2014 Exploration, PPO & Policy Gradients",
+   "\u201cDungeonBench: A Benchmark for Rules-Rich Tactical Reasoning in Dungeons & Dragons Combat\u201d \u2014 Agentic RL",
+   "\u201cLEMUR: Learning to Align with Multi-Objective Reinforcement Learning from Preference Feedback\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cDreamQAS: Learning a Decision-Useful World Model for VQE-Efficient Quantum Architecture Search\u201d \u2014 Model-Based RL"
+  ]
+ },
+ {
   "date": "2026-07-27",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
