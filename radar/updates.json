@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-08-10",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (Agentic RL: 39, RL for LLMs: 33, Continuous Control: 8, Model-Based RL: 7, general: 4, Exploration: 4, PPO & Policy Gradients: 2, Offline RL: 2, Value Learning: 1)",
+   "\u201cCreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity\u201d \u2014 RL for LLMs",
+   "\u201cFisher-R1: Training LLM Agents for Reliable Hypothesis Testing\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cResidencyRL: Reinforcement Learning in Simulated Clinical Environments\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cTrajectory-Relative Hindsight Distillation for Agentic Reinforcement Learning\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cAftab: A Comprehensive Benchmark of CNN Encoders and Advanced Value Functions in Parallelized Q-Networks\u201d \u2014 Value Learning"
+  ]
+ },
+ {
   "date": "2026-08-03",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
