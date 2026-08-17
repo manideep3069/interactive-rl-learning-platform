@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-08-17",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 37, Agentic RL: 32, Model-Based RL: 5, Continuous Control: 4, general: 3, Exploration: 3, Offline RL: 3, PPO & Policy Gradients: 2, Tabular Learning: 1, Value Learning: 1)",
+   "\u201cRollplex: Cross-Phase GPU Spatial Sharing for Vision Language Model Post-Training\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cDesigning Reinforcement Learning for Diffusion Models: A Unified Path-Space View\u201d \u2014 RL for LLMs",
+   "\u201cCORAL: Curriculum-Optimized Reward Adaptation for LiDAR-Based Goal-Directed Urban Driving\u201d \u2014 PPO & Policy Gradients",
+   "\u201cEnvs-FORGE: Frontier-Optimized Reward-Grounded Environment Synthesis for Agent RL\u201d \u2014 Agentic RL, Model-Based RL",
+   "\u201cMathForm: Scaling Mathematical Autoformalization with Knowledge Retrieval and Verification-Guided Refinement\u201d \u2014 Agentic RL"
+  ]
+ },
+ {
   "date": "2026-08-10",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
