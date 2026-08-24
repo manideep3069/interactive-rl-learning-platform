@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-08-24",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (Agentic RL: 28, RL for LLMs: 27, Exploration: 10, Continuous Control: 9, Offline RL: 7, general: 4, PPO & Policy Gradients: 4, Model-Based RL: 3, Tabular Learning: 1, Value Learning: 1)",
+   "\u201cRe$^3$Cap: Retrieval-Guided Refinement for Image Captioning Enhancement via Reinforcement Learning\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cAUSO: Action-Level Unified Skill Optimization from Internalization to Utilization\u201d \u2014 Agentic RL",
+   "\u201cBeyond Imitation: Self-Improving Robot Policies via Off-Policy Q-Planning\u201d \u2014 Agentic RL, Offline RL",
+   "\u201cSRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control\u201d \u2014 Offline RL, Continuous Control",
+   "\u201cTeaching is a Process: The TOSS Framework for Modeling Human Teaching Decisions in Human-Interactive Robot Learning\u201d \u2014 RL for LLMs, Exploration"
+  ]
+ },
+ {
   "date": "2026-08-17",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [

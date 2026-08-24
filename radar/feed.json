@@ -1,416 +1,421 @@
 {
- "generated": "2026-08-17T06:38:03+00:00",
+ "generated": "2026-08-24T06:41:04+00:00",
  "papers": [
   {
-   "id": "http://arxiv.org/abs/2608.14498v1",
-   "url": "http://arxiv.org/abs/2608.14498v1",
-   "title": "Rollplex: Cross-Phase GPU Spatial Sharing for Vision Language Model Post-Training",
-   "published": "2026-08-14T17:13:34Z",
-   "summary": "Vision-language models (VLMs) enable embodied agents to reason and act from visual observations and language instructions. Reinforcement learning (RL) post-training enhances these capabilities using task feedback, but current on-policy RL runtimes execute rollout, reference scoring, and actor training in strict serial phases. While effective for text-only RL, this phase-granular execution is wasteful for VLMs, where processing dense video inputs and prompt prefixes occupies a large fraction of e",
+   "id": "http://arxiv.org/abs/2608.21305v1",
+   "url": "http://arxiv.org/abs/2608.21305v1",
+   "title": "Re$^3$Cap: Retrieval-Guided Refinement for Image Captioning Enhancement via Reinforcement Learning",
+   "published": "2026-08-21T17:07:41Z",
+   "summary": "Reinforcement Learning (RL) has demonstrated significant gains in image captioning, yet it is still limited in encouraging Large Vision-Language Models (LVLMs) to explore novel reasoning strategies. This limitation leads to a performance gap between RL and Supervised Fine-Tuning (SFT). In this paper, we argue that multi-modal retrieval can serve as an effective reasoning signal for caption refinement. Based on this insight, we present the Retrieval-Guided Refinement for Image Captioning (Re$^3$C",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14430v1",
-   "url": "http://arxiv.org/abs/2608.14430v1",
-   "title": "Designing Reinforcement Learning for Diffusion Models: A Unified Path-Space View",
-   "published": "2026-08-14T16:11:55Z",
-   "summary": "Reinforcement learning (RL) post-training provides a direct way to align diffusion models with human preferences and task-specific rewards. However, current RL algorithms for diffusion models remain fragmented: reverse-trajectory methods rely on discretized likelihood ratios, whereas forward-matching methods train on reward-labeled noising versions of the rollout samples. This paper shows that these seemingly different losses arise from a single path-space principle. Starting from the regularize",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.14332v1",
-   "url": "http://arxiv.org/abs/2608.14332v1",
-   "title": "CORAL: Curriculum-Optimized Reward Adaptation for LiDAR-Based Goal-Directed Urban Driving",
-   "published": "2026-08-14T14:22:05Z",
-   "summary": "Reinforcement learning is promising for autonomous urban driving, but long-horizon goal-directed navigation asks a policy to acquire several competing behaviors at once--reaching a distant goal, tracking a route, avoiding obstacles, obeying signals--and a fixed objective gives no order in which to learn them. This paper presents CORAL, which advances two schedules together: a five-stage curriculum that progressively lengthens routes and tightens behavioral constraints, and a stage-aware reward w",
-   "chapters": [
-    "ch6"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.14312v1",
-   "url": "http://arxiv.org/abs/2608.14312v1",
-   "title": "Envs-FORGE: Frontier-Optimized Reward-Grounded Environment Synthesis for Agent RL",
-   "published": "2026-08-14T13:54:22Z",
-   "summary": "Reinforcement learning (RL) for terminal agents needs executable training environments with reliable rewards and useful difficulty. Fixed recipes such as few-shot, Self-Instruct, and Evol-Instruct apply the same prompting policy to every seed, even when the current policy would benefit from a harder, easier, or simply different task. We present Envs-FORGE, a prompting policy that converts verifier rewards into per-seed environment-synthesis actions. Envs-FORGE estimates seed pass rates, scores s",
-   "chapters": [
-    "ch12",
-    "ch8"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.14221v1",
-   "url": "http://arxiv.org/abs/2608.14221v1",
-   "title": "MathForm: Scaling Mathematical Autoformalization with Knowledge Retrieval and Verification-Guided Refinement",
-   "published": "2026-08-14T11:51:12Z",
-   "summary": "Autoformalization is commonly framed as translating natural-language mathematical statements into machine-verifiable formal languages such as Lean 4. However, faithful formalization requires more than translation. Models must map mathematical concepts to the complex hierarchy of types and definitions in formal libraries such as Mathlib, while ensuring that generated statements preserve the meaning of the source propositions. Existing approaches struggle because they rely heavily on the model's p",
+   "id": "http://arxiv.org/abs/2608.21292v1",
+   "url": "http://arxiv.org/abs/2608.21292v1",
+   "title": "AUSO: Action-Level Unified Skill Optimization from Internalization to Utilization",
+   "published": "2026-08-21T16:53:27Z",
+   "summary": "Skills play different roles as an agent's policy evolves: they should first provide learnable knowledge, then support capability formation, and finally be invoked only when they improve individual decisions. Existing methods rarely model this lifecycle. They either keep skills outside the model, fully internalize them, or select among internalization and utilization objectives through noisy task-level success rates. Such designs fragment training and assign uniform importance to actions within t",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14212v1",
-   "url": "http://arxiv.org/abs/2608.14212v1",
-   "title": "APTER: Adaptive Post-Training with Expert-Grounded Rubrics",
-   "published": "2026-08-14T11:42:29Z",
-   "summary": "As large language models enter professional domains, they must satisfy domain constraints, include critical evidence, and provide complete reasoning rather than merely produce fluent responses. Existing post-training methods often rely on holistic preferences or outcome-level verification, while recent rubric-based methods usually generate rubrics independently for each query. In specialized domains, such unconstrained rubrics may omit critical requirements and vary across samples, hindering the",
+   "id": "http://arxiv.org/abs/2608.21204v1",
+   "url": "http://arxiv.org/abs/2608.21204v1",
+   "title": "Beyond Imitation: Self-Improving Robot Policies via Off-Policy Q-Planning",
+   "published": "2026-08-21T15:18:37Z",
+   "summary": "Behaviour Cloning (BC) has driven remarkable progress in robot manipulation, yet it is fundamentally limited by its inability to self-improve: a policy that fails cannot learn from that failure without additional human demonstrations. Reinforcement Learning fine-tuning offers a path to self-improvement but has proven difficult to scale to the multi-billion-parameter models underpinning modern robot policies. We propose Q-Planning, which equips a large visuomotor BC policy with a small off-policy",
    "chapters": [
-    "ch11"
+    "ch12",
+    "ch10"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14157v1",
-   "url": "http://arxiv.org/abs/2608.14157v1",
-   "title": "Removing Temporal Note Redundancy Improves Multimodal Reinforcement Learning for Medicine",
-   "published": "2026-08-14T10:11:03Z",
-   "summary": "Mechanical ventilation is a critical life-support intervention, requiring dynamic adjustments to ventilator settings as a patient's condition evolves. While reinforcement learning (RL) offers a promising framework for optimizing these sequential decisions, standard approaches rely primarily on structured electronic health record (EHR) data, missing crucial clinical context recorded in free-text notes. Integrating longitudinal clinical notes into RL state spaces is challenging because notes are h",
+   "id": "http://arxiv.org/abs/2608.21175v1",
+   "url": "http://arxiv.org/abs/2608.21175v1",
+   "title": "SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control",
+   "published": "2026-08-21T14:46:06Z",
+   "summary": "Safe and efficient shape-aware navigation in heterogeneous crowds and robot fleets remains challenging. Traditional approaches often assume homogeneous robots, sparse workspaces, simplified geometry, offline computation, or handcrafted parameters to make the problem tractable, which limits their deployment in dense crowd scenarios. Toward this end, we propose Shape-Aware Reinforcement Learned Model Predictive Control (SRL-MPC), a method for safe, efficient, and adaptive navigation in crowds with",
    "chapters": [
-    "ch8"
+    "ch10",
+    "ch7"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14156v1",
-   "url": "http://arxiv.org/abs/2608.14156v1",
-   "title": "Deep Reinforcement Learning solution for pickup and delivery routing problems with time window and capacity constraints",
-   "published": "2026-08-14T10:10:01Z",
-   "summary": "The task of constructing vehicles optimal routes for pickup and delivery of goods is one of most promising tasks in the context of global urban population growth. Although this kind of problems with small size can be solved by various classical approaches, a fast (or realtime) route optimizer under the constraints of the real world (such as capacity and time windows constraints) for medium-large size problems still remains a highly challenging task. In this work we, for the first time, successfu",
+   "id": "http://arxiv.org/abs/2608.21083v1",
+   "url": "http://arxiv.org/abs/2608.21083v1",
+   "title": "Teaching is a Process: The TOSS Framework for Modeling Human Teaching Decisions in Human-Interactive Robot Learning",
+   "published": "2026-08-21T13:28:03Z",
+   "summary": "Successful Human-Robot Teaching assumes alignment between robot processing needs and human teaching intent. To better understand this alignment, this work seeks to uncover the underlying logic that humans intuitively apply when teaching. Through an exploratory, bottom-up study with N=34, participants observing two distinct robot Reinforcement Learning (RL) scenarios, we analyze 204 intuitive teaching responses across early, middle, and late learning phases. Results reveal that teaching decisions",
+   "chapters": [
+    "ch11",
+    "ch9"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.21049v1",
+   "url": "http://arxiv.org/abs/2608.21049v1",
+   "title": "$Z^2$-ACT: End-to-End Verifiable Agentic Intent Control for Open 6G RAN",
+   "published": "2026-08-21T12:44:03Z",
+   "summary": "With the progression in open and disaggregated 6G radio access networks, it is expected that the system will be able to host multi-vendors. In order to host multi-vendors, it is essential that AI-assisted control loops remain safe, verifiable, and auditable under concurrent operator intents and untrusted model inputs. The existing studies address the agentic coordination, formal intent constraints, zero-trust prompt verification and cryptographic accountability in isolation, which leaves pre-rea",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20909v1",
+   "url": "http://arxiv.org/abs/2608.20909v1",
+   "title": "Decoupling Policy Extraction for Offline Reinforcement Learning",
+   "published": "2026-08-21T09:26:53Z",
+   "summary": "Offline RL methods commonly jointly train the actor and critic, where the critic is used to guide the actor toward higher-value actions. This coupled learning process is well motivated in online RL, where an improved actor collects new data that can further update the actor and the critic. However, training data remains fixed in offline RL, making actor-side policy improvement unable to generate new data to validate or correct the critic. Moreover, retaining this coupled paradigm leads to two re",
+   "chapters": [
+    "ch12",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20858v1",
+   "url": "http://arxiv.org/abs/2608.20858v1",
+   "title": "Sharing the Control Authority Between Deep Reinforcement Learning and Model Predictive Control: Application to Multi-Class Transportation Networks",
+   "published": "2026-08-21T08:26:20Z",
+   "summary": "Transportation networks, in particular multi-class transportation networks (i.e., networks with mixed vehicle types), are complex systems that are challenging to control. Recently, Deep Reinforcement Learning (DRL), which learns control policies from interactions with the environment, and Model Predictive Control (MPC), which uses a system model to optimize control inputs, have been increasingly utilized for transportation network control. However, nonlinear system dynamics and high-dimensional ",
    "chapters": []
   },
   {
-   "id": "http://arxiv.org/abs/2608.14135v1",
-   "url": "http://arxiv.org/abs/2608.14135v1",
-   "title": "AgilePE: Autonomous UAV Pursuit-Evasion via Self-Play Reinforcement Learning",
-   "published": "2026-08-14T09:41:16Z",
-   "summary": "Autonomous pursuit-evasion is a fundamental challenge for Unmanned Aerial Vehicles (UAVs), requiring rapid decision-making under tightly coupled dynamics and continuously changing opponent behaviors. Traditional rule-based or differential-game approaches often struggle with high-dimensional aerial interactions and agile maneuvering. We present AgilePE, a complete system for autonomous UAV pursuit-evasion via self-play reinforcement learning. AgilePE integrates agile low-level control, competitiv",
+   "id": "http://arxiv.org/abs/2608.20852v1",
+   "url": "http://arxiv.org/abs/2608.20852v1",
+   "title": "Demonstration-Guided Humanoid Stand-Up on an Emulated Deformable Surface",
+   "published": "2026-08-21T08:16:43Z",
+   "summary": "This paper presents a reference-guided reinforcement learning framework to generate stand-up motion for a 29-DOF Unitree G1 humanoid on deformable soft ground, using a human demonstration recorded on hard ground. The terrain compliance is modelled using solref and solimp parameters from MuJoCo's rigid body soft-contact model. The rewards consists of (i) reference motion tracking through residual joint-position control and (ii) explicit recovery objectives such as pelvis height, torso uprightness",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14122v1",
-   "url": "http://arxiv.org/abs/2608.14122v1",
-   "title": "Reinforcement Learning-Based Production Scheduling in an Industry-Based Coating Scenario Using the Digital Model Playground",
-   "published": "2026-08-14T09:28:20Z",
-   "summary": "Production scheduling in complex manufacturing environments is challenging when sequence-dependent setup times, stochastic disturbances, and due-date constraints must be addressed simultaneously. While reinforcement learning (RL) methods have shown promising results in research, most studies rely on simplified benchmark processes, limiting their industrial relevance. This paper demonstrates the applicability of RL-based scheduling in an industry-inspired coating process that reflects practical c",
+   "id": "http://arxiv.org/abs/2608.20834v1",
+   "url": "http://arxiv.org/abs/2608.20834v1",
+   "title": "Advantage-level Aggregation Reinforcement Learning for X-point Target Magnetic Configuration Control in an EXL-50U Experiment-Calibrated Simulation Environment",
+   "published": "2026-08-21T08:00:50Z",
+   "summary": "Managing divertor heat loads is a central challenge for compact, high-power tokamaks. To increase local flux expansion and decouple the dissipation volume from the core, EHL-2 adopts the X-point target (XPT) divertor. This requires the secondary X-point to remain on the divertor leg; displacement degrades the topology and exhaust geometry. Current experiments, including EXL-50U discharges, rely on precomputed feedforward waveforms with PID loops on global quantities. Lacking dedicated closed-loo",
    "chapters": [
-    "ch12",
     "ch6"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.14114v1",
-   "url": "http://arxiv.org/abs/2608.14114v1",
-   "title": "Learning to Run Power Networks: Effective AlphaZero-inspired Topological Control",
-   "published": "2026-08-14T09:16:10Z",
-   "summary": "As the integration of volatile renewable energy sources increases the strain on modern power grids, the use of Reinforcement Learning (RL) for autonomous topological reconfiguration has emerged as a promising research field to keep strained grids stable and operational. Compared to traditional redispatching measures, topological actions offer a cheaper and more cost-effective way to manage grid congestion. However, their implementation is hindered by a vast combinatorial action space and strict ",
-   "chapters": [
-    "ch12",
-    "ch8"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.14109v1",
-   "url": "http://arxiv.org/abs/2608.14109v1",
-   "title": "A Graph-Based Reinforcement Learning Framework for Structured Drift Diagnosis and Recovery in Autonomous LLM Agents",
-   "published": "2026-08-14T09:12:14Z",
-   "summary": "Autonomous LLM agents are increasingly deployed in complex real-world workflows, yet they remain vulnerable to runtime behavioral drift, a silent deviation from the original task that can lead to irreversible side effects on external systems. Existing approaches address drift at the prompt level but lack structured mechanisms for step-level detection, risk assessment, and recovery decision. Because the main task-executing agent is often a large and expensive model that cannot be re-trained on ev",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13878v1",
-   "url": "http://arxiv.org/abs/2608.13878v1",
-   "title": "Knowledge-Data-Dual-Driven Reinforcement Learning for Autonomous Vehicle Control in Mixed Traffic",
-   "published": "2026-08-14T02:07:13Z",
-   "summary": "In mixed traffic, decision-making for autonomous vehicles (AVs) confronts three interrelated challenges. First, physics-based priors incorporated into reinforcement learning (RL) models fail to capture latent interactive vehicle intentions and diverse driver behaviors, limiting the proactive reasoning capabilities. Second, abrupt maneuvers by surrounding vehicles cause non-stationarity, leaving long-tail safety events under-explored. Third, hybrid action spaces destabilize unified RL training du",
+   "id": "http://arxiv.org/abs/2608.20823v1",
+   "url": "http://arxiv.org/abs/2608.20823v1",
+   "title": "Natural Sit-to-Stand Motion Synthesis For Humanoids via Guided Assistance Curricula and Staged Rewards",
+   "published": "2026-08-21T07:44:00Z",
+   "summary": "A humanoid has infinitely many ways to stand up from sitting while maintaining balance, making sit-to-stand (STS) a challenging control problem. We synthesise natural humanoid STS motion from scratch using reinforcement learning, without demonstrations or reference trajectories. A single Proximal Policy Optimisation policy learns smooth, human-like rising driven by three complementary components. (i) A coupled force/chair-height curriculum is used. A vertical pelvis-assist force aids early traje",
    "chapters": [
     "ch12",
     "ch9"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.13854v1",
-   "url": "http://arxiv.org/abs/2608.13854v1",
-   "title": "Bootstrapping Niche Multilingual Code Translation via Reinforcement Learning with Execution-Based Verifiable Supervision",
-   "published": "2026-08-14T00:56:41Z",
-   "summary": "Code translation must preserve executable behavior across many programming languages, yet neural code translation has largely focused on a few popular languages such as C++, Java, and Python. This leaves a niche, many-to-many setting where parallel supervision is sparse, producing plausible but non-executable translations. We address this setting with preference-based reinforcement learning driven by execution-based supervision. Our pipeline firstly expands verifiable seed Python programs into a",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13833v1",
-   "url": "http://arxiv.org/abs/2608.13833v1",
-   "title": "AdsWorldEngine: A Self-Evolving Conversational Advertising Agent through Orchestrator and Tool Coevolution",
-   "published": "2026-08-13T23:53:05Z",
-   "summary": "Conversational advertising aims to deliver useful ads within multi-turn assistant interactions. Unlike conventional query-based advertising, where the user's intent is often expressed in a short standalone query, conversational ads must infer latent commercial intent from the current user query, the assistant response, and dialogue history while also deciding whether an ad would be helpful rather than intrusive. We propose AdsWorldEngine, an agentic framework for conversational advertising. AdsW",
+   "id": "http://arxiv.org/abs/2608.20771v1",
+   "url": "http://arxiv.org/abs/2608.20771v1",
+   "title": "CAS: Conformalized Agentic Search via Adaptive Retrieval and Policy Weighting",
+   "published": "2026-08-21T06:29:52Z",
+   "summary": "Search Agents face a severe reliability crisis during reinforcement learning (RL) fine-tuning. Heuristic Top-K retrieval often causes critical evidence loss or noise inclusion, while over-confidence induced by progressive RL leads to hallucinated answers and redundant searches. To build highly reliable agents, we introduce Conformal Prediction (CP) and propose Conformalized Agentic Search (CAS). This framework establishes reliability guarantees on both the retrieval and training sides: on the re",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.13698v1",
-   "url": "http://arxiv.org/abs/2608.13698v1",
-   "title": "GRPO Beyond English: A Large-Scale Study of GRPO in Non-English and Multilingual Settings",
-   "published": "2026-08-13T18:43:33Z",
-   "summary": "Reinforcement Learning with Verifiable Rewards (RLVR), often optimized with Group Relative Policy Optimization (GRPO), has become a central recipe for improving the reasoning capabilities of pretrained language models but current studies remain heavily English-centric. We conduct a large-scale empirical study of multilingual and non-English GRPO across a wide range of base models, training languages, and different reasoning language rewards. We find that training to reason in the native language",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13505v1",
-   "url": "http://arxiv.org/abs/2608.13505v1",
-   "title": "Intern-S2-Preview: Scientific Agentic Foundation Model",
-   "published": "2026-08-13T17:31:28Z",
-   "summary": "Scientific discovery increasingly requires AI systems that can reason over scientific evidence of heterogeneous modalities, interact with scientific tools and environments, and sustain progress across long task horizons. We present Intern-S2-Preview, a series of scientific agentic foundation models designed to support multimodal scientific understanding, reasoning, generation, and long-horizon tasks. The training pipeline begins with scientific multimodal pre-training over rendered scientific do",
-   "chapters": [
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13395v1",
-   "url": "http://arxiv.org/abs/2608.13395v1",
-   "title": "FIRE-VLA: Failure-Informed Self-Evolution for Vision-Language-Action Models in Autonomous Driving",
-   "published": "2026-08-13T15:53:24Z",
-   "summary": "Reinforcement learning improves autonomous-driving vision-language-action (VLA) models by evaluating trajectories sampled from the current policy. Group relative policy optimization (GRPO) learns from reward differences within each rollout group. When all sampled trajectories are poor, this relative signal can rank failures without identifying behavior outside the failed region. We introduce FIRE-VLA, a failure-informed self-evolution framework that converts such unresolved failures into privile",
-   "chapters": [
-    "ch11",
-    "ch8"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13345v1",
-   "url": "http://arxiv.org/abs/2608.13345v1",
-   "title": "Rules or Character? Scaling Laws for AI Safety Design",
-   "published": "2026-08-13T15:15:09Z",
-   "summary": "Artificial Intelligence (AI) safety systems combine character shaping (e.g., Reinforcement Learning from Human Feedback [RLHF], Constitutional AI), which modifies behavioral distributions at training time, with rule enforcement (e.g., output filters, safety classifiers), which blocks harmful outputs at inference time, yet little formal analysis exists on how their optimal balance should change as deployment scales increase. We introduce a stylized comparative-statics model that parameterizes saf",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13179v1",
-   "url": "http://arxiv.org/abs/2608.13179v1",
-   "title": "Teach the Magnitude, Not the Direction: Verifier-Bounded Credit Assignment for Multi-Turn Multi-step LLM Agents",
-   "published": "2026-08-13T12:44:37Z",
-   "summary": "Reinforcement learning with verifiable rewards (RLVR) offers a verifier-bounded performance ceiling for training multi-turn tool-use agents, yet its trajectory-level credit assignment conflates heterogeneous per-turn outcomes into a single reward signal. On-policy distillation provides dense per-token supervision but is either teacher-bounded or prone to gradient concentration collapse. We introduce $\\textbf{CrEST}$, a hierarchical credit assignment framework that retains RL's verifier-bounded c",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13040v1",
-   "url": "http://arxiv.org/abs/2608.13040v1",
-   "title": "Latent On-Policy Self-Distillation",
-   "published": "2026-08-13T10:05:51Z",
-   "summary": "Enabling agents to learn from experience and internalize it into their policy has become a central problem in self-evolving AI. On-policy self-distillation (OPSD) offers an effective pathway by using a privileged self-teacher to provide dense supervision on the student's own trajectories; however, existing methods still rely heavily on designer-specified privileged artifacts (e.g., answers, feedback, skills, or trajectories), limiting the end-to-end learnability and scalability required for cont",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.13026v1",
-   "url": "http://arxiv.org/abs/2608.13026v1",
-   "title": "Temporal GRPO: Beyond Trajectory-Level Credit in Vision-Language-Action Reinforcement Learning",
-   "published": "2026-08-13T09:54:14Z",
-   "summary": "Outcome-driven reinforcement learning offers a scalable way to post-train vision-language-action (VLA) policies from sparse task-success feedback. In common GRPO-based VLA post-training, one rollout-level advantage is applied to every action in the trajectory. A rollout that completes several valid stages but fails later can therefore penalize the actions that produced its earlier progress. We call this trajectory-level credit aliasing. Temporal GRPO addresses this problem by constructing detect",
-   "chapters": [
-    "ch11",
-    "ch7"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12995v1",
-   "url": "http://arxiv.org/abs/2608.12995v1",
-   "title": "OGR-MARL: Option-Guided Residual Multi-Agent Reinforcement Learning for Heterogeneous USV Cooperative Pursuit in Constrained Port Waterways",
-   "published": "2026-08-13T09:19:10Z",
-   "summary": "Heterogeneous USV cooperative pursuit in constrained port waterways requires evader interception under navigation, traffic, and role constraints. This paper proposes OGR-MARL, an option-guided residual multi-agent reinforcement learning framework that is decoupled from a specific MARL algorithm. OGR-MARL integrates shared evader belief, role-conditioned option targets, adaptive rule penalties, and residual policy learning, allowing different MARL algorithms to learn corrective actions on top of ",
+   "id": "http://arxiv.org/abs/2608.20686v1",
+   "url": "http://arxiv.org/abs/2608.20686v1",
+   "title": "CDRL: Certification-Driven Reinforcement Learning for Neutrino Flavor Model Discovery",
+   "published": "2026-08-21T02:49:34Z",
+   "summary": "Many scientific discovery problems require searching combinatorial hypothesis spaces under complex domain constraints. Reinforcement learning (RL) offers a promising approach, but existing methods rely on scalar rewards that provide limited information about why candidate solutions fail, leading agents to repeatedly explore invalid regions. We introduce Certification-Driven Reinforcement Learning (CDRL), a framework that leverages structured feedback from symbolic reasoning tools. When a candida",
    "chapters": [
     "ch12",
-    "ch7"
+    "ch9"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12973v2",
-   "url": "http://arxiv.org/abs/2608.12973v2",
-   "title": "Online Inference for Quantile Temporal Difference Learning in Distributional Reinforcement Learning",
-   "published": "2026-08-13T08:53:02Z",
-   "summary": "In this paper, we study how to perform statistical inference for quantile temporal difference learning (QTD) in distributional reinforcement learning. Assuming access to a generative model, we first establish functional central limit theorems for both synchronous and asynchronous QTD, which show that the averaged iterates of QTD converge weakly to a rescaled Brownian motion. We next provide online inference methods. Based on random scaling, the inference procedure constructs an asymptotically pi",
-   "chapters": [
-    "ch3"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12929v1",
-   "url": "http://arxiv.org/abs/2608.12929v1",
-   "title": "Multi-perspective Imbalance-Conscious 6G Beamforming Optimization and Performance",
-   "published": "2026-08-13T08:08:02Z",
-   "summary": "The study presents a systematic machine learning (ML) study of 6G-IoT beamforming optimization (6GBO) using supervised and unsupervised approaches. We compared the predictive power of network, environmental, device, and vision feature groups for 6GBO. Additionally, it addressed other unsupervised perspectives that can enhance 6GBO, including clustering network scenarios using methods such as K-means, DBSCAN, and hierarchical clustering. Several imbalance-aware experiments revealed that network f",
+   "id": "http://arxiv.org/abs/2608.20680v1",
+   "url": "http://arxiv.org/abs/2608.20680v1",
+   "title": "Reinforcement Learning for Continuous-Time Jump Markov Decision Processes with Applications to Network Dynamic Pricing",
+   "published": "2026-08-21T02:36:15Z",
+   "summary": "We study reinforcement learning (RL) in Continuous-Time Jump Markov Decision Processes (CTJMDPs) featuring general discrete state spaces (which need not possess a vector space structure) and continuous/discrete action spaces. The setup covers many well-known applications in operations such as multi-product dynamic pricing with capacitated resources (Gallego and van Ryzin 1997). To model the exploration-exploitation tradeoff, we formulate an entropy-regularized continuous-time control problem wit",
    "chapters": [
     "ch9"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12925v1",
-   "url": "http://arxiv.org/abs/2608.12925v1",
-   "title": "Momentum as Residual-Driven Multiplier Correction for Deep Learning Optimization",
-   "published": "2026-08-13T08:04:38Z",
-   "summary": "Momentum-based optimizers are widely used in modern deep learning, yet the relations among momentum recursion, update geometry, and acceleration remain only partially understood. We develop an $\\textbf{A}$DMM-$\\textbf{I}$nspired $\\textbf{M}$omentum (AIM) framework based on residual-penalty variable splitting, which interprets momentum as a multiplier-like correction driven by the splitting residual. AIM recovers the exponential moving average of gradients from an ADMM-style multiplier update and",
+   "id": "http://arxiv.org/abs/2608.20670v1",
+   "url": "http://arxiv.org/abs/2608.20670v1",
+   "title": "Why2Speak: Faithful Reasoning for Abstaining Action Policies",
+   "published": "2026-08-21T02:00:21Z",
+   "summary": "Many agentic systems must repeatedly choose between acting and abstaining, making faithful reasoning important for oversight: an explanation is useful only if it reflects the computation that produced the action. We study this problem through intervention timing in multi-party conversation, where an assistant must decide whether to speak or remain silent. This setting exposes class imbalance, asymmetric action costs, and the possibility that exposing reasoning changes the policy being audited. U",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20634v1",
+   "url": "http://arxiv.org/abs/2608.20634v1",
+   "title": "AgentMercury: Your Agent Can Synthesize Verifiable Environments for Business Scenarios at scale",
+   "published": "2026-08-21T00:15:45Z",
+   "summary": "Agents learn to act through interaction with environments, yet the environments used for training are often manually constructed or synthesized around predefined tasks and benchmarks. This task-centric paradigm makes it difficult to scale environments that reflect realistic and evolving workflows where diverse tasks can naturally emerge from the underlying world. We introduce AgentMercury, a scalable framework for synthesizing executable environments from high-level business scenarios. Rather th",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20331v1",
+   "url": "http://arxiv.org/abs/2608.20331v1",
+   "title": "G-CARL: Grounded Checklist-Aligned Reward Learning for Patient-Oriented Medical Report Interpretation",
+   "published": "2026-08-20T17:59:46Z",
+   "summary": "Personalized interpretation of medical reports has emerged as an increasingly important need among patients. Addressing this need requires both evidence-grounded medical factuality and context-dependent patient communication, yet existing medical vision-language tasks do not adequately capture these dual requirements. To bridge this gap, we introduce Patient-oriented Medical Report Interpretation (PMRI), a novel open-ended multimodal generation task that requires models to explain medical report",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12917v1",
-   "url": "http://arxiv.org/abs/2608.12917v1",
-   "title": "Towards Socially Compliant Navigation in Deep Reinforcement Learning via Proxemics-Based Reward Modeling",
-   "published": "2026-08-13T07:59:23Z",
-   "summary": "Developing effective robot navigation methods in crowded environments is essential for real-world applications. Although recent deep reinforcement learning (DRL) methods have improved navigation performance in crowded environments, they often focus primarily on task-centric objectives and underrepresent social compliance objectives. In this paper, we introduce a novel proxemics-based reward formulation for DRL social navigation that provides a dense, interpretable social learning signal while ma",
+   "id": "http://arxiv.org/abs/2608.20314v1",
+   "url": "http://arxiv.org/abs/2608.20314v1",
+   "title": "MidTool: Mid-training Data Synthesis for Agentic Tool Use",
+   "published": "2026-08-20T17:53:59Z",
+   "summary": "Mid-training is increasingly recognized as a critical stage for shaping the capabilities of large language models. Recent work has shown that targeted mid-training can strengthen reasoning-intensive abilities such as math and science, and can also improve agentic capabilities in software-engineering settings. In this work, we study the parallel but less explored agentic capability: general tool use. We present MidTool, an open corpus construction pipeline for agentic tool-use mid-training that c",
    "chapters": [
     "ch11",
-    "ch7"
+    "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12876v1",
-   "url": "http://arxiv.org/abs/2608.12876v1",
-   "title": "SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data",
-   "published": "2026-08-13T06:40:20Z",
-   "summary": "Detecting AI-generated images is only half the task: a deployed detector must also justify its verdict, yet existing detectors inherit three failure modes from their training data: real and fake images collected from different sources invite provenance shortcuts, supervised explanation corpora teach templated rationales, and a static forgery corpus leaves the decision boundary standing still while generators keep moving. We introduce \\methodname{}, an adversarial reinforcement learning framework",
+   "id": "http://arxiv.org/abs/2608.20256v2",
+   "url": "http://arxiv.org/abs/2608.20256v2",
+   "title": "Learning When to Think: Adaptive Reasoning for Test-Time Compute Allocation",
+   "published": "2026-08-20T16:54:08Z",
+   "summary": "Reasoning language models trained with reinforcement learning typically operate under a fixed token budget rather than an explicitly adaptive one, which can lead to over-computation on easy problems and insufficient computation on difficult ones. We study whether a model can learn to allocate its own reasoning effort by choosing, as the first token of its response, one of three modes: \\textsc{NoThink} (answer as quickly as possible), \\textsc{Short} (brief reasoning), or \\textsc{Long} (extended r",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12860v1",
-   "url": "http://arxiv.org/abs/2608.12860v1",
-   "title": "HumanoidVLN: A Physics-Grounded Simulator and Benchmark for Vision-Language Navigation Across Diverse Humanoid Embodiments",
-   "published": "2026-08-13T06:16:05Z",
-   "summary": "Vision-Language Navigation (VLN) for humanoid robots poses challenges existing benchmarks fail to address: bipedal locomotion imposes physical constraints absent from wheeled agents, humanoid morphologies vary across platforms, and egocentric observations are distorted by locomotion-induced camera dynamics. We present HumanoidVLN, a physics-grounded simulator and benchmark for VLN across diverse humanoid embodiments. Built on NVIDIA Isaac Sim, our platform supports an extensible set of humanoid ",
+   "id": "http://arxiv.org/abs/2608.20161v1",
+   "url": "http://arxiv.org/abs/2608.20161v1",
+   "title": "DARS: Dual-Level Credit Assignment RL with Structured Reasoning for Instruction-Based Image Editing",
+   "published": "2026-08-20T15:16:39Z",
+   "summary": "Instruction-based image editing uses a planner-renderer pipeline: a vision-language model (VLM) first converts the instruction into an edit plan, and a diffusion model then executes that plan. Training such systems with only final-image rewards is inefficient because a poor edit does not reveal whether additional optimization should place more emphasis on the planner or the renderer, and even planner-dominant cases remain difficult to localize within a free-form reasoning trace. We present DARS,",
    "chapters": [
-    "ch12",
-    "ch7"
+    "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.13625v1",
-   "url": "http://arxiv.org/abs/2608.13625v1",
-   "title": "Reward Machines for Signal Temporal Logic",
-   "published": "2026-08-13T04:25:07Z",
-   "summary": "Signal temporal logic (STL) provides a formal language for specifying real-time properties of real-valued observations, along with a quantitative robustness score for monitoring satisfaction. Control synthesis from STL specifications is of interest since manual controller design becomes infeasible as real-world systems grow in complexity. Moreover, many modern autonomous and AI-enabled systems lack accurate and complete system models, which makes optimization-based synthesis approaches unsuitabl",
+   "id": "http://arxiv.org/abs/2608.20129v1",
+   "url": "http://arxiv.org/abs/2608.20129v1",
+   "title": "Multi-Agent Orchestration with the Common-Sense Reasoning Capabilities of LLMs for Autonomous Driving",
+   "published": "2026-08-20T14:56:15Z",
+   "summary": "Autonomous vehicles require robust perception and decision-making capabilities to operate in diverse and unseen scenarios. While reinforcement learning and rule-based methods can provide effective control and safety mechanisms, their performance may degrade in situations requiring contextual reasoning. Large Language Models (LLMs) have demonstrated strong capabilities in understanding multimodal information and generating contextual reasoning, however, their use for direct vehicle control can in",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20099v1",
+   "url": "http://arxiv.org/abs/2608.20099v1",
+   "title": "Reward-Guided Autoregressive Graph Generation for Efficient Multi-Agent Communication Topology Design",
+   "published": "2026-08-20T14:32:01Z",
+   "summary": "LLM-based Multi-Agent Systems (MAS) achieve strong performance on complex reasoning tasks by coordinating multiple agents, but at the cost of substantial token consumption. Recent work on automatic topology design, ARG-Designer, has reframed this problem as autoregressive graph generation. However, its training objective provides no explicit incentive for the model to generate sparse and efficient topologies. We address this limitation by introducing a Reward-Guided Autoregressive Graph Generati",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.20044v1",
+   "url": "http://arxiv.org/abs/2608.20044v1",
+   "title": "End-to-end Early Classification of Time Series in Non-Stationary Environments",
+   "published": "2026-08-20T13:47:16Z",
+   "summary": "Early Classification of Time Series (ECTS) requires making accurate decisions as early as possible in inherently online and evolving environments. Yet, most existing methods assume stationarity and rely on separable designs, where classification and triggering are optimized independently, an assumption that fundamentally limits their adaptability under drift. In this work, we challenge this paradigm and study ECTS under non-stationary conditions. We provide the first systematic comparison betwee",
    "chapters": []
   },
   {
-   "id": "http://arxiv.org/abs/2608.12764v1",
-   "url": "http://arxiv.org/abs/2608.12764v1",
-   "title": "Beyond Outcome Rewards: Step-Level Self-Distilled Policy Optimization for Deep Search Agents",
-   "published": "2026-08-13T03:13:18Z",
-   "summary": "Deep search agents operate over trajectories spanning dozens of steps, yet standard reinforcement learning provides only a single outcome reward per trajectory, which is far too sparse for effective credit assignment. On-policy self-distillation (OPSD) addresses this by using the model's own logits as dense token-level teachers, but extending it to search agents introduces a fundamental tension: the teacher, having access to privileged information such as the correct answer, produces a distribut",
+   "id": "http://arxiv.org/abs/2608.19977v1",
+   "url": "http://arxiv.org/abs/2608.19977v1",
+   "title": "Learning Highly Dynamic Skills Transition for Quadruped Jumping Through Constrained Space",
+   "published": "2026-08-20T12:50:18Z",
+   "summary": "Although legged animals are capable of performing explosive motions while traversing confined spaces, replicating this behavior in quadrupedal robots has been a longstanding challenge. Here, we propose a hierarchical reinforcement learning pipeline that empowers the robots to perform aggressive locomotion through constrained obstacles--a narrow gate. The imitation learning technique is used to train the low-level policy, which mimics the behaviors of real animals and forms a set of diverse skill",
+   "chapters": [
+    "ch10",
+    "ch7"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19955v1",
+   "url": "http://arxiv.org/abs/2608.19955v1",
+   "title": "MILD: Tractable Terrain Modeling for Learning Improved Bipedal Locomotion on Deformable Surfaces",
+   "published": "2026-08-20T12:24:34Z",
+   "summary": "Enabling robots to walk on yielding terrain is vital for applications ranging from disaster response to planetary exploration. While bipedal robots hold immense potential, their locomotion on deformable surfaces remains limited as current simulators fail to capture the spatiotemporal heterogeneity of such yielding substrates. We present MILD, featuring a physics-grounded discrete-element contact solver that accurately simulates spatially varying foot-terrain interactions. Complementing this mode",
+   "chapters": [
+    "ch9",
+    "ch7"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19891v1",
+   "url": "http://arxiv.org/abs/2608.19891v1",
+   "title": "EXIMO: VLM Guided Exploration of VLA Policies",
+   "published": "2026-08-20T10:58:45Z",
+   "summary": "How to efficiently finetune robot policies to learn new tasks on the fly? State of the art robotic manipulation policies are based on behaviour cloning of large vision-language-action (VLA) models with billions of parameters on huge teleoperation datasets. While this simple approach has enabled significant advances for robotic manipulation, finetuning of VLA policies for learning new tasks still remains an open problem. In particular, collecting teleoperation datasets requires hundreds of hours ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12753v1",
-   "url": "http://arxiv.org/abs/2608.12753v1",
-   "title": "Decentralized Multi-Player Q-Learning in Episodic Markov Decision Processes with Information Asymmetry",
-   "published": "2026-08-13T03:06:11Z",
-   "summary": "We study decentralized multi-player reinforcement learning in episodic tabular Markov decision processes (MDPs) under three forms of information asymmetry: (A) unobserved actions with common rewards, (B) observed actions with independent rewards, and (C) unobserved actions with independent rewards. Players cannot communicate during learning but may agree on a protocol a priori. For Problems A and B we propose \\texttt{mQ-learning} and \\texttt{mQ-learning-intervals}, achieving $\\tilde{O}(\\sqrt{H^4",
+   "id": "http://arxiv.org/abs/2608.19880v1",
+   "url": "http://arxiv.org/abs/2608.19880v1",
+   "title": "EnvHarness: Awakening Static Worlds for Agent Learning",
+   "published": "2026-08-20T10:42:06Z",
+   "summary": "LLM agents learn by interacting with environments, yet these environments are hand-built and static: blind to an agent's weaknesses, and quickly left behind as it improves. While recent environment generation methods attempt to address this, they require domain-specific pipelines, rely on expensive or unreliable verifiers, and still produce static environments. To alleviate the engineering burden of rebuilding environments from scratch, we propose Environment Harness (EnvHarness), a programmable",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12743v1",
-   "url": "http://arxiv.org/abs/2608.12743v1",
-   "title": "Spatial Memory Agent: Experience-Grounded Procedure Memory for Spatial Intelligence",
-   "published": "2026-08-13T02:42:35Z",
-   "summary": "Spatial intelligence is becoming a foundation for embodied agents, robotic planning, and multimodal assistants. To improve the spatial reasoning ability of VLM agents, existing work has mainly followed two lines. One line uses post-training methods, such as supervised fine-tuning and reinforcement learning. Another line adopts an agentic paradigm in which the model calls external spatial tools, such as depth estimation and 3D reconstruction tools, to gather intermediate spatial evidence. We stud",
+   "id": "http://arxiv.org/abs/2608.19842v1",
+   "url": "http://arxiv.org/abs/2608.19842v1",
+   "title": "SAPO: Single-Rollout Autoregressive Policy Optimization for Agentic Reinforcement Learning",
+   "published": "2026-08-20T09:43:47Z",
+   "summary": "Agentic reinforcement learning (RL) has become a critical stage in the post-training of large language models. Existing critic-free, group-relative methods estimate policy advantages from multiple rollouts, avoiding the substantial memory overhead of conventional proximal policy optimization (PPO) and achieving strong performance on long-horizon interactive tasks. Despite their success, recent studies revealed three limitations: (1) Lack explicit value generalization and effective temporal credi",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19836v1",
+   "url": "http://arxiv.org/abs/2608.19836v1",
+   "title": "Adaptive Probabilistic Shielding by Learning MDPs for Safe Reinforcement Learning",
+   "published": "2026-08-20T09:37:44Z",
+   "summary": "Probabilistic shielding is a technique for safe reinforcement learning (RL). Typically, a static observer -- called the shield -- constrains the learning agent's actions to those for which acting safely remains feasible. Traditionally, the shield is computed from the transition probabilities of the underlying Markov decision process (MDP). Thus, this technique is not applicable when the MDP model is not given a priori, which, unfortunately, is the case in typical RL applications. In this paper, ",
    "chapters": [
     "ch12",
+    "ch9"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19825v1",
+   "url": "http://arxiv.org/abs/2608.19825v1",
+   "title": "Towards Clinically Faithful Medical Image Captioning via Enhanced Vision-Language Alignment",
+   "published": "2026-08-20T09:25:30Z",
+   "summary": "Medical image captioning is a technique that accelerates early-stage diagnostic workflows and enhances the interpretability of medical diagnostic AI systems. However, unlike general image captioning, clinically reliable captioning remains challenging due to grayscale-based modalities, subtle anatomical cues, specialized medical phrasing, and variations in data quality. Despite recent advances in large vision-language models, fluent outputs do not necessarily guarantee sufficient alignment with c",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19804v1",
+   "url": "http://arxiv.org/abs/2608.19804v1",
+   "title": "ADAPT: Physics-Aware Diffusion-based World Models for Adaptive Predictive Transferable HVAC Control",
+   "published": "2026-08-20T08:58:28Z",
+   "summary": "Buildings account for roughly one-third of global energy consumption and CO$_2$ emissions. Optimizing indoor climate systems plays a critical role for urban climate mitigation aligned with UN Sustainable Development Goals 11 and 13. However, indoor delayed thermodynamic responses and partial observability severely hinder existing methods, which are primarily limited by implicit thermal inertia, occupancy dynamic prediction, and cumulative prediction errors, especially for out-of-distribution env",
+   "chapters": [
     "ch8"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12679v1",
-   "url": "http://arxiv.org/abs/2608.12679v1",
-   "title": "Beyond the Best Guess: Improving LLM Solution Coverage with Evolution Strategies",
-   "published": "2026-08-13T00:30:04Z",
-   "summary": "Large Language Models (LLMs) are increasingly deployed in discovery domains such as math and science. The usual approach is to present the problem to the model and use its answer as the proposed solution. However, beyond this best guess, discovery can be enhanced by increasing test-time compute. In a process called pass@k, the model is allowed to explore the solution space and generate diverse candidate solutions. Unfortunately, the standard approach to post-training LLMs through Reinforcement L",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12585v1",
-   "url": "http://arxiv.org/abs/2608.12585v1",
-   "title": "Reasoning Jury: Multi-Model Consensus for Evaluating Reasoning Traces",
-   "published": "2026-08-12T21:00:22Z",
-   "summary": "Improving reasoning LLMs requires the ability to judge the quality of long reasoning traces for effective reasoning data curation, strong training signals during reinforcement learning, and an in-depth understanding of reasoning behaviors during model performance evaluation. Additionally, surfacing reasoning mistakes that the model makes would enable improving the model's performance at runtime through providing feedback. Due to the difficulty of this complex task on long reasoning traces, singl",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12253v1",
-   "url": "http://arxiv.org/abs/2608.12253v1",
-   "title": "One Frozen Simulator Is Not Enough: Simulator Collapse in Multi-Agent RL",
-   "published": "2026-08-12T16:55:50Z",
-   "summary": "Multi-agent reinforcement learning for human-AI interaction typically relies on a single large language model to simulate user behavior. We show that this approach systematically fails to generalize, and trace the failure to simulator collapse: because the simulator LLM is mode-collapsed, an LLM policy trained against it overfits to narrow strategies that exploit the simulator's dominant mode, and such a policy transfers poorly to unseen simulators and real users. We formalize this collapse theo",
+   "id": "http://arxiv.org/abs/2608.19803v1",
+   "url": "http://arxiv.org/abs/2608.19803v1",
+   "title": "MileGPO: Milestone Inference with Local Evidence for Graph-Based Policy Optimization of Long-Horizon LLM Agents",
+   "published": "2026-08-20T08:58:27Z",
+   "summary": "Credit assignment is challenging in long-horizon agentic reinforcement learning, where supervision often comes only from final rewards. Existing methods refine trajectory-level signals into step-level credits through step grouping or graph-based advantage estimation, but can overlook meaningful intermediate milestones. We propose MileGPO (Milestone Inference with Local Evidence for Graph-Based Policy Optimization), which derives process-level credit from grouped on-policy rollouts through three ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2608.12220v1",
-   "url": "http://arxiv.org/abs/2608.12220v1",
-   "title": "SCOUT: Unlocking Enhanced Spatial Reasoning via Structured Chain-of-Thought and Multi-Objective Process Reward",
-   "published": "2026-08-12T16:14:25Z",
-   "summary": "Existing Vision-Language Models (VLMs) exhibits a critical bottleneck in robust spatial reasoning. Recent reinforcement learning (RL) methods aim to close this gap with verifiable outcomes, yet they suffer from poor credit assignment across intermediate reasoning steps. Concurrently, structured reasoning approaches overlook the critical depth perception necessary for comprehensive 3D understanding. To address these challenges, we propose SCOUT (Structured Chain-Of-Thought Utilizing Process-Super",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12190v1",
-   "url": "http://arxiv.org/abs/2608.12190v1",
-   "title": "Machine Learning-Based Cyber Defense for Cloud Infrastructure: An Adaptive Deep Q-Network Architecture for Intelligent Intrusion Detection and Automated Threat Mitigation",
-   "published": "2026-08-12T15:46:17Z",
-   "summary": "With the increasing complexity of cyber assaults in cloud environments, adaptable security solutions are needed that can support real-time detection and autonomous response. In this paper, we propose a reinforcement learning-based dynamic cyber defense framework. We deploy a Deep Q-Network (DQN) to train effective defensive strategies to counteract the evolving cyberattacks. We leverage the CICIDS2017 dataset for model creation and the UNSW-NB15 dataset for external validation, involving preproc",
-   "chapters": [
-    "ch4"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2608.12146v1",
-   "url": "http://arxiv.org/abs/2608.12146v1",
-   "title": "RoutePack: Expert Placement and Attention-Aware Data Packing for MoE Reinforcement Learning",
-   "published": "2026-08-12T15:07:15Z",
-   "summary": "Training Mixture-of-Experts (MoE) models for reinforcement learning (RL) couples two load-balancing problems: sequence composition determines dense attention work in each data-parallel microbatch, while token routing determines sparse expert work on expert-parallel ranks. Optimizing either alone can shift the bottleneck to the other. In MoE RL, rollout-time routing replay exposes every sample's sequence length and layer-wise expert demand before its training step. We present RoutePack, a hierarc",
+   "id": "http://arxiv.org/abs/2608.19693v1",
+   "url": "http://arxiv.org/abs/2608.19693v1",
+   "title": "RIPE++: Reinforced Keypoint Learning from Positive Pairs Only",
+   "published": "2026-08-20T06:37:24Z",
+   "summary": "Sparse keypoint extraction and matching underpin core tasks in geometric computer vision, including structure-from-motion, visual SLAM, augmented reality, and medical image registration. Learning robust local feature representations, however, typically requires accurate camera poses or depth supervision, which are often unavailable in real-world settings. Reinforcement learning (RL) has recently emerged as a promising alternative, requiring only the information if two images show the same scene ",
    "chapters": []
   },
   {
-   "id": "http://arxiv.org/abs/2608.12436v1",
-   "url": "http://arxiv.org/abs/2608.12436v1",
-   "title": "Multi-AUV Ad-hoc network-based Target Tracking: A Value Gradient Guidance Multi-Agent Diffusion Reinforcement Learning Approach",
-   "published": "2026-08-12T14:15:35Z",
-   "summary": "Multi-AUV ad-hoc network-based target tracking requires networked autonomous underwater vehicles (AUVs) to cooperatively track maneuvering targets under constrained acoustic communication, dynamic topology, and uncertain ocean disturbances. Although multi-agent reinforcement learning (MARL) enables decentralized coordination through centralized training, existing methods suffer from high-dimensional joint state-action modeling, noise-sensitive policy generation, leading to unstable training and ",
+   "id": "http://arxiv.org/abs/2608.19684v1",
+   "url": "http://arxiv.org/abs/2608.19684v1",
+   "title": "Learning Hierarchical Skill Policies with Offline Quality-Diversity Reinforcement Learning",
+   "published": "2026-08-20T06:20:03Z",
+   "summary": "Recent studies investigate how to leverage pre-collected datasets to improve the policy performance and sample efficiency of RL. One promising approach to achieve this goal is to employ a two-stage strategy: In the first stage, diverse skills are extracted as a low-level policy from a given dataset, and a high-level policy is trained to solve a specific task in the second stage. Typically, extraction of the low-level policy is performed based on unsupervised learning such as trajectory VAE. Howe",
    "chapters": [
+    "ch10",
+    "ch9"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19669v1",
+   "url": "http://arxiv.org/abs/2608.19669v1",
+   "title": "Scaffolding Minds: Optimizing Latent Visual Target Representations for Multimodal Reasoning",
+   "published": "2026-08-20T06:04:28Z",
+   "summary": "Latent reasoning has advanced multimodal reasoning through a two-stage training paradigm: (1) a helper image is encoded into latent tokens to teach visual chain-of-thought during a supervised fine-tuning (SFT) stage, and (2) these latent tokens are further refined with reward feedback during a reinforcement learning (RL) stage. In this paper, we identify two key limitations of this framework, one in each stage. First, the SFT stage typically relies on an off-the-shelf vision encoder to encode th",
+   "chapters": [
+    "ch10",
+    "ch9"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19643v1",
+   "url": "http://arxiv.org/abs/2608.19643v1",
+   "title": "Time-Uniform Self-Normalized Concentration for Discounted Least Squares: Limits and Corrections",
+   "published": "2026-08-20T05:19:11Z",
+   "summary": "Self-normalized concentration inequalities are standard tools in bandit and reinforcement-learning analyses. A widely used weighted extension claims an analogous time-uniform guarantee for discounted least-squares estimators in non-stationary problems. A simple scalar Gaussian counterexample with a fixed parameter shows that the claimed bounded radius is crossed with probability one. For fixed discount and regularization parameters, we further show that, when $\u03b4\\leq1/2$ and $T/\u03b4$ is sufficiently",
+   "chapters": [
+    "ch9"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19389v1",
+   "url": "http://arxiv.org/abs/2608.19389v1",
+   "title": "Concentrated Liquidity Provision: a Reinforcement Learning Perspective",
+   "published": "2026-08-19T19:08:39Z",
+   "summary": "Automated market makers (AMMs) are a cornerstone of decentralised finance (DeFi). Constant product markets with concentrated liquidity, such as UniswapV3, are now a well-established design. In these markets, liquidity providers (LPs) face a sequential decision problem: they must decide when to rebalance their positions and which price ranges to allocate capital to as market conditions evolve. We formulate dynamic liquidity provision as a stochastic impulse control problem and use reinforcement l",
+   "chapters": [
+    "ch11",
     "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19375v1",
+   "url": "http://arxiv.org/abs/2608.19375v1",
+   "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control",
+   "published": "2026-08-19T18:41:27Z",
+   "summary": "High-fidelity embodied AI simulators provide realistic evaluation of complex robotic systems, but their computational cost limits their direct use for large-scale reinforcement learning campaigns. We advocate the use of less accurate but more expeditious simulations, which might draw on data-driven, e.g., neural dynamics, models. This contribution argues that the practical value of a neural dynamics model for complex robot control lies in learning the \\emph{right abstraction}: a reduced state th",
+   "chapters": [
+    "ch7"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19182v1",
+   "url": "http://arxiv.org/abs/2608.19182v1",
+   "title": "ADEPT: Accelerating Dexterity via Pre-Training and Post-Training using Reinforcement Learning",
+   "published": "2026-08-19T17:55:06Z",
+   "summary": "We introduce Accelerating Dexterity via Pre-Training (ADEPT), a large-scale reinforcement learning (RL) framework for learning sim-to-real transferable dexterity across high degree-of-freedom (DoF) robot embodiments that can solve long-horizon tasks directly from raw visuo-tactile perception. ADEPT pretrains a dexterous policy on a generic object reposing task, then post-trains downstream policies with this pretrained behavior as a prior. ADEPT enables learning new behaviors that are otherwise d",
+   "chapters": [
+    "ch7"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2608.19151v1",
+   "url": "http://arxiv.org/abs/2608.19151v1",
+   "title": "Continuous-Time Reinforcement Learning for Controlled Hawkes Jump-Diffusions",
+   "published": "2026-08-19T17:40:23Z",
+   "summary": "We study stochastic control of multivariate Hawkes-driven stochastic differential equations with machine learning algorithms in a non-Markovian setting. Due to the path dependence of the memory of the Hawkes intensity, this problem does not fall within classical stochastic control theory outside particular Markovian kernels. We first develop a finite-dimensional Markovianization procedure and algorithm to approximate multivariate Hawkes processes with mixtures of exponential kernels. We prove th",
+   "chapters": [
+    "ch7",
+    "ch6"
    ]
   }
  ]
