@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-08-31",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (Agentic RL: 39, RL for LLMs: 36, Offline RL: 8, Continuous Control: 4, Model-Based RL: 4, Exploration: 3, general: 2, PPO & Policy Gradients: 1)",
+   "\u201cAero Hand Open: A Simulation-Ready Tendon-Driven Hand for Dexterous Manipulation Learning\u201d \u2014 Continuous Control",
+   "\u201cREPLICANT: Learning Policies for Evading and Hardening Malware Detectors\u201d \u2014 general RL",
+   "\u201cLearning to Use Tools: Reinforcement Learning for Tool-Integrated Mathematical Reasoning\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cProgram Learning with Verifiable Rewards: Symbolic Backpropagation for Post-Training LLMs\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cHARTS: Efficient Agentic Reinforcement Learning for Hybrid-Attention Models over Arbitrary Rollout Trees\u201d \u2014 RL for LLMs, Agentic RL"
+  ]
+ },
+ {
   "date": "2026-08-24",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
