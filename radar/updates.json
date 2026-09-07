@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-09-07",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 38, Agentic RL: 31, Offline RL: 14, PPO & Policy Gradients: 4, Continuous Control: 3, general: 3, Exploration: 2, Model-Based RL: 1)",
+   "\u201cLarge Language Models for HVAC Operations in Building Energy Systems: A Critical Review of Methods, Applications, and Deployment Readiness\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cHuman-Human & Human-Robot Interaction Transformer (H2INT) for Robot Navigation in Dense and Uncertain Crowds\u201d \u2014 Continuous Control",
+   "\u201cOnline Change-point Detection for Cooperative Multi-Agent Reinforcement Learning\u201d \u2014 Agentic RL",
+   "\u201cRISE: Recursive Improvement via Self-Extrapolating Policy Distillation\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cGUT: Quantifying and Optimizing the Reasoning Uncertainty of LLMs via Graph Complexity\u201d \u2014 RL for LLMs"
+  ]
+ },
+ {
   "date": "2026-08-31",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
