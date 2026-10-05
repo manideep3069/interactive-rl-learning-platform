@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-10-05",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 29, Agentic RL: 29, Exploration: 10, general: 7, Continuous Control: 6, Offline RL: 4, PPO & Policy Gradients: 4, Model-Based RL: 3, Value Learning: 1)",
+   "\u201cPlanning to Learn\u201d \u2014 RL for LLMs, Exploration",
+   "\u201cOn the Convergence of Success Conditioning for Policy Optimization\u201d \u2014 general RL",
+   "\u201cCredit Where It Matters: Dependency-Aware Policy Optimization for Terminal Agents\u201d \u2014 Agentic RL",
+   "\u201cNeutronGym: Physics-Graded Neutron Instrument Design for LLM Agents\u201d \u2014 RL for LLMs, Agentic RL",
+   "\u201cUniIntervene++: An Adaptive Intervention Agent for Efficient Real-World Reinforcement Learning\u201d \u2014 Agentic RL, Offline RL"
+  ]
+ },
+ {
   "date": "2026-09-07",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
