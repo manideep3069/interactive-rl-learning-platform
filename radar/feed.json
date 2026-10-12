@@ -1,412 +1,413 @@
 {
- "generated": "2026-10-05T13:13:11+00:00",
+ "generated": "2026-10-12T14:03:42+00:00",
  "papers": [
   {
-   "id": "http://arxiv.org/abs/2610.03667v1",
-   "url": "http://arxiv.org/abs/2610.03667v1",
-   "title": "Planning to Learn",
-   "published": "2026-10-02T17:38:28Z",
-   "summary": "Policy-gradient methods are central to modern reinforcement learning, including LLM post-training. When they struggle, the usual suspects are exploration, credit assignment and action-sampling noise. Classification has none of them. A classifier is a policy whose expected reward, its \\emph{expected accuracy}, is the probability it assigns to the correct label, and because that label is known, the policy gradient is exact and smooth. Yet exact policy gradient loses to cross-entropy, even on expec",
+   "id": "http://arxiv.org/abs/2610.13923v1",
+   "url": "http://arxiv.org/abs/2610.13923v1",
+   "title": "Goal-Oriented Bundle Management and Flow Control for Deep-Space Communications via Reinforcement Learning",
+   "published": "2026-10-09T17:53:46Z",
+   "summary": "Deep-space communications operate under intermittent connectivity, long propagation delays, and relay storage constraints. In such networks, the Bundle Protocol enables store-carry-forward communication, requiring relay nodes to manage limited storage and scarce contact opportunities. Relay-side scheduling and dropping decisions are inherently goal-oriented: transmission resources should be allocated to bundles most valuable to downstream mission objectives. Conventional schedulers, such as FIFO",
    "chapters": [
-    "ch11",
-    "ch9"
+    "ch6"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03642v1",
-   "url": "http://arxiv.org/abs/2610.03642v1",
-   "title": "On the Convergence of Success Conditioning for Policy Optimization",
-   "published": "2026-10-02T17:29:38Z",
-   "summary": "Success conditioning is a strategy for improving decision-making policies in stochastic environments; it updates a policy by increasing the probability of taking actions that yield successful outcomes. Success conditioning is common to many reinforcement learning applications, yet its limiting behavior and convergence rates are not well understood. In this work, we demonstrate that success conditioning converges to an optimal policy on a broad class of Markov decision processes (MDPs). We also d",
+   "id": "http://arxiv.org/abs/2610.13871v1",
+   "url": "http://arxiv.org/abs/2610.13871v1",
+   "title": "Partially Informed Stochastic Optimization via Zeroth-Order Residual Tracking",
+   "published": "2026-10-09T17:20:41Z",
+   "summary": "Many optimization problems provide direct access to only part of the gradient, while the remaining component must be inferred from function evaluations. This structure arises in performative prediction, performative reinforcement learning, and bilevel optimization with a black-box lower level. We introduce Partially Informed Stochastic Optimization (PISO), which combines the available gradient component with a running estimate of the residual. By centring each zeroth-order observation on this es",
    "chapters": []
   },
   {
-   "id": "http://arxiv.org/abs/2610.03634v1",
-   "url": "http://arxiv.org/abs/2610.03634v1",
-   "title": "Credit Where It Matters: Dependency-Aware Policy Optimization for Terminal Agents",
-   "published": "2026-10-02T17:24:48Z",
-   "summary": "Terminal-using agents benefit from reinforcement learning (RL) in coding, debugging, and other multi-step terminal tasks. In these tasks, later commands often depend on information or intermediate results produced by earlier commands. However, existing trajectory-level and step-level credit assignment methods do not explicitly trace the read-write dependencies through which commands affect the final outcome. Consequently, training signals could still be assigned to irrelevant operations, weakeni",
+   "id": "http://arxiv.org/abs/2610.13821v1",
+   "url": "http://arxiv.org/abs/2610.13821v1",
+   "title": "Can Language Models Learn When to Abstain? Policy Learning and Calibrated Answer Selection",
+   "published": "2026-10-09T16:33:27Z",
+   "summary": "A useful language model should know when to answer and when to say \"I don't know.\" Can we improve that decision by training the model itself or by training a separate component to check its answers? We study both approaches on Qwen3-14B for factual questions, using a score that rewards correct answers, penalizes mistakes, and allows abstention. Across three training seeds and two held-out confidence thresholds, a learned answer selector improves threshold-averaged utility over the original model",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13816v1",
+   "url": "http://arxiv.org/abs/2610.13816v1",
+   "title": "Dream to Remember: Continual Steering of Generalist Robot Policies with World Models",
+   "published": "2026-10-09T16:28:01Z",
+   "summary": "Generalist robot policies are trained with imitation learning and are bounded by the quality and coverage of their demonstrations. Reinforcement learning can improve and extend them, either by fine-tuning the policy weights or by training a small module to steer the input noise of a frozen generative policy. When tasks arrive sequentially, both approaches suffer from catastrophic forgetting. Fine-tuning on a task degrades prior tasks, and steering only shifts forgetting to the shared steering mo",
+   "chapters": [
+    "ch10",
+    "ch8"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13772v1",
+   "url": "http://arxiv.org/abs/2610.13772v1",
+   "title": "MARGoS: A Configuration-Driven Platform for Reproducible MARL Experiments in ARGoS",
+   "published": "2026-10-09T15:55:16Z",
+   "summary": "Multi-agent reinforcement learning (MARL) has become a prominent research direction, particularly within collective robotics, where the ARGoS simulator is widely used to study emergent swarm behavior. Yet despite this growth, systematic support for reuse and reproducibility in MARL-based swarm robotics remains limited and insufficiently standardized: a single experiment is assembled from manually aligned simulator files, training scripts, configuration values, paths, seeds, and environment detai",
+   "chapters": [
+    "ch12",
+    "ch7"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13737v1",
+   "url": "http://arxiv.org/abs/2610.13737v1",
+   "title": "SafeDiSTL: Decomposing Joint Constraints for Safe Multi-Agent Reinforcement Learning",
+   "published": "2026-10-09T15:32:06Z",
+   "summary": "Cooperative multi-agent tasks often impose constraints on a shared objective or collective safety. A team level violation cost function can measure this constraint outcome, but does not distinguish which agents' actions most strongly influence that violation. We present SafeDiSTL, a constrained multi-agent reinforcement learning framework that allows for credit assignment even with joint constraint measurements. We use Signal Temporal Logic (STL) robustness to measure episode-level violation thr",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03631v1",
-   "url": "http://arxiv.org/abs/2610.03631v1",
-   "title": "NeutronGym: Physics-Graded Neutron Instrument Design for LLM Agents",
-   "published": "2026-10-02T17:23:52Z",
-   "summary": "Designing a scientific instrument tests whether language-model agents can do physics rather than recall it, provided the grading cannot be argued with. We introduce NeutronGym, to our knowledge the first executable environment for neutron instrument design: agents build instruments through validating tools, McStas ray-traces what they build, and a level-resolved ladder grades syntax, runtime, structure and science with no LLM judge. Procedural families supply unlimited instances of a fixed layou",
+   "id": "http://arxiv.org/abs/2610.13653v1",
+   "url": "http://arxiv.org/abs/2610.13653v1",
+   "title": "A Critical Look at Power Sampling when Test Time Sharpening LLMs",
+   "published": "2026-10-09T14:29:28Z",
+   "summary": "Reinforcement learning with verifiable rewards (RLVR) has substantially improved LLM reasoning, yet growing evidence suggests it mainly performs distribution sharpening: concentrating probability mass on reasoning paths the base model already produces. Recent work therefore seeks RLVR's gains without needing reward signals, by sampling from the power distribution $\u03c0_\u03b1\\propto \u03c0_{\\text{base}}^\u03b1$ via Markov chain Monte Carlo or sequential Monte Carlo. We show that these samplers fail to converge to",
+   "chapters": [
+    "ch11"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13594v1",
+   "url": "http://arxiv.org/abs/2610.13594v1",
+   "title": "MENTOR: Learning from Failure with On-Policy Pedagogical Intervention",
+   "published": "2026-10-09T13:43:49Z",
+   "summary": "Reinforcement Learning from Verifiable Rewards (RLVR) is a key driver for Large Reasoning Models, but it is vulnerable to \"zero-reward collapse\", a training failure where a sudden increase in task difficulty causes the learning signal to vanish. We argue that the conventional approach of discarding these failed trajectories is wasteful, as they contain valuable diagnostic information about the model's cognitive gaps, a bright side that can be leveraged for recovery. Existing solutions, however, ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03620v1",
-   "url": "http://arxiv.org/abs/2610.03620v1",
-   "title": "UniIntervene++: An Adaptive Intervention Agent for Efficient Real-World Reinforcement Learning",
-   "published": "2026-10-02T17:18:12Z",
-   "summary": "Online reinforcement learning (RL) enables robot policies to improve through physical interaction, but the assistance they require changes as their competence evolves. Existing intervention strategies based on offline estimates or fixed decision rules can therefore become mismatched to the current policy. To address this, we propose UniIntervene++, an adaptive intervention agent that learns to allocate control between autonomous execution and heterogeneous assisted behaviors during online RL. Sp",
+   "id": "http://arxiv.org/abs/2610.13504v1",
+   "url": "http://arxiv.org/abs/2610.13504v1",
+   "title": "Beyond Temporal Proximity: Explanatory World Models for Credit Assignment in Reinforcement Learning",
+   "published": "2026-10-09T12:30:14Z",
+   "summary": "Generative Recommenders increasingly use Reinforcement Learning (RL) to optimize outcomes that may appear hundreds or thousands of interactions after a decision. Standard RL propagates reward according to temporal proximity rather than explicit relevance, attenuating the signal assigned to distant but important actions and creating a source of sample inefficiency. We introduce Explanatory World Models (EWM), an attribution framework that uses explanations to identify the earlier events that plau",
+   "chapters": [
+    "ch11",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13453v1",
+   "url": "http://arxiv.org/abs/2610.13453v1",
+   "title": "Reflect-VLA: Internalizing Reflective Guidance via Dual-Path On-Policy Self-Distillation for Autonomous Driving",
+   "published": "2026-10-09T11:52:17Z",
+   "summary": "Reinforcement Learning (RL) substantially improves planning performance in autonomous-driving Vision-Language-Action (VLA) models. However, existing RL methods rely on scalar trajectory rewards that measure overall quality but fail to identify specific planning errors or provide actionable correction signals. In long-tail scenarios, errors in scene understanding, behavior selection, and trajectory execution are compressed into a single score. We observe that Reflective Guidance turns trajectory ",
    "chapters": [
     "ch12",
     "ch10"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03604v1",
-   "url": "http://arxiv.org/abs/2610.03604v1",
-   "title": "Mastering Atari 2600 Games with Discovered Options",
-   "published": "2026-10-02T17:05:46Z",
-   "summary": "Temporal abstractions, often instantiated as options, have long been regarded as a mechanism for accelerating credit assignment, facilitating exploration, and enabling generalisation in reinforcement learning (RL). However, developing general option discovery methods that are effective in large-scale, high-dimensional domains remains a fundamental challenge. Existing option discovery methods are either confined to relatively simple domains, depend on handcrafted or quasi-symbolic representations",
+   "id": "http://arxiv.org/abs/2610.13439v1",
+   "url": "http://arxiv.org/abs/2610.13439v1",
+   "title": "Collective Autonomous Vehicle Routing Needs Social Awareness for Coexistence with Human Drivers",
+   "published": "2026-10-09T11:37:47Z",
+   "summary": "Collective Autonomous Vehicle (AV) route choices in real-world traffic networks can create externalities for Human-Driven Vehicles (HDVs), as routes that benefit AVs may increase travel times for other road users. To address this, we introduce a social component, the marginal cost, to the selfish travel time AV reward. Marginal cost captures an AV's impact on other road users by comparing their travel times with those in a counterfactual simulation in which the AV is removed. We study AV route c",
    "chapters": [
-    "ch12",
-    "ch9"
+    "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03598v1",
-   "url": "http://arxiv.org/abs/2610.03598v1",
-   "title": "When a Correct Reward Is Not Enough: Diagnosing and Guiding PPO in an Analytically Solved Broker-Trader Game",
-   "published": "2026-10-02T17:03:29Z",
-   "summary": "Reinforcement learning (RL) is increasingly used for financial optimal-control problems when complex dynamics make analytical strategies difficult to obtain. There are financial mathematics literactures which provides many solved models whose equations and controls could evaluate and guide learning; we ask whether RL can exploit these results. We place a proximal policy optimisation (PPO) agent in an analytically solved continuous-time broker--trader game. PPO replaces the broker and chooses its",
-   "chapters": [
-    "ch12",
-    "ch6"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03475v1",
-   "url": "http://arxiv.org/abs/2610.03475v1",
-   "title": "Single or Multiple Policies for Phase-Structured Reinforcement Learning?",
-   "published": "2026-10-02T15:48:01Z",
-   "summary": "Many reinforcement-learning (RL) problems are non-stationary yet structured and can be decomposed into phases, each with its own transition probabilities and reward functions. When the phase sequence is known, the common solution augments the state with information to satisfy the Markovian property and applies standard RL techniques. However, prior work finds that the multi-policy approach for different phases can outperform a single state-augmented policy shared among the phases, for reasons th",
-   "chapters": []
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03454v1",
-   "url": "http://arxiv.org/abs/2610.03454v1",
-   "title": "Measure Less, Know More: Self-Supervised Test-Time Feature Acquisition",
-   "published": "2026-10-02T15:33:07Z",
-   "summary": "Recent progress in multimodal, high-dimensional learning has enabled foundation models to process heterogeneous, large-scale data. However, at test time, acquiring all features or modalities can be prohibitively costly and often redundant. Sequentially selecting informative modalities is therefore critical, yet challenging when the downstream task or prediction target is unknown. To this end, we introduce ECHO-$k$, a task-agnostic and self-supervised learning principle for modality acquisition: ",
-   "chapters": []
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03395v1",
-   "url": "http://arxiv.org/abs/2610.03395v1",
-   "title": "Bidirectional Voronoi-biased Exploration Curriculum for Reinforcement Learning",
-   "published": "2026-10-02T14:44:33Z",
-   "summary": "Long-horizon tasks with sparse rewards pose an exploration bottleneck for goal-conditioned reinforcement learning: a policy started from the initial state rarely reaches the goal and receives no learning signal. Reference motions, hand-designed curricula, and shaped rewards supply this signal but require demonstrations or task-specific engineering; automatic start-state and goal curricula avoid this but typically expand from one side only, so the full distance to the target must be covered from ",
-   "chapters": [
-    "ch9",
-    "ch8"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03369v1",
-   "url": "http://arxiv.org/abs/2610.03369v1",
-   "title": "Mixture-of-Experts for Cryptocurrency Order Execution: Training Stability, Tail Risk, and Failure Modes",
-   "published": "2026-10-02T14:27:26Z",
-   "summary": "Deep reinforcement-learning policies for order execution can vary substantially across training seeds, so apparent architectural gains may reflect favourable training realisations rather than reproducible properties of the architecture. We evaluate vanilla Double Deep Q-Learning (DDQL), K-means-partitioned mixtures of DDQL experts at $K \\in \\{2, 4, 8\\}$, and dense networks parameter-matched to the $K{=}4$ and $K{=}8$ expert budgets on 5-minute mean-aggregated BTC/USDT limit order book data from ",
-   "chapters": [
-    "ch9",
-    "ch4"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03273v1",
-   "url": "http://arxiv.org/abs/2610.03273v1",
-   "title": "EVOL: Simulator-Guided Evolutionary Expert Synthesis for Deployment-Free Learning Path Recommendation",
-   "published": "2026-10-02T13:16:40Z",
-   "summary": "Reinforcement learning (RL) for learning path recommendation (LPR) faces two coupled obstacles. First, the policy must commit to a sequence of L concepts without intermediate feedback, producing a combinatorial search space that grows super-exponentially with L and provides reward only at the final step. Second, expert learning paths would be the natural cure for sparse-reward RL, but they do not exist in educational data, because student logs record what learners did, not what they should have ",
+   "id": "http://arxiv.org/abs/2610.13438v1",
+   "url": "http://arxiv.org/abs/2610.13438v1",
+   "title": "Rollout-Time Intervention: Unlocking Agentic Reinforcement Learning Beyond Policy Limits",
+   "published": "2026-10-09T11:37:09Z",
+   "summary": "Reinforcement learning (RL) has emerged as a key paradigm for improving large language model (LLM) agents, enabling stronger reasoning, planning, and tool-use in interactive environments. However, existing agent RL methods remain fundamentally constrained by an on-policy reasoning bottleneck: when tasks exceed the model's current capability boundary, effective trajectories become extremely sparse and training often collapses. We introduce Rollout-Time Intervention (RTI), a technique designed to ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03223v1",
-   "url": "http://arxiv.org/abs/2610.03223v1",
-   "title": "AdaStep: Adaptive Step Credit Weighting for Agentic Reinforcement Learning",
-   "published": "2026-10-02T12:38:53Z",
-   "summary": "Long-horizon LLM agents are typically trained with sparse outcome rewards, making trajectory-level objectives too coarse to distinguish the contribution of individual decisions. Step-level credit assignment provides finer-grained supervision, but its estimates can be unreliable because observed returns also depend on subsequent actions, environment transitions, and trajectory length. We propose AdaStep, an Adaptive Step-credit weighting method that controls how strongly each group-derived local ",
+   "id": "http://arxiv.org/abs/2610.13356v1",
+   "url": "http://arxiv.org/abs/2610.13356v1",
+   "title": "SWE-Critix: Post-Training Generalist Verifiers for Assessing Coding-Agent Trajectories",
+   "published": "2026-10-09T10:30:21Z",
+   "summary": "Coding agents are increasingly deployed for end-to-end software engineering tasks, where a readily available oracle evaluator that defines the success criteria is often absent. This motivates verifications for coding agents that can reliably judge and explain their behavior. However, verification is non-trivial as coding agents are increasingly capable of solving long-horizon software engineering tasks. Their execution trajectories can be extremely long, containing hundreds of iterative interact",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03213v1",
-   "url": "http://arxiv.org/abs/2610.03213v1",
-   "title": "Toward SLM-based agentic task-tool intent matching",
-   "published": "2026-10-02T12:31:01Z",
-   "summary": "Tool-equipped AI agents use tool calls to access data and act on external systems. Horizontal growth of agentic systems increases the number of these interactions, and further motivates the need for automated, per-call oversight that can operate at low latency and/or on-prem. Conventional authorization schemes can determine whether an agent is allowed to invoke a tool, but cannot assess the agent's underlying cognition, specifically, whether the tool selection represents a logical, relevant step",
+   "id": "http://arxiv.org/abs/2610.13353v1",
+   "url": "http://arxiv.org/abs/2610.13353v1",
+   "title": "EmoGavel: Grounding-Aware Reinforcement Learning with Verifiable Rewards for Multimodal Emotion Preference Learning",
+   "published": "2026-10-09T10:28:54Z",
+   "summary": "Multimodal emotion preference learning uses pairwise comparisons to identify which open-ended emotion descriptions align more closely with human judgments. However, existing methods primarily focus on the final preference decision and provide little explicit supervision for localizing and correcting erroneous content. To address this limitation, we propose EmoGavel, a Grounding-Aware reinforcement learning framework with Verifiable rewards for multimodal Emotion preference Learning. We first int",
    "chapters": [
     "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03196v1",
-   "url": "http://arxiv.org/abs/2610.03196v1",
-   "title": "Beyond Reward Hacking: Proxy Divergence Across Four Layers of a Staged Humanoid Learning Pipeline",
-   "published": "2026-10-02T12:10:12Z",
-   "summary": "A reinforcement-learning (RL) pipeline for a legged robot is assembled from proxies. A reward stands in for intended behaviour, a curriculum gate stands in for competence, an evaluation statistic stands in for robustness, and a reference motion stands in for an achievable skill. The traditional view treats only the first of these as optimised against, and so locates specification failure (reward hacking) in the reward alone. I argue that all four are proxies in the same formal sense, that each h",
-   "chapters": [
-    "ch7",
-    "ch6"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03190v1",
-   "url": "http://arxiv.org/abs/2610.03190v1",
-   "title": "Not Until the Evidence Says So: Teaching LLM Investigators When to Close a Case",
-   "published": "2026-10-02T12:06:02Z",
-   "summary": "Accident, defect and outage investigations end with a decision that ordinary question answering never faces: whether the evidence gathered so far is enough to close the case. We study this decision for LLM investigators, which request evidence from a case file, revise their hypotheses, and either close the case with a conclusion grounded in what they read or leave it open and name what is missing. This judgment does not come with capability: an untrained 9B model overstates its evidence in 97% o",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03185v1",
-   "url": "http://arxiv.org/abs/2610.03185v1",
-   "title": "Gains and Collapse in On-Policy Distillation:A Reinforcement Learning Perspective",
-   "published": "2026-10-02T11:57:36Z",
-   "summary": "On-policy distillation (OPD) has become an important approach to language model post-training. However, despite its performance gains, OPD can also collapse into excessively long and repetitive generation, and the mechanism underlying these divergent outcomes remains poorly understood. We explain these outcomes through a reinforcement learning perspective: the teacher implicitly rewards student behaviors, even those it rarely exhibits itself. From this perspective, our experiments show that OPD ",
-   "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03127v1",
-   "url": "http://arxiv.org/abs/2610.03127v1",
-   "title": "Coverage You Can Steer: Online Conformal Calibration for RL-Driven Hardware-Aware NAS",
-   "published": "2026-10-02T10:47:58Z",
-   "summary": "Hardware-aware neural architecture search (NAS) is dominated by evaluation cost: every architecture must be trained before its reward is known. Conformal-prediction filters cut this cost by pruning candidates whose predicted-reward upper bound misses a threshold, with a distribution-free guarantee that at most a fraction $\u03b4$ are wrongly discarded. That guarantee assumes exchangeability between calibration and test candidates, which the surrounding reinforcement-learning (RL) loop violates: the p",
-   "chapters": []
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03119v1",
-   "url": "http://arxiv.org/abs/2610.03119v1",
-   "title": "How to Find and Reuse Policies for Continuous Adaptation in Lifelong Reinforcement Learning",
-   "published": "2026-10-02T10:37:52Z",
-   "summary": "In lifelong reinforcement learning, retaining previously learned policies is not sufficient for effective transfer to a new task. Useful knowledge may be distributed across several prior policies, and its relevance may change as the learner acquires experience. One hypothesis is that task similarity can be effectively used in a continual learning setting to find and combine previously learned policies. To test it, Adaptive Mask Selection and Composition (AMSC) is designed to estimate similarity ",
-   "chapters": []
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03099v1",
-   "url": "http://arxiv.org/abs/2610.03099v1",
-   "title": "Beyond Single Videos: Benchmarking and Active Evidence Seeking for E-Commerce Cross-Video Reasoning",
-   "published": "2026-10-02T10:19:49Z",
-   "summary": "E-commerce videos are information-dense and frequently compared by consumers evaluating products and merchants assessing marketing strategies. However, existing multimodal models mainly focus on single-video understanding and have limited ability to compare information across videos. We introduce AdsCVR, the first e-commerce cross-video reasoning benchmark, containing 2,483 videos and 6,110 question-answer pairs across six reasoning dimensions. Cross- video reasoning requires models to locate fi",
-   "chapters": [
-    "ch12",
     "ch10"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03065v1",
-   "url": "http://arxiv.org/abs/2610.03065v1",
-   "title": "Learning Transferable Policies from Action-free Time Series Through Dynamical Embeddings",
-   "published": "2026-10-02T09:47:36Z",
-   "summary": "Learning control from action-free recordings is challenging because intervention effects are unobserved and policies may exploit errors in reconstructed dynamics. We present a hierarchical model-based reinforcement learning framework that uses shared structure across related systems to learn system-specific control policies from action-free recordings. A hierarchical dynamical system reconstruction model captures shared dynamics and individual variation through low-dimensional embeddings. These ",
+   "id": "http://arxiv.org/abs/2610.13345v1",
+   "url": "http://arxiv.org/abs/2610.13345v1",
+   "title": "Evo-RL: Iterative Robot Reinforcement Learning from Selective Experience",
+   "published": "2026-10-09T10:19:54Z",
+   "summary": "Existing real-world reinforcement learning methods improve robot policies by combining human corrections with autonomous rollouts. However, accumulated experience varies in its value for policy improvement, and even successful trajectories can contain inefficient or redundant behavior, motivating more selective experience reuse. To this end, we propose Evo-RL, an iterative reinforcement learning method that combines human interventions with advantage-guided experience selection. Evo-RL uses huma",
    "chapters": [
-    "ch8",
+    "ch12",
     "ch7"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03063v1",
-   "url": "http://arxiv.org/abs/2610.03063v1",
-   "title": "HARPO: Hallucination-Aware Reinforcement Learning for Faithful and Creative Language Generation",
-   "published": "2026-10-02T09:46:40Z",
-   "summary": "Large Language Models (LLMs) are prone to generating hallucinated content, which compromises their reliability in knowledge-intensive tasks. To address this challenge without sacrificing creativity, we propose HARPO, a reinforcement learning framework designed to jointly optimize faithfulness and creativity. HARPO incorporates a Hallucination-Aware Generative Reward Model (HA-GRM), trained via verifiable feedback, to assess both faithfulness and writing quality. A Selective Activation Mechanism ",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.03055v1",
-   "url": "http://arxiv.org/abs/2610.03055v1",
-   "title": "hacktrace: behavior-supervised detection of reward hacking during code generation",
-   "published": "2026-10-02T09:35:59Z",
-   "summary": "A coding agent can earn a passing grade by fixing its code, or by deleting the test that exposes the bug. Detecting such reward hacking requires recognizing attempted shortcuts, including those that fail. We release 173,561 annotated multi-turn coding trajectories from Qwen3-8B and show that supervising shortcut behavior independently of exploit success substantially improves detection. We introduce HACKTRACE, a behavior-supervised monitor that reads the internal states the agent already compute",
+   "id": "http://arxiv.org/abs/2610.13335v1",
+   "url": "http://arxiv.org/abs/2610.13335v1",
+   "title": "AgentTune: A Unified Training Lifecycle for Tool-Using LLM Agents",
+   "published": "2026-10-09T10:09:27Z",
+   "summary": "Tool-using agents increasingly require a common substrate for building, training, evaluating, distilling, and maintaining agentic systems, yet existing tooling typically addresses these stages in isolation. We present AgentTune, a source-available Python library that provides a unified framework for developing and optimizing tool-using agents. At its core, AgentTune introduces a two-tier EventLog representation that preserves agent trajectories while supporting consistent projections for trainin",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.03025v1",
-   "url": "http://arxiv.org/abs/2610.03025v1",
-   "title": "Verifiable, Articulable, and Tacit Components of Preference",
-   "published": "2026-10-02T09:01:07Z",
-   "summary": "What makes a short story gripping; a news article newsworthy; or a math proof elegant? These constructs resist articulation or verification; their meaning is at least partially tacit. However, modern AI models are improved primarily via articulated constitutions, rubrics and verifiers (i.e. in RLAIF and RLVR); tacit components of preferences are typically understudied. We introduce a large, labeled preference dataset CreativePreferences, containing 2.8M texts labeled by 317M human preference jud",
+   "id": "http://arxiv.org/abs/2610.13305v1",
+   "url": "http://arxiv.org/abs/2610.13305v1",
+   "title": "MORAD: Reinforcement Learning with Multi-Objective Rewards for RNA Inverse Design",
+   "published": "2026-10-09T09:50:55Z",
+   "summary": "We introduce MORAD, an online reinforcement learning framework for backbone-conditioned RNA diffusion models that trains a single shared policy across diverse target backbones. Structure-conditioned RNA inverse design seeks nucleotide sequences compatible with a target three-dimensional backbone, yet existing reinforcement learning approaches either optimize a separate policy for each target backbone or rely on offline preference optimization, leaving online post-training of a reusable backbone-",
+   "chapters": [
+    "ch11",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13205v1",
+   "url": "http://arxiv.org/abs/2610.13205v1",
+   "title": "Rethinking Relative Policy Differences Transfer of On-Policy Distillation",
+   "published": "2026-10-09T08:24:48Z",
+   "summary": "On-policy distillation (OPD) trains a target policy on its own rollouts using token-level supervision from a stronger teacher, but typically relies on the teacher being substantially more capable than the target. Recent work relaxes this requirement by transferring the relative policy difference between an expert and a reference policy rather than the expert's absolute distribution. Yet it remains unclear which differences provide useful supervision and which targets can benefit from them. We de",
+   "chapters": []
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13202v1",
+   "url": "http://arxiv.org/abs/2610.13202v1",
+   "title": "S$^3$R: Fast and Faithful RL Rollouts via Self-Sparse Speculative Decoding",
+   "published": "2026-10-09T08:22:40Z",
+   "summary": "Fast rollout generation for long-context reinforcement learning with verifiable rewards (RLVR) requires reducing KV-cache traffic without changing the response groups used for policy optimization. In our profiled RLVR workloads, attention accounts for 72--76\\% of autoregressive decoding kernel time. Sparse attention reduces these reads, but sampling directly from a sparse policy changes the response groups used for learning. For group-relative optimization, we show that even exact response-wise ",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02979v1",
-   "url": "http://arxiv.org/abs/2610.02979v1",
-   "title": "RASPER: Reward-Aligned Summarization of Clinical Notes for EHR Outcome Prediction",
-   "published": "2026-10-02T08:10:22Z",
-   "summary": "Unstructured discharge notes in Electronic Health Records (EHRs) often carry signal complementary to structured medical codes, holding patient-specific evidence that standardized cohort-level codes alone cannot capture. However, this evidence in notes is frequently buried in lengthy, noisy text that is not intentionally written with any specific clinical prediction in mind. Summarization is an obvious mitigation, but generic summaries, tuned for fluency rather than the outcome, routinely omit de",
+   "id": "http://arxiv.org/abs/2610.13197v1",
+   "url": "http://arxiv.org/abs/2610.13197v1",
+   "title": "Does Learning Recurrent Networks Matter in Partially Observable RL?",
+   "published": "2026-10-09T08:17:28Z",
+   "summary": "Reinforcement learning (RL) under partial observability typically re- lies on recurrent networks to encode temporal information, with the recurrent module trained jointly with the policy or value function. This raises a natural question: is learning the recurrent network actually necessary? In this paper, we investigate whether a frozen recurrent network can provide sufficient memory for solving par- tially observable Markov decision processes (POMDPs). Motivated by the theoretical foundations o",
+   "chapters": []
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13184v1",
+   "url": "http://arxiv.org/abs/2610.13184v1",
+   "title": "AdaC-GRPO: Towards Mastering Long-Horizon Visual Sudoku Puzzles via Adaptive Curriculum Learning",
+   "published": "2026-10-09T08:08:42Z",
+   "summary": "While reinforcement learning with verifiable reward (RLVR) enhances reasoning in large language models, its efficacy in long-horizon multimodal tasks remains underexplored. Visual Sudoku puzzles pose a representative challenge, requiring multi-step deductive reasoning over both local constraints and global dependency chains. To this end, we introduce FG-Sudoku, a fine-grained benchmark categorized by grid size and required deductive steps. Evaluations reveal that frontier MLLMs fail on complex l",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02847v1",
-   "url": "http://arxiv.org/abs/2610.02847v1",
-   "title": "Turnover-Orthogonal Credit Assignment for Open-Team Multi-Agent Reinforcement Learning",
-   "published": "2026-10-02T05:35:04Z",
-   "summary": "Open-team multi-agent reinforcement learning studies cooperative systems in which agents may join, leave, or be replaced during an episode. In such settings, the team return changes both because agents choose useful actions and because the active population itself changes. Standard centralized critics and shared advantages often mix these two effects into one scalar credit signal, allowing surviving agents to be rewarded or penalized for exogenous turnover events outside their control. We introd",
+   "id": "http://arxiv.org/abs/2610.13157v1",
+   "url": "http://arxiv.org/abs/2610.13157v1",
+   "title": "SOAR: Source-Aware Reinforcement Learning with Precise Credit Assignment for Search Agents",
+   "published": "2026-10-09T07:45:11Z",
+   "summary": "Reinforcement learning (RL) for search agents often suffers from evidence fabrication, a failure mode where agents bypass external information ($E_{ext}$) and fabricate an incorrect answer. We argue that this fabrication arises from an over-reliance on unreliable internal knowledge ($E_{int}$) as shortcuts due to the inherent opacity of reasoning trajectories. To address this, we propose SOAR (SOurce-Aware Reinforcement learning), a paradigm that transforms monolithic reasoning into source-expli",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02846v1",
-   "url": "http://arxiv.org/abs/2610.02846v1",
-   "title": "Understanding Enrichment in Reinforcement Learning",
-   "published": "2026-10-02T05:34:41Z",
-   "summary": "When rewards are sparse, reinforcement learning with verifiable rewards (RLVR) often uses hints or intermediate guidance to generate more successful rollouts. This enrichment biases policy-gradient updates unless corrected via importance weights, but existing methods omit correction or truncate importance weights in order to avoid the high variance of correction. It thus remains unclear what exactly is gained or lost in RLVR by correcting enriched rollouts. We show, mathematically, that omitted ",
+   "id": "http://arxiv.org/abs/2610.13132v1",
+   "url": "http://arxiv.org/abs/2610.13132v1",
+   "title": "DP-MIND: Differentially private memory-guided Long context Inference",
+   "published": "2026-10-09T07:25:17Z",
+   "summary": "LLM-as-a-Service has become a dominant paradigm for accessing large language models without requiring local deployment. However, the process raises severe privacy concerns when user queries may include sensitive or confidential contexts. Differential privacy (DP) provides a principled approach to protecting such inputs, but existing DP inference methods are primarily designed for short- or moderate-context settings and struggle with million-token-scale inputs due to limited context capacity and ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02835v1",
-   "url": "http://arxiv.org/abs/2610.02835v1",
-   "title": "All Work And No Play Makes Jack a Dull Boy: Understanding and Preventing Catastrophic Strategy Collapse in RLVR",
-   "published": "2026-10-02T05:27:33Z",
-   "summary": "During post-training of large language models (LLMs) with Reinforcement Learning with Verifiable Rewards (RLVR), GRPO-style algorithms can exhibit severe late-stage collapse. Prompt-based probing reveals that this is not benign strategic pruning, but a harmful contraction of effective strategy capacity that makes distinct reasoning strategies increasingly inaccessible. To characterize this phenomenon, we define strategies through trajectory-level policy-update interactions and develop a unified ",
+   "id": "http://arxiv.org/abs/2610.13081v1",
+   "url": "http://arxiv.org/abs/2610.13081v1",
+   "title": "SWEAR: Section-Wise Efficient Audio Reasoning via Self-Rated Difficulty",
+   "published": "2026-10-09T06:36:43Z",
+   "summary": "Recent work on large audio-language models (LALMs) explores adaptive reasoning to balance accuracy and efficiency. However, existing approaches often rely on coarse-grained difficulty estimation, overlooking the diverse factors that determine reasoning effort. We address this limitation by deriving five-dimensional difficulty scores and compressed reasoning traces from complementary offline assessments. Based on this characterization, we propose SWEAR, a difficulty-aware reasoning framework that",
+   "chapters": [
+    "ch11",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13066v1",
+   "url": "http://arxiv.org/abs/2610.13066v1",
+   "title": "Evolving Creatives with Clicks: CTR-Driven Advertising image Editing via Attribute Disentanglement and Preference Alignment",
+   "published": "2026-10-09T06:26:24Z",
+   "summary": "The optimization objective for e-commerce advertising creatives has shifted from aesthetic quality to online business metrics like click-through rate (CTR). Recent methods generate appealing ad images from product images by constructing CTR-based reward signals and refining prompt generation via Reinforcement Learning. Such paradigms equally penalize all attributes within an underperforming image, even though some are actually beneficial to clicks. In this work, we propose Evolving Creatives wit",
    "chapters": [
     "ch11"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02828v1",
-   "url": "http://arxiv.org/abs/2610.02828v1",
-   "title": "FSPO: Policy-Consistent Risk and Pareto-Feasible Control for Budgeted LLM RL Post-Training",
-   "published": "2026-10-02T05:19:54Z",
-   "summary": "Adaptive LLM reinforcement-learning post-training changes multiple training actuators online, including rollout temperature, group size, clipping, KL regularization, verifier allocation, and update budget. Three coupled issues remain unresolved. A future-risk model trained from behavior trajectories need not estimate the risk induced by the controller that will be deployed; a score calibrated on logged state-action pairs can become miscalibrated after selective action choice; and independent per",
+   "id": "http://arxiv.org/abs/2610.13020v1",
+   "url": "http://arxiv.org/abs/2610.13020v1",
+   "title": "Trajectory-Aware Policy Optimization: Closing the State Distribution Gap in Long-Horizon LLM RL",
+   "published": "2026-10-09T05:22:07Z",
+   "summary": "Reinforcement learning (RL) has become a dominant paradigm for enhancing LLMs' reasoning capabilities. Yet long-horizon autoregressive rollouts introduce a fundamental limitation: local policy mismatch can compound into severe state distribution shift over trajectories. Existing LLM RL methods, such as GRPO and GSPO, control policy mismatch at the token or sequence level, but overlook this trajectory-induced shift, causing training instability and eventual collapse as the horizon grows. To close",
+   "chapters": [
+    "ch11",
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.13015v1",
+   "url": "http://arxiv.org/abs/2610.13015v1",
+   "title": "Generalized Proximal Policy Optimization: Unifying LLM RL Algorithms from the Perspective of Divergence",
+   "published": "2026-10-09T05:17:26Z",
+   "summary": "Reinforcement learning has become the foundational paradigm for enhancing the reasoning capabilities of LLMs. Yet the dominant approach, Proximal Policy Optimization (PPO), relies on a geometrically degenerate clipping proxy that cannot adapt its resistance to policy shifts, leading to premature clipping and degraded exploration. Subsequent variants alleviate these issues through fragmented and heuristic modifications. We propose Generalized Proximal Policy Optimization (GPPO), a principled and ",
    "chapters": [
     "ch11",
     "ch9"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02824v1",
-   "url": "http://arxiv.org/abs/2610.02824v1",
-   "title": "MetaRubric: Learning to Reward for Rubric-Based Reinforcement Learning",
-   "published": "2026-10-02T05:16:42Z",
-   "summary": "Rubric-based reinforcement learning extends reward-driven optimization to open-ended tasks by assigning partial credit to individual response requirements. However, rubric judges can assign a high criterion score even when the information or action it requires is absent from the response, a failure mode we term Vacuous Credit. Such awards persist after the required information is removed and can reverse the sign of a response's GRPO advantage. To address this problem, we introduce MetaRubric, wh",
+   "id": "http://arxiv.org/abs/2610.12957v1",
+   "url": "http://arxiv.org/abs/2610.12957v1",
+   "title": "JoyInside-VLM-Agent: Product-Conditioned Multimodal Policy Learning for Embodied Agents",
+   "published": "2026-10-09T03:54:58Z",
+   "summary": "Embodied agents must translate multimodal observations and user requests into executable actions while adapting to product constraints, changing goals, and execution feedback. We present JoyInside-VLM-Agent, a ReAct-style multimodal agent developed through product-conditioned trajectory construction and staged policy learning for robotic platforms and smart hardware. A closed-loop sandbox generates multimodal interaction trajectories covering goal revisions and failure recovery, which are checke",
    "chapters": [
-    "ch11",
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.02819v1",
-   "url": "http://arxiv.org/abs/2610.02819v1",
-   "title": "Text-Centric Post-Training for Omni-Modal Reasoning",
-   "published": "2026-10-02T05:08:25Z",
-   "summary": "Improving joint audio-visual reasoning in Omni Large Language Models typically incurs substantial data construction and training costs. Our diagnostics reveal multi-hop reasoning difficulties despite correct answers to all corresponding single-hop questions and suggest partial decoupling in the local optimization of perception and reasoning objectives. This motivates post-training with different emphases on these capabilities. Text-only reasoning training yields gains across data sources, model ",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.02808v1",
-   "url": "http://arxiv.org/abs/2610.02808v1",
-   "title": "ROUTEAUDIT: Interaction-Aware Identification for Budgeted Multi-Verifier Routing",
-   "published": "2026-10-02T04:59:24Z",
-   "summary": "Adaptive multi-verifier systems are commonly compared through endpoint quality-cost gaps, even when the verifier catalog, availability, accounting, information filtration, or scorer changes with the policy. We formulate verifier routing as a contract-conditioned identification problem. The contract records request support, verifier catalog, realized availability, resource accounting, online filtration, and post-trace scoring; a matched route contrast changes only the policy coordinate. ROUTEAUDI",
-   "chapters": [
-    "ch11"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.02801v1",
-   "url": "http://arxiv.org/abs/2610.02801v1",
-   "title": "VIGOR: Zero-Shot Visual Generalization via Latent-Space Consistency in Model-Based Reinforcement Learning",
-   "published": "2026-10-02T04:46:58Z",
-   "summary": "Model-based reinforcement learning (MBRL) achieves strong sample efficiency by planning within learned latent dynamics, yet its performance degrades substantially under unseen visual distractions such as background variations, lighting changes, or camera shifts. Unlike model-free RL, where encoder perturbations affect only single-step predictions, MBRL suffers from a two-level vulnerability: visual distractions first push encoder outputs out of distribution, and these errors then compound throug",
-   "chapters": [
+    "ch12",
     "ch8"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02781v1",
-   "url": "http://arxiv.org/abs/2610.02781v1",
-   "title": "OPD Before RL: Warm-Starting Rubric-Based RL with On-Policy Distillation",
-   "published": "2026-10-02T04:14:57Z",
-   "summary": "Many useful language-model tasks cannot be evaluated by exact outcome verification. Rubric-based reinforcement learning (RL) addresses this issue by scoring open-ended responses against explicit criteria. However, because the reward is assigned after the complete response, the training signal does not directly identify which individual decisions contributed to the final score. We propose a two-stage training framework that uses rubrics first as privileged teacher context for dense token-level su",
-   "chapters": [
-    "ch12"
-   ]
-  },
-  {
-   "id": "http://arxiv.org/abs/2610.02744v1",
-   "url": "http://arxiv.org/abs/2610.02744v1",
-   "title": "EpiWorld: Grounding LLM Policy Agents in Epidemiological World Models",
-   "published": "2026-10-02T03:16:28Z",
-   "summary": "Epidemic intervention policies are textual artefacts that human decision-makers interpret, justify, and revise through natural language, making large language models a natural candidate for epidemic policy reasoning. A naive LLM, however, lacks the epidemic dynamics needed to project intervention consequences, the quantitative surveillance signals required to assess severity, and the institutional constraints that define admissible actions. We present EpiWorld, a closed-loop framework that groun",
+   "id": "http://arxiv.org/abs/2610.12927v1",
+   "url": "http://arxiv.org/abs/2610.12927v1",
+   "title": "Collaborative Learning and Reasoning over Model Slices",
+   "published": "2026-10-09T03:17:29Z",
+   "summary": "Large language models (LLMs) excel across diverse tasks, benefiting from knowledge priors, in-context reasoning, and test-time computation. Despite these strengths, single-model reasoning remains vulnerable to error propagation, as later steps depend on the model's earlier outputs, leaving reasoning blind spots difficult to independently reassess. To address this limitation, we develop \\textit{collaborative learning}, encompassing the construction of heterogeneous collaborators and the learning ",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02740v1",
-   "url": "http://arxiv.org/abs/2610.02740v1",
-   "title": "Prospective Hindsight: Self-Calibrating Reinforcement Learning via Prediction-Reality Gaps",
-   "published": "2026-10-02T03:12:00Z",
-   "summary": "Reinforcement learning for long-horizon agents relies on purely retrospective training signals: credit is assigned only after observing environmental consequences, leaving the agent's belief at action time invisible to the gradient. We introduce Prospective Hindsight (PH), a self-calibrating training principle that augments any retrospective base method with a signal derived from the gap between the agent's prospective prediction (before feedback) and the retrospective evaluation (after feedback",
+   "id": "http://arxiv.org/abs/2610.12848v1",
+   "url": "http://arxiv.org/abs/2610.12848v1",
+   "title": "Reinforcement Learning via Fixed-point Flow Matching",
+   "published": "2026-10-09T01:15:10Z",
+   "summary": "In maximum entropy and behavior-constrained reinforcement learning (RL), the optimal policy is given by a Boltzmann distribution. Generating samples from this distribution can be challenging, as it is often complex and multimodal. While flow policies trained with flow matching provide a powerful framework for representing such distributions, they traditionally rely on access to training data, which is generally unavailable in online RL. To address this limitation, we propose fixed-point flow mat",
+   "chapters": [
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12830v1",
+   "url": "http://arxiv.org/abs/2610.12830v1",
+   "title": "Cross-Behavior Policy Optimization: Unified Learning from Offline Demonstrations and On- and Off-Policy Rollouts via a Shared Regression Target",
+   "published": "2026-10-09T00:29:53Z",
+   "summary": "Reasoning post-training draws on offline demonstrations and policy-generated rollouts, yet conventional supervised fine-tuning (SFT) followed by reinforcement learning (RL) separates their objectives and limits continued reuse of collected responses. We propose \\textbf{Cross-Behavior Policy Optimization} (CBPO), which makes these sources compatible with one regression loss through a fixed-reference target. Because the generating policy does not enter this target, positive and negative offline co",
+   "chapters": [
+    "ch10"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12822v1",
+   "url": "http://arxiv.org/abs/2610.12822v1",
+   "title": "Reward Hacking as a Transmissible Strategy in Multi-Agent Coding Systems",
+   "published": "2026-10-09T00:02:59Z",
+   "summary": "Multi-agent systems are increasingly used to solve coding tasks by coordinating agents that share code and plans. These agents are often optimized with reinforcement learning (RL) using automated evaluators, but bypassing evaluation can earn reward without producing a genuine solution. Prior work has largely treated reward hacking as a single-agent failure. In this work, we show that a reward-hacking strategy elicited in one agent can propagate to others and affect system coordination. Across fo",
+   "chapters": [
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12796v1",
+   "url": "http://arxiv.org/abs/2610.12796v1",
+   "title": "Efficient Audio-Visual Speech Enhancement via Reinforcement Learning-Based Neural Architecture Search",
+   "published": "2026-10-08T23:03:32Z",
+   "summary": "Audio-visual speech enhancement (AVSE) improves speech intelligibility in noisy environments but often relies on computationally expensive models unsuitable for resource-constrained edge devices. This paper introduces a reinforcement learning-driven neural architecture search (RL-NAS) framework to discover compact, efficient AVSE architectures. The search space preserves temporal alignment between audio and visual streams, while a novel reward function jointly optimises speech enhancement perfor",
    "chapters": [
     "ch11",
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02730v1",
-   "url": "http://arxiv.org/abs/2610.02730v1",
-   "title": "Bellman Error Minimization Via Linear Programming Normalization",
-   "published": "2026-10-02T03:05:07Z",
-   "summary": "This paper proposes a new functional approximation approach to reduce Bellman error in high-dimensional dynamic programming and Reinforcement Learning problems. Using a classic dynamic programming problem (network capacity control in revenue management) as the motivational example, the paper illustrates that deep neural networks and linear programming approximation algorithms can be combined to derive approximate solutions to dynamic programming problems. Simulation results show the proposed app",
+   "id": "http://arxiv.org/abs/2610.12772v1",
+   "url": "http://arxiv.org/abs/2610.12772v1",
+   "title": "Reflex: Visually Grounded Reactive Humanoid Control",
+   "published": "2026-10-08T22:24:03Z",
+   "summary": "Humans effortlessly react to the world; they adeptly return a tennis shot, catch a falling cup, step aside from a passing cart, or pass a box tossed during truck unloading. These everyday actions require anticipating a moving target and reflexively responding with the whole body within about a second. Such visual reactive whole-body control remains challenging for humanoids, which must (1) coordinate whole-body control, (2) react to object dynamics in real time, and (3) ground perception in egoc",
+   "chapters": []
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12757v1",
+   "url": "http://arxiv.org/abs/2610.12757v1",
+   "title": "MADS: Multi-Agent Dialog Simulation for Robust Conversational Agents",
+   "published": "2026-10-08T22:08:10Z",
+   "summary": "Task-oriented conversational agents remain fragile under realistic conditions, especially when users exhibit non-cooperative behavior. Existing function-calling benchmarks underrepresent adversarial conversation trajectories, thereby limiting the training resources available for developing robust agents. We present MADS (Multi-Agent Dialog Simulation), a synthetic data generation pipeline that produces structured, diverse dialogue trajectories. We inject adversarial conversation, producing valid",
    "chapters": [
-    "ch11"
+    "ch11",
+    "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02728v1",
-   "url": "http://arxiv.org/abs/2610.02728v1",
-   "title": "Around the World: Unified Learned Locomotion on a 270 g Continuous-Rotation Quadruped",
-   "published": "2026-10-02T03:03:22Z",
-   "summary": "Closed-loop learned locomotion is established on commercial quadrupeds but remains uncommon at the sub-kilogram scale. Continuous-rotation legs give MiNI-Q, a 270 g quadruped, access to supporting configurations on either side of the body. We exploit this range with a single posture-conditioned reinforcement-learning policy that runs entirely onboard. A continuous joint-space reference on the torus $T^8$ and its gravity-conditioned transformation connect upright walking, inverted walking, and la",
+   "id": "http://arxiv.org/abs/2610.12697v1",
+   "url": "http://arxiv.org/abs/2610.12697v1",
+   "title": "Toward Maximizing Algebraic Connectivity via Density-Dependent Backbone Construction and Reinforcement Learning Completion",
+   "published": "2026-10-08T20:28:53Z",
+   "summary": "This paper studies an open network design problem of constructing graph topologies with maximum algebraic connectivity under fixed numbers of vertices and edges. A density-dependent approach is proposed that decomposes the design task into two stages: a high-quality, low-cost structural backbone construction and a reinforcement learning completion stage. The method selects the backbone based on density, using complete multipartite graphs in dense regimes and Cayley graphs in low-to-intermediate ",
+   "chapters": []
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12659v1",
+   "url": "http://arxiv.org/abs/2610.12659v1",
+   "title": "MagicBeanStalk: Escaping the RLVR Zero Advantage Trap with Recursive Data Synthesis",
+   "published": "2026-10-08T19:25:48Z",
+   "summary": "Data-centric scaling of RLVR has focused on collecting or generating verifiable training problems. However, corpus size alone does not determine whether the dataset provides a useful learning signal for a target policy. To guide the synthesis of effective RLVR data, we experimentally characterize dataset effectiveness as a function of its problems, the target policy, and the training rollout budget. Under this characterization, we show that a large open-source math corpus pooled from widely used",
    "chapters": [
-    "ch7"
+    "ch11",
+    "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02700v1",
-   "url": "http://arxiv.org/abs/2610.02700v1",
-   "title": "Learning from Evolving Errors: Adaptive Iterative Repair for On-Policy Distillation",
-   "published": "2026-10-02T02:34:57Z",
-   "summary": "On-policy self-distillation (OPSD) supplies dense token-level feedback on trajectories sampled from the student's own policy, a richer training signal than the outcome-level rewards of reinforcement learning. This feedback comes from a teacher conditioned on a full reference solution unavailable to the student. The reference solution specifies the target but not how to move from the student's current error toward it, creating a solution-conditioned shortcut risk. We introduce AIR-OPD, an adaptiv",
+   "id": "http://arxiv.org/abs/2610.12601v1",
+   "url": "http://arxiv.org/abs/2610.12601v1",
+   "title": "Reflective Prompt Optimization of a Deep-Research Agent: A Topic-Disjoint, Multi-Seed Protocol for Measuring Transferable Gains and Prompt-Level Overfitting",
+   "published": "2026-10-08T18:23:23Z",
+   "summary": "Prompt optimization is an attractive alternative to reinforcement learning for adapting language-model agents, since it is cheap and produces human-readable artifacts. On factual tasks, however, it carries a failure mode that scalar-reward reinforcement learning does not. An optimizer that reads the training examples can write their answers into the prompt, so an in-distribution gain may be memorization rather than transferable behaviour. We apply reflective prompt evolution (GEPA) to the two sy",
    "chapters": [
     "ch12"
    ]
   },
   {
-   "id": "http://arxiv.org/abs/2610.02695v1",
-   "url": "http://arxiv.org/abs/2610.02695v1",
-   "title": "Test-time Calibration Learning for Large Language Model Reasoning",
-   "published": "2026-10-02T02:17:17Z",
-   "summary": "Reliable large language models (LLMs) must not only produce accurate answers but also express confidence that faithfully reflects their probability of being correct. Such calibration is essential for identifying uncertain predictions and supporting reliable decision-making in real-world deployment. Recent studies incorporate calibration learning into reinforcement learning (RL), jointly optimizing answer correctness and verbalized confidence using ground-truth correctness supervision. However, t",
+   "id": "http://arxiv.org/abs/2610.12598v1",
+   "url": "http://arxiv.org/abs/2610.12598v1",
+   "title": "Beyond Binary Verifiable Rewards: Behavioral Self-Rewarding for SWE Agents",
+   "published": "2026-10-08T18:21:10Z",
+   "summary": "Reinforcement learning with verifiable rewards (RLVR) provides reliable supervision for software engineering agents through executable tests, but binary rewards fail to distinguish trajectories with substantially different debugging quality. We investigate whether the current policy can judge its own trajectories and use these judgments to improve task performance without a separately trained reward model. To this end, we introduce Behavioral Self-Rewarding (BSR), a reward-refinement method that",
+   "chapters": [
+    "ch11",
+    "ch12"
+   ]
+  },
+  {
+   "id": "http://arxiv.org/abs/2610.12572v1",
+   "url": "http://arxiv.org/abs/2610.12572v1",
+   "title": "DiffusionART: Efficient, Stable and Scalable Reinforcement of Diffusion Models",
+   "published": "2026-10-08T18:01:44Z",
+   "summary": "Online reinforcement learning (RL) fine-tunes diffusion models with black-box rewards, but reverse-process methods such as Flow-GRPO are limited in efficiency by poor credit assignment, while forward-process methods such as DiffusionNFT are efficient yet unstable without carefully tuned exponential-moving-average (EMA) off-policy training. We show that NFT-style objectives contain a hidden forward--reverse consistency force that joint positive--negative training cancels only partially, and that ",
    "chapters": [
     "ch11"
    ]

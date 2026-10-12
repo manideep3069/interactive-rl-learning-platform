@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-10-12",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (Agentic RL: 31, RL for LLMs: 27, Offline RL: 12, general: 10, Continuous Control: 5, Exploration: 4, Model-Based RL: 2, PPO & Policy Gradients: 1)",
+   "\u201cGoal-Oriented Bundle Management and Flow Control for Deep-Space Communications via Reinforcement Learning\u201d \u2014 PPO & Policy Gradients",
+   "\u201cPartially Informed Stochastic Optimization via Zeroth-Order Residual Tracking\u201d \u2014 general RL",
+   "\u201cCan Language Models Learn When to Abstain? Policy Learning and Calibrated Answer Selection\u201d \u2014 RL for LLMs",
+   "\u201cDream to Remember: Continual Steering of Generalist Robot Policies with World Models\u201d \u2014 Offline RL, Model-Based RL",
+   "\u201cMARGoS: A Configuration-Driven Platform for Reproducible MARL Experiments in ARGoS\u201d \u2014 Agentic RL, Continuous Control"
+  ]
+ },
+ {
   "date": "2026-10-05",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
