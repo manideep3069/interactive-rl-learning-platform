@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-10-19",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 37, Agentic RL: 33, Continuous Control: 7, Offline RL: 5, Model-Based RL: 4, Exploration: 3, PPO & Policy Gradients: 3, general: 3, Value Learning: 1)",
+   "\u201cBlind Precise Assembly: Proprioceptive Sim-to-Real Peg-in-Hole for Diverse Parts\u201d \u2014 Continuous Control",
+   "\u201cCocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning\u201d \u2014 Agentic RL, Exploration",
+   "\u201cNot All Actions Contribute Equally: Learning Precise Progress Estimation from Imprecise Demonstrations\u201d \u2014 Agentic RL, Offline RL",
+   "\u201cLearning Robot Metareasoning: Adaptive Computation Budgets for Real-Time Control\u201d \u2014 Offline RL, Model-Based RL",
+   "\u201cJAXtari: High-Throughput and Easy-to-Modify Arcade Learning Environment\u201d \u2014 Agentic RL, PPO & Policy Gradients"
+  ]
+ },
+ {
   "date": "2026-10-12",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
