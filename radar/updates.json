@@ -1,5 +1,17 @@
 [
  {
+  "date": "2026-10-26",
+  "title": "Radar sweep: 60 new papers mapped to the curriculum",
+  "items": [
+   "60 new papers since the last sweep (RL for LLMs: 33, Agentic RL: 23, Offline RL: 13, Continuous Control: 11, Model-Based RL: 8, Exploration: 6, PPO & Policy Gradients: 2, general: 1, Value Learning: 1)",
+   "\u201cRobustRLlib: A Unified Library and Benchmark for Robust Reinforcement Learning Algorithms\u201d \u2014 Offline RL",
+   "\u201cRynnUnify: Towards Unified Embodied Brain\u201d \u2014 Agentic RL, Model-Based RL",
+   "\u201cWhere Rounding Happens Matters: Rounding-Location Alignment Stabilizes LLM Reinforcement Learning\u201d \u2014 RL for LLMs",
+   "\u201cRecommender regret for improving regularised RL estimation with bandits and MCTS\u201d \u2014 Exploration, Model-Based RL",
+   "\u201cHoloBoxing: A Simple Recipe for Humanoid Boxing with 7 Minutes of Single-GPU Training\u201d \u2014 Offline RL, Exploration"
+  ]
+ },
+ {
   "date": "2026-10-19",
   "title": "Radar sweep: 60 new papers mapped to the curriculum",
   "items": [
